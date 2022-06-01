@@ -14,13 +14,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical" >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-            android:src="@drawable/odds_logo_color" />
+            android:src="@drawable/odds_logo_color"
+            android:contentDescription="Odds Logo" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +28,8 @@
             android:textColor="@color/black"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:text="Room Booking"
+            android:text="Booking"
+            android:layout_marginTop="36px"
             />
 
     </LinearLayout>
