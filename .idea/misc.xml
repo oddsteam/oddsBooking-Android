@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_face.xml" value="0.1415" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_success.xml" value="0.1945" />
-        <entry key="app/src/main/res/layout/activity_booking_form.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/odds_logo.xml" value="0.114" />
+        <entry key="app/src/main/res/layout/activity_booking_form.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/activity_booking_success.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11550151975683891" />
-        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25483856201171873" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1" />
       </map>
     </option>
   </component>

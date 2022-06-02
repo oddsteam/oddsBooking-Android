@@ -2,11 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.Oddsbooking" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_color</item>
-        <item name="colorPrimaryVariant">@color/purple_hover</item>
+        <item name="colorPrimary">@color/dark_blue</item>
+        <item name="colorPrimaryVariant">@color/purple_color</item>
         <item name="colorOnPrimary">@color/white_color</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/red_color</item>
+        <item name="colorSecondary">@color/dark_red</item>
         <item name="colorSecondaryVariant">@color/red_color</item>
         <item name="colorOnSecondary">@color/black_color</item>
         <!-- Status bar color. -->
