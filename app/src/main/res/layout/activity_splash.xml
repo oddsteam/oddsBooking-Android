@@ -25,10 +25,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textColor="@color/black_color"
+            android:textSize="36sp"
             android:textStyle="bold"
-            android:text="Booking"
+            android:text="Rooms Booking"
             android:layout_marginTop="36px"
             />
 
