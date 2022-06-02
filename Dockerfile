@@ -10,3 +10,8 @@ RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/ /app/
 
 ENTRYPOINT ["java","-jar","/app/kotlin-docker-gradle-app.jar"]
+
+ADD ./entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+ENTRYPOINT /app/entrypoint.sh
