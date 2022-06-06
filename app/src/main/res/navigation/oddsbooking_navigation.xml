@@ -13,4 +13,9 @@
         android:id="@+id/successFragment"
         android:name="com.odds.oddsbooking.booking_form.SuccessFragment"
         android:label="SuccessFragment" />
+    <fragment
+        android:id="@+id/previewFragment"
+        android:name="com.odds.oddsbooking.booking_form.PreviewFragment"
+        android:label="fragment_preview"
+        tools:layout="@layout/fragment_preview" />
 </navigation>
