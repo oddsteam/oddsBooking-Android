@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "664673294014",
+    "project_id": "odds-booking",
+    "storage_bucket": "odds-booking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664673294014:android:ec1ac9acd59d3ccc6030ef",
+        "android_client_info": {
+          "package_name": "com.odds.oddsbooking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664673294014-v5erbep2vmcb98in34pvlcoutmrku7l4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0ZsdzAIt6EmfliR_MnVmLxDHLRbNpaXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664673294014-v5erbep2vmcb98in34pvlcoutmrku7l4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
