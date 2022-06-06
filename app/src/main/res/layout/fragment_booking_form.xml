@@ -58,7 +58,7 @@ tools:context=".booking_form.BookingFormFragment">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name *" />
+                android:hint="Name*" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,7 @@ tools:context=".booking_form.BookingFormFragment">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number"
+                android:hint="Phone Number*"
                 android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +95,7 @@ tools:context=".booking_form.BookingFormFragment">
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
             android:layout_height="wrap_content"
-            android:hint="Room"
+            android:hint="Room*"
             app:startIconDrawable="@drawable/ic_room">
 
             <AutoCompleteTextView
@@ -115,8 +115,10 @@ tools:context=".booking_form.BookingFormFragment">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:hint="Reason" />
+                android:layout_height="wrap_content"
+                android:minLines="2"
+                android:gravity="top"
+                android:hint="Reason*" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +126,7 @@ tools:context=".booking_form.BookingFormFragment">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="From"
+            android:hint="From*"
             app:startIconDrawable="@drawable/ic_calendar">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -140,7 +142,7 @@ tools:context=".booking_form.BookingFormFragment">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="From Time"
+            android:hint="From Time*"
             app:startIconDrawable="@drawable/ic_time">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -156,7 +158,7 @@ tools:context=".booking_form.BookingFormFragment">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="To"
+            android:hint="To*"
             app:startIconDrawable="@drawable/ic_calendar">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -172,7 +174,7 @@ tools:context=".booking_form.BookingFormFragment">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="To From"
+            android:hint="To From*"
             app:startIconDrawable="@drawable/ic_time">
 
             <com.google.android.material.textfield.TextInputEditText
