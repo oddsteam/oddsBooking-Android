@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-            android:src="@drawable/odds_logo_color"
+            android:src="@drawable/ic_odds_logo_color"
             android:contentDescription="Odds Logo" />
 
         <TextView

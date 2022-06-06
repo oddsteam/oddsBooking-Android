@@ -24,7 +24,7 @@
                 android:layout_width="105dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="4dp"
-                android:src="@drawable/odds_logo_color"
+                android:src="@drawable/ic_odds_logo_color"
                 android:translationY="2dp" />
             <TextView
                 android:id="@+id/textView3"
