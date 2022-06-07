@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingSuccessBinding
 
@@ -21,7 +22,15 @@ class BookingSuccessFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+        binding.bookingAgainButton.setOnClickListener {
+            findNavController().apply {
+                navigate(
+                    R.id.navigateToBookingForm
+                )
+            }
+        }
+
         return binding.root
     }
 
