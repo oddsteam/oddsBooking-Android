@@ -31,32 +31,7 @@ class BookingFormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rooms = resources.getStringArray(R.array.rooms)
-        val arrayAdapter = ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
-        val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.roomFormDropdown)
-        autocompleteTV.setAdapter(arrayAdapter)
 
-        binding.fromDateFormEditText.setOnClickListener(View.OnClickListener {
-            showDatePickerDialog(binding.fromDateFormEditText)
-        })
-
-        binding.toDateFormEditText.setOnClickListener(View.OnClickListener {
-            showDatePickerDialog(binding.toDateFormEditText)
-        })
-
-        binding.previewButton.setOnClickListener {
-            findNavController().apply {
-                navigate(
-                    R.id.bookingPreviewFragment
-                )
-            }
-        }
-
-        with(binding) {
-            emailFormEditText.doOnTextChanged { text, _, _, _ ->
-                emailValidator(text.toString())
-            }
-        }
 
         return binding.root
     }
@@ -100,6 +75,37 @@ class BookingFormFragment : Fragment() {
             emailFormContainer.error = "invalid email"
         } else {
             emailFormContainer.isErrorEnabled = false
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val rooms = resources.getStringArray(R.array.rooms)
+        val arrayAdapter = ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
+
+        binding.roomFormDropdown.setAdapter(arrayAdapter)
+
+        binding.fromDateFormEditText.setOnClickListener(View.OnClickListener {
+            showDatePickerDialog(binding.fromDateFormEditText)
+        })
+
+        binding.toDateFormEditText.setOnClickListener(View.OnClickListener {
+            showDatePickerDialog(binding.toDateFormEditText)
+        })
+
+        binding.previewButton.setOnClickListener {
+            findNavController().apply {
+                navigate(
+                    R.id.bookingPreviewFragment
+                )
+            }
+        }
+
+        with(binding) {
+            emailFormEditText.doOnTextChanged { text, _, _, _ ->
+                emailValidator(text.toString())
+            }
         }
     }
 

@@ -19,4 +19,6 @@
     <string name="return_string">RETURN</string>
     <string name="confirm_string">CONFIRM</string>
     <string name="odds_logo_des">ODDS color logo</string>
+    <string name="rooms_booking">Rooms Booking</string>
+    <string name="demo_version">Demo V0.0.2</string>
 </resources>
