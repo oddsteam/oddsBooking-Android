@@ -51,13 +51,16 @@
             app:layout_constraintTop_toBottomOf="@+id/oddsTitle">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameFormContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconMode="clear_text"
+                app:errorContentDescription="ERROR!!!"
                 app:startIconDrawable="@drawable/ic_face">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameFormEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name*" />
@@ -65,6 +68,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailFormContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,12 +77,14 @@
                 app:startIconDrawable="@drawable/ic_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailFormEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email*" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneFormContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,6 +92,7 @@
                 app:startIconDrawable="@drawable/ic_phone">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneFormEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number*"
@@ -93,6 +100,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/roomFormContainer"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,7 +109,7 @@
                 app:startIconDrawable="@drawable/ic_room">
 
                 <AutoCompleteTextView
-                    android:id="@+id/dropdown"
+                    android:id="@+id/roomFormDropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none" />
@@ -109,6 +117,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reasonFormContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,6 +125,7 @@
                 app:startIconDrawable="@drawable/ic_reason">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reasonFormEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
@@ -124,6 +134,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fromDateFormContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,17 +143,17 @@
                 app:startIconDrawable="@drawable/ic_calendar">
 
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/startDate"
-                android:focusable="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                 />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fromDateFormEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fromTimeFormContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -151,13 +162,16 @@
                 app:startIconDrawable="@drawable/ic_time">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fromTimeFormEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=""
                     android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/toDateFormContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,15 +180,16 @@
                 app:startIconDrawable="@drawable/ic_calendar">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/endDate"
-                    android:focusable="false"
+                    android:id="@+id/toDateFormEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:hint="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/toTimeFormContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,6 +198,7 @@
                 app:startIconDrawable="@drawable/ic_time">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/toTimeFormEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=""
@@ -195,11 +211,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="#7464fc"
                 android:text="PREVIEW"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:backgroundTint="#7464fc"
-                android:layout_marginBottom="30dp" />
+                android:textStyle="bold" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
