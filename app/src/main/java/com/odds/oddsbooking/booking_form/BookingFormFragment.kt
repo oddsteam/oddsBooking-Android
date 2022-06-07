@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
@@ -22,6 +24,7 @@ class BookingFormFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -29,16 +32,16 @@ class BookingFormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rooms = resources.getStringArray(R.array.rooms)
-        val arrayAdapter = ArrayAdapter(binding.dropdown.context, R.layout.dropdown_item, rooms)
-        val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.dropdown)
+        val arrayAdapter = ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
+        val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.roomFormDropdown)
         autocompleteTV.setAdapter(arrayAdapter)
 
-        binding.startDate.setOnClickListener(View.OnClickListener {
-            showDatePickerDialog(binding.startDate)
+        binding.fromDateFormEditText.setOnClickListener(View.OnClickListener {
+            showDatePickerDialog(binding.fromDateFormEditText)
         })
 
-        binding.endDate.setOnClickListener(View.OnClickListener {
-            showDatePickerDialog(binding.endDate)
+        binding.toDateFormEditText.setOnClickListener(View.OnClickListener {
+            showDatePickerDialog(binding.toDateFormEditText)
         })
 
         binding.previewButton.setOnClickListener {
@@ -46,6 +49,12 @@ class BookingFormFragment : Fragment() {
                 navigate(
                     R.id.navigateToPreviewFragment
                 )
+            }
+        }
+
+        with(binding){
+            emailFormEditText.doOnTextChanged { text, _, _, _->
+                emailValidator(text.toString())
             }
         }
 
@@ -78,6 +87,20 @@ class BookingFormFragment : Fragment() {
         dialog.datePicker.minDate = minDate
         dialog.datePicker.maxDate = maxDate
         dialog.show()
+    }
+
+    //Validation function
+    private fun emailValidator(email : String) {
+        val emailFormContainer = binding.emailFormContainer
+        if(email.isEmpty()){
+            emailFormContainer.isErrorEnabled = true
+            emailFormContainer.error = "please enter email"
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            emailFormContainer.isErrorEnabled = true
+            emailFormContainer.error = "invalid email"
+        }else{
+            emailFormContainer.isErrorEnabled = false
+        }
     }
 
     companion object {
