@@ -7,7 +7,7 @@
     tools:context=".booking_form.BookingPreviewFragment">
 
     <LinearLayout
-        android:id="@+id/oddsTitle"
+        android:id="@+id/oddsTitleBookingPreview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -18,15 +18,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/oddsLogo"
+            android:id="@+id/oddsLogoBookingPreview"
             android:layout_width="105dp"
             android:layout_height="50dp"
             android:layout_marginEnd="4dp"
+            android:contentDescription="@string/odds_logo_des"
             android:src="@drawable/ic_odds_logo_color"
             android:translationY="2dp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textTitleBookingPreview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bookings"
@@ -36,7 +37,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/formLayout"
+        android:id="@+id/bookingPreviewLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
@@ -44,9 +45,10 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/oddsTitle">
+        app:layout_constraintTop_toBottomOf="@+id/oddsTitleBookingPreview">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/namePreviewContainer"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,9 +56,10 @@
             app:startIconDrawable="@drawable/ic_face">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/namePreviewEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name *"
+                android:hint="@string/name_string"
                 android:text="Somchai Jaidee"
                 android:textColor="@color/black_color" />
 
@@ -73,7 +76,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email *"
+                android:hint="@string/email_string"
                 android:text="somchai@odds.team"
                 android:textColor="@color/black_color" />
 
@@ -90,7 +93,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number *"
+                android:hint="@string/phone_number_string"
                 android:text="0999999999"
                 android:textColor="@color/black_color" />
 
@@ -107,7 +110,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Selected Room *"
+                android:hint="@string/room_string"
                 android:text="Neon"
                 android:textColor="@color/black_color" />
 
@@ -124,7 +127,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:hint="Reason"
+                android:hint="@string/reason_string"
                 android:text="booking room for android class"
                 android:textColor="@color/black_color" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -140,7 +143,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="From *"
+                android:hint="@string/from_date_string"
                 android:text="2022-07-08T01:00:00"
                 android:textColor="@color/black_color" />
 
@@ -157,7 +160,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="To *"
+                android:hint="@string/to_date_string"
                 android:text="2022-07-08T06:00:00"
                 android:textColor="@color/black_color" />
 
@@ -171,9 +174,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/formLayout"
-        app:layout_constraintStart_toStartOf="@id/formLayout"
-        app:layout_constraintTop_toBottomOf="@id/formLayout">
+        app:layout_constraintEnd_toEndOf="@id/bookingPreviewLayout"
+        app:layout_constraintStart_toStartOf="@id/bookingPreviewLayout"
+        app:layout_constraintTop_toBottomOf="@id/bookingPreviewLayout">
 
         <Button
             android:id="@+id/backToBookingFormButton"
@@ -181,16 +184,20 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:backgroundTint="@color/yellow_color"
-            android:text="return"
-            android:textAllCaps="true" />
+            android:text="@string/return_string"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/green_color"
-            android:text="confirm"
-            android:textAllCaps="true" />
+            android:text="@string/confirm_string"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

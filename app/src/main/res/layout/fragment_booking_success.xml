@@ -7,6 +7,7 @@
     tools:context=".booking_form.BookingSuccessFragment">
 
     <LinearLayout
+        android:id="@+id/bookingSuccessLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -38,14 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/purple_color"
-            android:text="Booking Again"
+            android:text="BOOKING AGAIN"
             android:textAllCaps="true"
             android:textColor="@color/white_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

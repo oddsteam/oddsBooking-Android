@@ -4,34 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/oddsbooking_navigation"
     app:startDestination="@id/bookingFormFragment">
+
     <fragment
         android:id="@+id/bookingFormFragment"
         android:name="com.odds.oddsbooking.booking_form.BookingFormFragment"
         android:label="fragment_booking_form"
-        tools:layout="@layout/fragment_booking_form" >
+        tools:layout="@layout/fragment_booking_form">
+
         <action
             android:id="@+id/action_bookingFormFragment_to_bookingPreviewFragment"
             app:destination="@id/bookingPreviewFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/bookingPreviewFragment"
         android:name="com.odds.oddsbooking.booking_form.BookingPreviewFragment"
         android:label="fragment_booking_preview"
-        tools:layout="@layout/fragment_booking_preview" >
+        tools:layout="@layout/fragment_booking_preview">
+
         <action
             android:id="@+id/action_bookingPreviewFragment_to_bookingSuccessFragment3"
             app:destination="@id/bookingSuccessFragment" />
+
         <action
             android:id="@+id/action_bookingPreviewFragment_to_bookingFormFragment"
             app:destination="@id/bookingFormFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/bookingSuccessFragment"
         android:name="com.odds.oddsbooking.booking_form.BookingSuccessFragment"
         android:label="fragment_booking_success"
-        tools:layout="@layout/fragment_booking_success" >
+        tools:layout="@layout/fragment_booking_success">
+
         <action
             android:id="@+id/action_bookingSuccessFragment_to_bookingFormFragment"
             app:destination="@id/bookingFormFragment" />
+
     </fragment>
+
 </navigation>

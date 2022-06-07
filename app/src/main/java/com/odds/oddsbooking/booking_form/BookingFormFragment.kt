@@ -52,8 +52,8 @@ class BookingFormFragment : Fragment() {
             }
         }
 
-        with(binding){
-            emailFormEditText.doOnTextChanged { text, _, _, _->
+        with(binding) {
+            emailFormEditText.doOnTextChanged { text, _, _, _ ->
                 emailValidator(text.toString())
             }
         }
@@ -90,15 +90,15 @@ class BookingFormFragment : Fragment() {
     }
 
     //Validation function
-    private fun emailValidator(email : String) {
+    private fun emailValidator(email: String) {
         val emailFormContainer = binding.emailFormContainer
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             emailFormContainer.isErrorEnabled = true
             emailFormContainer.error = "please enter email"
-        }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailFormContainer.isErrorEnabled = true
             emailFormContainer.error = "invalid email"
-        }else{
+        } else {
             emailFormContainer.isErrorEnabled = false
         }
     }

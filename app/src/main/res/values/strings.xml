@@ -1,10 +1,22 @@
 <resources>
     <string name="app_name">Odds Booking</string>
-
     <string-array name="rooms">
         <item>All Star</item>
         <item>Neon</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name_string">Name*</string>
+    <string name="email_string">Email*</string>
+    <string name="phone_number_string">Phone Number*</string>
+    <string name="room_string">Room*</string>
+    <string name="reason_string">Reason*</string>
+    <string name="from_date_string">From*</string>
+    <string name="from_time_string">From Time*</string>
+    <string name="to_date_string">To*</string>
+    <string name="to_time_string">To Time*</string>
+    <string name="preview_string">PREVIEW</string>
+    <string name="return_string">RETURN</string>
+    <string name="confirm_string">CONFIRM</string>
+    <string name="odds_logo_des">ODDS color logo</string>
 </resources>
