@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
 import java.text.SimpleDateFormat
@@ -32,6 +33,7 @@ class BookingFormFragment : Fragment() {
         val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.dropdown)
         autocompleteTV.setAdapter(arrayAdapter)
 
+<<<<<<< Updated upstream
         binding.startDate.setOnClickListener(View.OnClickListener {
             showDatePickerDialog(binding.startDate)
         })
@@ -39,6 +41,15 @@ class BookingFormFragment : Fragment() {
         binding.endDate.setOnClickListener(View.OnClickListener {
             showDatePickerDialog(binding.endDate)
         })
+=======
+        binding.previewButton.setOnClickListener {
+            findNavController().apply {
+                navigate(
+                    R.id.navigateToPreviewFragment
+                )
+            }
+        }
+>>>>>>> Stashed changes
 
         return binding.root
     }

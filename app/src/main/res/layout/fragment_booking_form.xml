@@ -193,6 +193,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="#7464fc"
@@ -202,4 +203,23 @@
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+                android:hint=""
+                android:inputType="phone" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/previewButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="PREVIEW"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:backgroundTint="#7464fc"
+            android:layout_marginBottom="30dp" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+>>>>>>> Stashed changes
 </ScrollView>
