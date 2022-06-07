@@ -18,7 +18,7 @@
             android:name=".booking_form.BookingFormActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".splash_screen.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
