@@ -29,16 +29,16 @@ class BookingFormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rooms = resources.getStringArray(R.array.rooms)
-        val arrayAdapter = ArrayAdapter(binding.dropdown.context, R.layout.dropdown_item, rooms)
-        val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.dropdown)
+        val arrayAdapter = ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
+        val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.roomFormDropdown)
         autocompleteTV.setAdapter(arrayAdapter)
 
-        binding.startDate.setOnClickListener(View.OnClickListener {
-            showDatePickerDialog(binding.startDate)
+        binding.fromDateFormEditText.setOnClickListener(View.OnClickListener {
+            showDatePickerDialog(binding.fromDateFormEditText)
         })
 
-        binding.endDate.setOnClickListener(View.OnClickListener {
-            showDatePickerDialog(binding.endDate)
+        binding.toDateFormEditText.setOnClickListener(View.OnClickListener {
+            showDatePickerDialog(binding.toDateFormEditText)
         })
 
         binding.previewButton.setOnClickListener {
