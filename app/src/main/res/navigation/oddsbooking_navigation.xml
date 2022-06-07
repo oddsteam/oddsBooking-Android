@@ -8,16 +8,16 @@
         android:id="@+id/bookingFormFragment"
         android:name="com.odds.oddsbooking.booking_form.BookingFormFragment"
         android:label="fragment_booking_form"
-        tools:layout="@layout/fragment_booking_form" />
-    <fragment
-        android:id="@+id/successFragment"
-        android:name="com.odds.oddsbooking.booking_form.BookingSuccessFragment"
-        android:label="SuccessFragment"
-        tools:layout="@layout/fragment_booking_form">
+        tools:layout="@layout/fragment_booking_form" >
         <action
             android:id="@+id/navigateToPreviewFragment"
             app:destination="@id/previewFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/successFragment"
+        android:name="com.odds.oddsbooking.booking_form.BookingSuccessFragment"
+        android:label="SuccessFragment"
+        tools:layout="@layout/fragment_booking_form"/>
     <fragment
         android:id="@+id/previewFragment"
         android:name="com.odds.oddsbooking.booking_form.BookingPreviewFragment"

@@ -31,6 +31,7 @@ class BookingPreviewFragment : Fragment() {
                     R.id.navigateToBookingForm
                 )
             }
+
         }
 
         binding.confirmButton.setOnClickListener {
