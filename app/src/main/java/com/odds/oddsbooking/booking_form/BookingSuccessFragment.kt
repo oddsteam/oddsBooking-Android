@@ -26,7 +26,7 @@ class BookingSuccessFragment : Fragment() {
         binding.bookingAgainButton.setOnClickListener {
             findNavController().apply {
                 navigate(
-                    R.id.navigateToBookingForm
+                    R.id.bookingFormFragment
                 )
             }
         }

@@ -47,7 +47,7 @@ class BookingFormFragment : Fragment() {
         binding.previewButton.setOnClickListener {
             findNavController().apply {
                 navigate(
-                    R.id.navigateToPreviewFragment
+                    R.id.bookingPreviewFragment
                 )
             }
         }

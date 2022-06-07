@@ -10,28 +10,28 @@
         android:label="fragment_booking_form"
         tools:layout="@layout/fragment_booking_form" >
         <action
-            android:id="@+id/navigateToPreviewFragment"
-            app:destination="@id/previewFragment" />
+            android:id="@+id/action_bookingFormFragment_to_bookingPreviewFragment"
+            app:destination="@id/bookingPreviewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/successFragment"
-        android:name="com.odds.oddsbooking.booking_form.BookingSuccessFragment"
-        android:label="SuccessFragment"
-        tools:layout="@layout/fragment_booking_form">
+        android:id="@+id/bookingPreviewFragment"
+        android:name="com.odds.oddsbooking.booking_form.BookingPreviewFragment"
+        android:label="fragment_booking_preview"
+        tools:layout="@layout/fragment_booking_preview" >
         <action
-            android:id="@+id/navigateToBookingForm"
+            android:id="@+id/action_bookingPreviewFragment_to_bookingSuccessFragment3"
+            app:destination="@id/bookingSuccessFragment" />
+        <action
+            android:id="@+id/action_bookingPreviewFragment_to_bookingFormFragment"
             app:destination="@id/bookingFormFragment" />
     </fragment>
     <fragment
-        android:id="@+id/previewFragment"
-        android:name="com.odds.oddsbooking.booking_form.BookingPreviewFragment"
-        android:label="fragment_preview"
-        tools:layout="@layout/fragment_booking_preview" >
+        android:id="@+id/bookingSuccessFragment"
+        android:name="com.odds.oddsbooking.booking_form.BookingSuccessFragment"
+        android:label="fragment_booking_success"
+        tools:layout="@layout/fragment_booking_success" >
         <action
-            android:id="@+id/navigateToSuccessFragment"
-            app:destination="@id/successFragment" />
-        <action
-            android:id="@+id/navigateToBookingForm"
+            android:id="@+id/action_bookingSuccessFragment_to_bookingFormFragment"
             app:destination="@id/bookingFormFragment" />
     </fragment>
 </navigation>
