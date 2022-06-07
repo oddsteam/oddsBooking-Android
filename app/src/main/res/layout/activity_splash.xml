@@ -10,27 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-            android:src="@drawable/ic_odds_logo_color"
-            android:contentDescription="Odds Logo" />
+            android:contentDescription="Odds Logo"
+            android:src="@drawable/ic_odds_logo_color" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="36px"
+            android:text="Rooms Booking"
             android:textColor="@color/black_color"
             android:textSize="36sp"
-            android:textStyle="bold"
-            android:text="Rooms Booking"
-            android:layout_marginTop="36px"
-            />
+            android:textStyle="bold" />
 
     </LinearLayout>
 

@@ -3,15 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_outline_calendar_today_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_reason.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_room.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_success.xml" value="0.1945" />
         <entry key="app/src/main/res/layout/activity_booking_form.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_booking_preview.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_booking_success.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11550151975683891" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25483856201171873" />
-        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.13183949973944764" />
+        <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.11018518518518519" />
+        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_booking_preview.xml" value="0.20538838704427084" />
         <entry key="app/src/main/res/layout/fragment_booking_success.xml" value="0.13177083333333334" />
+        <entry key="app/src/main/res/layout/fragment_preview.xml" value="0.11018518518518519" />
         <entry key="app/src/main/res/layout/fragment_success.xml" value="0.13177083333333334" />
       </map>
     </option>
