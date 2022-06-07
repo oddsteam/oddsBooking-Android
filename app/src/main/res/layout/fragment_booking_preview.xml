@@ -1,204 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".booking_form.BookingPreviewFragment">
 
-    <LinearLayout
-        android:id="@+id/oddsTitleBookingPreview"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/oddsLogoBookingPreview"
-            android:layout_width="105dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="4dp"
-            android:contentDescription="@string/odds_logo_des"
-            android:src="@drawable/ic_odds_logo_color"
-            android:translationY="2dp" />
+        <LinearLayout
+            android:id="@+id/oddsTitleBookingPreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textTitleBookingPreview"
+            <ImageView
+                android:id="@+id/oddsLogoBookingPreview"
+                android:layout_width="105dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@string/odds_logo_des"
+                android:src="@drawable/ic_odds_logo_color"
+                android:translationY="2dp" />
+
+            <TextView
+                android:id="@+id/textTitleBookingPreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bookings"
+                android:textColor="@color/black_color"
+                android:textSize="38sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bookingPreviewLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/oddsTitleBookingPreview">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/namePreviewContainer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:startIconDrawable="@drawable/ic_face">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/namePreviewEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name_string"
+                    android:text="Somchai Jaidee"
+                    android:textColor="@color/black_color" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                app:startIconDrawable="@drawable/ic_email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email_string"
+                    android:text="somchai@odds.team"
+                    android:textColor="@color/black_color" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                app:startIconDrawable="@drawable/ic_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/phone_number_string"
+                    android:text="0999999999"
+                    android:textColor="@color/black_color" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                app:startIconDrawable="@drawable/ic_room">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/room_string"
+                    android:text="Neon"
+                    android:textColor="@color/black_color" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                app:startIconDrawable="@drawable/ic_reason">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:hint="@string/reason_string"
+                    android:text="booking room for android class"
+                    android:textColor="@color/black_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                app:startIconDrawable="@drawable/ic_calendar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/from_date_string"
+                    android:text="2022-07-08T01:00:00"
+                    android:textColor="@color/black_color" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                app:startIconDrawable="@drawable/ic_calendar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/to_date_string"
+                    android:text="2022-07-08T06:00:00"
+                    android:textColor="@color/black_color" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bookings"
-            android:textColor="@color/black_color"
-            android:textSize="38sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/bookingPreviewLayout"
+            app:layout_constraintStart_toStartOf="@id/bookingPreviewLayout"
+            app:layout_constraintTop_toBottomOf="@id/bookingPreviewLayout">
 
-    <LinearLayout
-        android:id="@+id/bookingPreviewLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/oddsTitleBookingPreview">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/namePreviewContainer"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            app:startIconDrawable="@drawable/ic_face">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/namePreviewEditText"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/backToBookingFormButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/name_string"
-                android:text="Somchai Jaidee"
-                android:textColor="@color/black_color" />
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/yellow_color"
+                android:text="@string/return_string"
+                android:textAllCaps="true"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="false"
-            app:startIconDrawable="@drawable/ic_email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/confirmButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/email_string"
-                android:text="somchai@odds.team"
-                android:textColor="@color/black_color" />
+                android:backgroundTint="@color/green_color"
+                android:text="@string/confirm_string"
+                android:textAllCaps="true"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="false"
-            app:startIconDrawable="@drawable/ic_phone">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/phone_number_string"
-                android:text="0999999999"
-                android:textColor="@color/black_color" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="false"
-            app:startIconDrawable="@drawable/ic_room">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/room_string"
-                android:text="Neon"
-                android:textColor="@color/black_color" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="false"
-            app:startIconDrawable="@drawable/ic_reason">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:hint="@string/reason_string"
-                android:text="booking room for android class"
-                android:textColor="@color/black_color" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="false"
-            app:startIconDrawable="@drawable/ic_calendar">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/from_date_string"
-                android:text="2022-07-08T01:00:00"
-                android:textColor="@color/black_color" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="false"
-            app:startIconDrawable="@drawable/ic_calendar">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/to_date_string"
-                android:text="2022-07-08T06:00:00"
-                android:textColor="@color/black_color" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/bookingPreviewLayout"
-        app:layout_constraintStart_toStartOf="@id/bookingPreviewLayout"
-        app:layout_constraintTop_toBottomOf="@id/bookingPreviewLayout">
-
-        <Button
-            android:id="@+id/backToBookingFormButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/yellow_color"
-            android:text="@string/return_string"
-            android:textAllCaps="true"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/confirmButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/green_color"
-            android:text="@string/confirm_string"
-            android:textAllCaps="true"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
