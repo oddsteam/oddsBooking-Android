@@ -1,5 +1,8 @@
 package com.odds.oddsbooking.booking_form
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +12,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BookingFormFragment : Fragment() {
 
@@ -23,10 +28,47 @@ class BookingFormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rooms = resources.getStringArray(R.array.rooms)
-        val arrayAdapter = ArrayAdapter( binding.dropdown.context, R.layout.dropdown_item, rooms)
+        val arrayAdapter = ArrayAdapter(binding.dropdown.context, R.layout.dropdown_item, rooms)
         val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.dropdown)
         autocompleteTV.setAdapter(arrayAdapter)
+
+        binding.startDate.setOnClickListener(View.OnClickListener {
+            showDatePickerDialog(binding.startDate)
+        })
+
+        binding.endDate.setOnClickListener(View.OnClickListener {
+            showDatePickerDialog(binding.endDate)
+        })
+
         return binding.root
+    }
+
+    // TODO : Implement Date Picker Dialog with minDate and maxDate
+    private fun showDatePickerDialog(
+        editText: com.google.android.material.textfield.TextInputEditText,
+        minDate: Long = System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 14),
+        maxDate: Long = System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 15)
+    ) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val listener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            val date = String.format("%02d-%02d-%d", day, month, year);
+            editText.setText(date)
+        }
+
+        val dialog = DatePickerDialog(
+            requireContext(),
+            listener,
+            year,
+            month,
+            day
+        )
+        dialog.datePicker.minDate = minDate
+        dialog.datePicker.maxDate = maxDate
+        dialog.show()
     }
 
     companion object {
@@ -34,7 +76,6 @@ class BookingFormFragment : Fragment() {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             BookingFormFragment().apply {
-
             }
     }
 }

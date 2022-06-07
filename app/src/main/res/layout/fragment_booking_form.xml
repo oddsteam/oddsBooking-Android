@@ -131,11 +131,14 @@
                 android:hint="From*"
                 app:startIconDrawable="@drawable/ic_calendar">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint=""
-                    android:inputType="phone" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/startDate"
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=""
+                 />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -154,7 +157,6 @@
                     android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -164,10 +166,11 @@
                 app:startIconDrawable="@drawable/ic_calendar">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/endDate"
+                    android:focusable="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=""
-                    android:inputType="phone" />
+                    android:hint="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,7 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="To From*"
+                android:hint="To Time*"
                 app:startIconDrawable="@drawable/ic_time">
 
                 <com.google.android.material.textfield.TextInputEditText
