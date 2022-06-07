@@ -33,7 +33,6 @@ class BookingFormFragment : Fragment() {
         val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.dropdown)
         autocompleteTV.setAdapter(arrayAdapter)
 
-<<<<<<< Updated upstream
         binding.startDate.setOnClickListener(View.OnClickListener {
             showDatePickerDialog(binding.startDate)
         })
@@ -41,7 +40,7 @@ class BookingFormFragment : Fragment() {
         binding.endDate.setOnClickListener(View.OnClickListener {
             showDatePickerDialog(binding.endDate)
         })
-=======
+
         binding.previewButton.setOnClickListener {
             findNavController().apply {
                 navigate(
@@ -49,7 +48,6 @@ class BookingFormFragment : Fragment() {
                 )
             }
         }
->>>>>>> Stashed changes
 
         return binding.root
     }

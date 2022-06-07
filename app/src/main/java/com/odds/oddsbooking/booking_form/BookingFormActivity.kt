@@ -19,12 +19,6 @@ class BookingFormActivity : AppCompatActivity() {
         val nav = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
         val navController = nav.navController
         navController.setGraph(R.navigation.oddsbooking_navigation)
-<<<<<<< Updated upstream
-=======
-
-
-
->>>>>>> Stashed changes
     }
 
 }

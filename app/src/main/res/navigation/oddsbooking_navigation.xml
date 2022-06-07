@@ -8,28 +8,20 @@
         android:id="@+id/bookingFormFragment"
         android:name="com.odds.oddsbooking.booking_form.BookingFormFragment"
         android:label="fragment_booking_form"
-<<<<<<< Updated upstream
         tools:layout="@layout/fragment_booking_form" />
     <fragment
         android:id="@+id/successFragment"
         android:name="com.odds.oddsbooking.booking_form.BookingSuccessFragment"
         android:label="SuccessFragment"
-        tools:layout="@layout/fragment_booking_success"/>
-=======
-        tools:layout="@layout/fragment_booking_form" >
+        tools:layout="@layout/fragment_booking_form">
         <action
             android:id="@+id/navigateToPreviewFragment"
             app:destination="@id/previewFragment" />
     </fragment>
-
->>>>>>> Stashed changes
     <fragment
         android:id="@+id/previewFragment"
         android:name="com.odds.oddsbooking.booking_form.BookingPreviewFragment"
         android:label="fragment_preview"
-<<<<<<< Updated upstream
-        tools:layout="@layout/fragment_booking_preview" />
-=======
         tools:layout="@layout/fragment_booking_preview" >
         <action
             android:id="@+id/navigateToSuccessFragment"
@@ -38,11 +30,4 @@
             android:id="@+id/navigateToBookingForm"
             app:destination="@id/bookingFormFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/successFragment"
-        android:name="com.odds.oddsbooking.booking_form.BookingSuccessFragment"
-        android:label="SuccessFragment"
-        tools:layout="@layout/fragment_booking_success"/>
->>>>>>> Stashed changes
 </navigation>
