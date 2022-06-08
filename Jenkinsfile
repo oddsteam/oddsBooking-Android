@@ -11,8 +11,12 @@ pipeline{
 //         TAG = "oddsbooking-android:${BRANCH_NAME}"
 //         APP_BUILD_TAG = "${REGISTRY}/${ORGANIZATION}/${TAG}"
 //     }
-
      stages{
+            stage("Checkout SCM"){
+                steps{
+                    checkout scm
+                }
+            }
             stage("Set Environment"){
                 steps{
                     sh """
