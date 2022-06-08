@@ -91,6 +91,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             phoneFormEditText.doOnTextChanged{ text, _, _, _ ->
                 phoneValidator(text.toString())
             }
+
             previewButton.setOnClickListener {
                 findNavController().apply {
                     navigate(
@@ -116,6 +117,17 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             phoneFormContainer.error = "invalid phone"
         } else {
             phoneFormContainer.isErrorEnabled = false
+        }
+    }
+
+    private fun reasonValidator(reason: String) {
+        val reasonFormContainer = binding.reasonFormContainer
+        if (reason.isEmpty()) {
+            reasonFormContainer.isErrorEnabled = true
+            reasonFormContainer.error = "plzzzzzz"
+        }
+        else {
+            reasonFormContainer.isErrorEnabled = false
         }
     }
 
