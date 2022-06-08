@@ -1,6 +1,6 @@
 pipeline{
     //  กำหนด ชื่อ,IP,.. ของ agent --> any : can run any agent
-    agent { docker 'gethomesafe/android-31-fastlane:latest' }
+    agent { docker 'androidsdk/android-31' }
     
      stages{
             stage("unit test"){

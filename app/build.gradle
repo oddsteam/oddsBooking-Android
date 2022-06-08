@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 32
 
     flavorDimensions "default"
     productFlavors {
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "com.odds.oddsbooking"
         minSdk 23
-        targetSdk 30
+        targetSdk 32
         versionCode 1
         versionName "0.0.2"
 

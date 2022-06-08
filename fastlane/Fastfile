@@ -26,7 +26,7 @@ desc "Android Distribute"
 
         build_android_app(
             task: "assemble",
-        ab    flavor: "dev",
+            flavor: "dev",
             build_type: "Release",
         )
 
