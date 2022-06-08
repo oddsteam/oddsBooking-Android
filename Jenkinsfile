@@ -7,17 +7,12 @@ pipeline{
     }
 
      stages{
-            stage("Checkout SCM"){
-                steps{
-                    checkout scm
-                }
-            }
+
             stage("Set Environment"){
                 steps{
-                    bat("xcopy /Users/Jerry/odds/oddsBooking-Android/local.properties local.properties")
-//                     sh """
-//                         cp ~/Users/Jerry/odds/oddsBooking-Android/local.properties local.properties
-//                     """
+                    sh """
+                        cp /Users/Jerry/odds/oddsBooking-Android/local.properties local.properties
+                    """
                 }
             }
             stage("unit test"){
