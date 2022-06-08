@@ -2,14 +2,13 @@ package com.odds.oddsbooking.booking_form
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
@@ -40,10 +39,38 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         autocompleteTV.setAdapter(arrayAdapter)
 
         with(binding) {
+
+//            presenter check onChange
+            nameFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateName(text.toString())
+            }
             emailFormEditText.doOnTextChanged { text, _, _, _ ->
-                emailValidator(text.toString())
+                presenter.validateEmail(text.toString())
+            }
+            phoneFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validatePhoneNumber(text.toString())
+            }
+            roomFormDropdown.doOnTextChanged { text, _, _, _ ->
+                presenter.validateRoom(text.toString())
+            }
+            reasonFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateReason(text.toString())
+            }
+            fromDateFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateFromDate(text.toString())
+            }
+            fromTimeFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateFromTime(text.toString())
+            }
+            toDateFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateToDate(text.toString())
+            }
+            toTimeFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateToTime(text.toString())
             }
 
+
+//            showDialog date/time picker
             fromDateFormEditText.setOnClickListener {
                 showDatePickerDialog(fromDateFormEditText)
             }
@@ -55,9 +82,12 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             fromTimeFormEditText.setOnClickListener {
                 showTimePickerDialog(fromTimeFormEditText)
             }
+
             toTimeFormEditText.setOnClickListener {
                 showTimePickerDialog(toTimeFormEditText)
             }
+
+//            onClick previewButton
             previewButton.setOnClickListener {
                 findNavController().apply {
                     navigate(
@@ -139,19 +169,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         tpd.show(childFragmentManager, "TimepickerDialog")
     }
 
-    //Validation function
-    private fun emailValidator(email: String) {
-        val emailFormContainer = binding.emailFormContainer
-        if (email.isEmpty()) {
-            emailFormContainer.isErrorEnabled = true
-            emailFormContainer.error = "please enter email"
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailFormContainer.isErrorEnabled = true
-            emailFormContainer.error = "invalid email"
-        } else {
-            emailFormContainer.isErrorEnabled = false
-        }
-    }
 
     companion object {
 

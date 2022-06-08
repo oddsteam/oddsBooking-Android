@@ -17,7 +17,7 @@ class BookingFormPresenter {
         fun onEmailValid()
     }
 
-    fun validateName(name: String){
+    fun validateName(name: String) {
         when {
             name.isEmpty() -> {
                 view.onNameError("empty name")
@@ -28,7 +28,7 @@ class BookingFormPresenter {
         }
     }
 
-    fun validateEmail(email: String){
+    fun validateEmail(email: String) {
         when {
             email.isEmpty() -> {
                 // TODO: change String type to int & declaration @String
@@ -43,6 +43,34 @@ class BookingFormPresenter {
             }
 
         }
+    }
+
+    fun validatePhoneNumber(phoneNumber: String) {
+
+    }
+
+    fun validateRoom(room: String) {
+
+    }
+
+    fun validateReason(reason: String) {
+
+    }
+
+    fun validateFromDate(fromDate: String) {
+
+    }
+
+    fun validateFromTime(fromTime: String) {
+
+    }
+
+    fun validateToDate(toDate: String) {
+
+    }
+
+    fun validateToTime(toTime: String) {
+
     }
 
 
