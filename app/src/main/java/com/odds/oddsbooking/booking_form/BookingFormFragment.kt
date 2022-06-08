@@ -144,8 +144,12 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         binding.nameFormContainer.isErrorEnabled = false
     }
 
-    override fun onNameAutoFormat(name : String) {
-        binding.nameFormEditText.setText(name.uppercase())
+    override fun onNameAutoFormat(term : String) {
+        val nameFormatter = term.lowercase().trim().split(" ").toMutableList()
+        for (index in nameFormatter.indices) {
+            nameFormatter[index] = nameFormatter[index].replaceFirstChar { it.uppercaseChar() }
+        }
+        binding.nameFormEditText.setText(nameFormatter.joinToString(" "))
     }
 
     override fun onEmailError(errMsg: String) {
