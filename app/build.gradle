@@ -8,6 +8,16 @@ plugins {
 android {
     compileSdk 32
 
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            dimension "default"
+            applicationIdSuffix ".dev"
+        }
+        production {
+            dimension "default"
+        }
+    }
     defaultConfig {
         applicationId "com.odds.oddsbooking"
         minSdk 23

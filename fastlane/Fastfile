@@ -1,0 +1,54 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+desc "Android Distribute"
+    lane :distribute do
+
+        build_android_app(
+            task: "assemble",
+            flavor: "dev",
+            build_type: "Release",
+        )
+
+        firebase_app_distribution(
+            app: "1:435114910085:android:9fd5fc533d9661c9c824ec",
+            testers: "Odds-Mola",
+            release_notes: "this is release_notes"
+        )
+
+    end
+
+#   desc "Deploy a new dev version to the Firebase App Distribution"
+#   lane :distribute do
+#     gradle(
+#       task: "clean assemble",
+#       flavor: "dev",
+#       build_type: "Release"
+#     )
+#     firebase_app_distribution(
+#         app: "1:165854329521:android:93e1991805446ca39f0090",
+#         testers: "jerry@odds.team", # รายชื่อ testers ที่จะได้รับอีเมลให้ดาวน์โหลดแอป
+#         release_notes: "New feature is ready to test"
+#       )
+#   end
+end
