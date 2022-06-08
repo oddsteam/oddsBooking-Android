@@ -13,6 +13,7 @@ class BookingFormPresenter {
     interface BookingFormView {
         fun onNameError(errMsg: String)
         fun onNameValid()
+        fun onNameAutoFormat(name : String)
         fun onEmailError(errMsg: String)
         fun onEmailValid()
         fun onPhoneError(errMsg: String)
@@ -36,6 +37,9 @@ class BookingFormPresenter {
                 view.onNameValid()
             }
         }
+    }
+    fun autoFormatName(name : String){
+        view.onNameAutoFormat(name)
     }
 
     fun validateEmail(email: String) {

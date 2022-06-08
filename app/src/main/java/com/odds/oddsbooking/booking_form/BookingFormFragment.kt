@@ -45,7 +45,9 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
 //            presenter check onChange
             nameFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateName(text.toString())
+                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
             }
+
             emailFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateEmail(text.toString())
             }
@@ -140,6 +142,10 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
 
     override fun onNameValid() {
         binding.nameFormContainer.isErrorEnabled = false
+    }
+
+    override fun onNameAutoFormat(name : String) {
+        binding.nameFormEditText.setText(name.uppercase())
     }
 
     override fun onEmailError(errMsg: String) {
