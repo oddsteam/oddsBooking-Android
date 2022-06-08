@@ -1,6 +1,7 @@
 pipeline{
     //  กำหนด ชื่อ,IP,.. ของ agent --> any : can run any agent
-    agent { docker 'openjdk:8-jre' }
+    agent none
+
      stages{
             stage("unit test"){
                 steps{
