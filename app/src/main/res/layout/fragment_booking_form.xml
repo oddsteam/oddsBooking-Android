@@ -57,7 +57,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconMode="clear_text"
-                app:errorContentDescription="ERROR!!!"
                 app:startIconDrawable="@drawable/ic_face">
 
                 <com.google.android.material.textfield.TextInputEditText

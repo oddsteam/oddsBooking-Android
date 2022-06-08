@@ -96,10 +96,10 @@ class BookingFormPresenter {
     fun validateReason(reason: String) {
         when {
             reason.isEmpty() -> {
-                view.onNameError("Please enter reason")
+                view.onReasonError("Please enter reason")
             }
             else -> {
-                view.onNameValid()
+                view.onReasonValid()
             }
         }
     }
