@@ -2,6 +2,7 @@ package com.odds.oddsbooking.booking_form
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,66 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
     private val presenter by lazy {
         BookingFormPresenter()
     }
+    private val editTextArray by lazy {
+        arrayOf<FormValidate>(
+            FormValidate(
+                "name",
+                binding.nameFormContainer,
+                binding.nameFormEditText,
+                "error name empty",
+                arrayOf(presenter::isEmpty)
+            ),
+            FormValidate(
+                "email",
+                binding.emailFormContainer,
+                binding.emailFormEditText,
+                "error email",
+                arrayOf(presenter::isEmpty, presenter::isEmail)
+            ),
+            FormValidate(
+                "phone",
+                binding.phoneFormContainer,
+                binding.phoneFormEditText,
+                "error phone empty",
+                arrayOf(presenter::isEmpty, presenter::isPhone)
+            ),
+            FormValidate(
+                "reason",
+                binding.reasonFormContainer,
+                binding.reasonFormEditText,
+                "error reason empty",
+                arrayOf(presenter::isEmpty)
+            ),
+            FormValidate(
+                "startDate",
+                binding.fromDateFormContainer,
+                binding.fromDateFormEditText,
+                "error from date empty",
+                arrayOf(presenter::isEmpty)
+            ),
+            FormValidate(
+                "startTime",
+                binding.fromTimeFormContainer,
+                binding.fromTimeFormEditText,
+                "error from time empty",
+                arrayOf(presenter::isEmpty)
+            ),
+            FormValidate(
+                "endDate",
+                binding.toDateFormContainer,
+                binding.toDateFormEditText,
+                "error to date empty",
+                arrayOf(presenter::isEmpty)
+            ),
+            FormValidate(
+                "endTime",
+                binding.fromDateFormContainer,
+                binding.fromDateFormEditText,
+                "error from date empty",
+                arrayOf(presenter::isEmpty)
+            ),
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,47 +93,27 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val rooms = resources.getStringArray(R.array.rooms)
-        val arrayAdapter = ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
-        binding.roomFormDropdown.setAdapter(arrayAdapter)
+        val arrayAdapter =
+            ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
+        val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.roomFormDropdown)
+        autocompleteTV.setAdapter(arrayAdapter)
+
+        editTextArray.forEach {
+            it.fieldBindingEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validate(text.toString(), it.tagName, it.chains)
+                if (it.tagName == "name")
+                    it.fieldBindingEditText.setOnFocusChangeListener { _, _ ->
+                        presenter.autoFormatName(text.toString())
+                    }
+            }
+        }
 
         with(binding) {
-//            presenter check onChange
-            nameFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateName(text.toString())
-                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
-            }
 
-            emailFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateEmail(text.toString())
-            }
-            phoneFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validatePhoneNumber(text.toString())
-            }
             roomFormDropdown.doOnTextChanged { text, _, _, _ ->
                 presenter.validateRoom(text.toString())
             }
-            reasonFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateReason(text.toString())
-            }
-            fromDateFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateFromDate(text.toString())
-            }
-            fromTimeFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateFromTime(text.toString())
-            }
-            toDateFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateToDate(text.toString())
-            }
-            toTimeFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateToTime(text.toString())
-            }
-
 //            showDialog date/time picker
             fromDateFormEditText.setOnClickListener {
                 showDatePickerDialog(fromDateFormEditText)
@@ -89,6 +130,8 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             toTimeFormEditText.setOnClickListener {
                 showTimePickerDialog(toTimeFormEditText)
             }
+
+//            onClick previewButton
             previewButton.setOnClickListener {
                 findNavController().apply {
                     navigate(
@@ -97,16 +140,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                 }
             }
         }
-    }
-
-    override fun onNameError(errMsg: String) {
-        val nameFormContainer = binding.nameFormContainer
-        nameFormContainer.isErrorEnabled = true
-        nameFormContainer.error = errMsg
-    }
-
-    override fun onNameValid() {
-        binding.nameFormContainer.isErrorEnabled = false
+        return binding.root
     }
 
     override fun onNameAutoFormat(term : String) {
@@ -115,26 +149,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             nameFormatter[index] = nameFormatter[index].replaceFirstChar { it.uppercaseChar() }
         }
         binding.nameFormEditText.setText(nameFormatter.joinToString(" "))
-    }
-
-    override fun onEmailError(errMsg: String) {
-        val emailFormContainer = binding.emailFormContainer
-        emailFormContainer.isErrorEnabled = true
-        emailFormContainer.error = errMsg
-    }
-
-    override fun onEmailValid() {
-        binding.emailFormContainer.isErrorEnabled = false
-    }
-
-    override fun onPhoneError(errMsg: String) {
-        val phoneFormContainer = binding.phoneFormContainer
-        phoneFormContainer.isErrorEnabled = true
-        phoneFormContainer.error = errMsg
-    }
-
-    override fun onPhoneValid() {
-        binding.phoneFormContainer.isErrorEnabled = false
     }
 
     override fun onRoomError(errMsg: String) {
@@ -147,55 +161,30 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         binding.roomFormContainer.isErrorEnabled = false
     }
 
-    override fun onReasonError(errMsg: String) {
-        val reasonFormContainer = binding.reasonFormContainer
-        reasonFormContainer.isErrorEnabled = true
-        reasonFormContainer.error = errMsg
+    override fun onError(tagName: String) {
+        val form = editTextArray.find {
+            tagName == it.tagName
+        }
+        val container = form?.fieldBindingContainer
+        container?.isErrorEnabled = true
+        container?.error = form?.errMsg
     }
 
-    override fun onReasonValid() {
-        binding.reasonFormContainer.isErrorEnabled = false
+    override fun onValid(tagName: String) {
+        val form = editTextArray.find {
+            tagName == it.tagName
+        }
+        val container = form?.fieldBindingContainer
+        container?.isErrorEnabled = false
     }
 
-    override fun onFromDateError(errMsg: String) {
-        val fromDateContainer = binding.fromDateFormContainer
-        fromDateContainer.isErrorEnabled = true
-        fromDateContainer.error = errMsg
-    }
-
-    override fun onFromDateValid() {
-        binding.fromDateFormContainer.isErrorEnabled = false
-    }
-
-    override fun onFromTimeError(errMsg: String) {
-        val fromTimeContainer = binding.fromTimeFormContainer
-        fromTimeContainer.isErrorEnabled = true
-        fromTimeContainer.error = errMsg
-    }
-
-    override fun onFromTimeValid() {
-        binding.fromTimeFormContainer.isErrorEnabled = false
-    }
-
-    override fun onToDateError(errMsg: String) {
-        val toDateContainer = binding.toDateFormContainer
-        toDateContainer.isErrorEnabled = true
-        toDateContainer.error = errMsg
-
-    }
-
-    override fun onToDateValid() {
-        binding.toDateFormContainer.isErrorEnabled = false
-    }
-
-    override fun onToTimeError(errMsg: String) {
-        val toTimeContainer = binding.toTimeFormContainer
-        toTimeContainer.isErrorEnabled = true
-        toTimeContainer.error = errMsg
-    }
-
-    override fun onToTimeValid() {
-        binding.toTimeFormContainer.isErrorEnabled = false
+    override fun onErrorMessage(tagName: String, errMsg: String) {
+        val form = editTextArray.find {
+            tagName == it.tagName
+        }
+        val container = form?.fieldBindingContainer
+        container?.isErrorEnabled = true
+        container?.error = errMsg
     }
 
     // TODO : Implement Date Picker Dialog with minDate and maxDate

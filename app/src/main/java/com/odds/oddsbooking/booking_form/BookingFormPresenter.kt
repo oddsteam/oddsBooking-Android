@@ -11,74 +11,73 @@ class BookingFormPresenter {
     }
 
     interface BookingFormView {
-        fun onNameError(errMsg: String)
-        fun onNameValid()
-        fun onNameAutoFormat(name : String)
-        fun onEmailError(errMsg: String)
-        fun onEmailValid()
-        fun onPhoneError(errMsg: String)
-        fun onPhoneValid()
+        fun onNameAutoFormat(name: String)
         fun onRoomError(errMsg: String)
         fun onRoomValid()
-        fun onReasonError(errMsg: String)
-        fun onReasonValid()
-        fun onFromDateError(errMsg: String)
-        fun onFromDateValid()
-        fun onFromTimeError(errMsg: String)
-        fun onFromTimeValid()
-        fun onToDateError(errMsg: String)
-        fun onToDateValid()
-        fun onToTimeError(errMsg: String)
-        fun onToTimeValid()
+        fun onError(tagName: String)
+        fun onValid(tagName: String)
+        fun onErrorMessage(tagName: String, errMsg: String)
     }
 
-    fun validateName(name: String) {
+    fun validate(
+        value: String,
+        tagName: String,
+        chain: Array<(value: String, tagName: String) -> Boolean>
+    ) {
         when {
-            name.isEmpty() -> {
-                view.onNameError("Please enter name")
+            chain.isNotEmpty() -> {
+                chain.forEach {
+                    val err = it(value, tagName)
+                    if (err) return@forEach
+                }
             }
             else -> {
-                view.onNameValid()
+                view.onValid(tagName)
             }
         }
     }
-    fun autoFormatName(name : String){
+
+    fun isEmpty(value: String, tagName: String): Boolean {
+        when {
+            value.isEmpty() -> {
+                view.onError(tagName)
+                return true
+            }
+            else -> {
+                view.onValid(tagName)
+            }
+        }
+        return false
+    }
+
+    fun isEmail(value: String, tagName: String): Boolean {
+        when {
+            !Patterns.EMAIL_ADDRESS.matcher(value).matches() -> {
+                view.onErrorMessage(tagName, "format email error")
+                return true
+            }
+            else -> {
+                view.onValid(tagName)
+            }
+        }
+        return false
+    }
+
+    fun isPhone(value: String, tagName: String): Boolean {
+        when {
+            !Regex("^0[9, 8, 6, 2][0-9]{8}\$").matches(value) -> {
+                view.onErrorMessage(tagName, "format email error")
+                return true
+            }
+            else -> {
+                view.onValid(tagName)
+            }
+        }
+        return false
+    }
+
+    fun autoFormatName(name: String) {
         view.onNameAutoFormat(name)
-    }
-
-    fun validateEmail(email: String) {
-        // TODO: change String type to int & declaration @String
-        when {
-            email.isEmpty() -> {
-                // TODO: change String type to int & declaration @String
-                view.onEmailError("Please enter email")
-            }
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                view.onEmailError("Email invalid")
-            }
-            else -> {
-                view.onEmailValid()
-            }
-
-        }
-    }
-
-    fun validatePhoneNumber(phone: String) {
-        when {
-            phone.isEmpty() -> {
-                view.onPhoneError("Please enter phone number")
-            }
-            !(phone.startsWith("08") || phone.startsWith("06") || phone.startsWith("02") || phone.startsWith("09")) -> {
-                view.onPhoneError("Phone number invalid (should start with 06,08,09)")
-            }
-            phone.length != 10 -> {
-                view.onPhoneError("Phone number must be 10 digits")
-            }
-            else -> {
-                view.onPhoneValid()
-            }
-        }
-
     }
 
 
@@ -92,62 +91,5 @@ class BookingFormPresenter {
             }
         }
     }
-
-    fun validateReason(reason: String) {
-        when {
-            reason.isEmpty() -> {
-                view.onReasonError("Please enter reason")
-            }
-            else -> {
-                view.onReasonValid()
-            }
-        }
-    }
-
-    fun validateFromDate(fromDate: String) {
-        when {
-            fromDate.isEmpty() -> {
-                view.onFromDateError("Please enter from date")
-            }
-            else -> {
-                view.onFromDateValid()
-            }
-        }
-    }
-
-    fun validateFromTime(fromTime: String) {
-        when {
-            fromTime.isEmpty() -> {
-                view.onFromTimeError("Please enter from time")
-            }
-            else -> {
-                view.onFromTimeValid()
-            }
-        }
-
-    }
-
-    fun validateToDate(toDate: String) {
-        when {
-            toDate.isEmpty() -> {
-                view.onToDateError("Please enter to date")
-            }
-            else -> {
-                view.onToDateValid()
-            }
-        }
-    }
-
-    fun validateToTime(toTime: String) {
-        when {
-            toTime.isEmpty() -> {
-                view.onToTimeError("Please enter to time")
-            }
-            else -> {
-                view.onToTimeValid()
-            }
-        }
-    }
-
 
 }

@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../oddsBooking-Android/app/src/main/res/layout/fragment_booking_form.xml" value="0.1" />
+        <entry key="../../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_outline_calendar_today_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_reason.xml" value="0.1" />
