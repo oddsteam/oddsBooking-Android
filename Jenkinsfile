@@ -11,15 +11,13 @@ pipeline{
             stage("Set Environment"){
                 steps{
                     sh """
-                        cd fastlane & ls
-                        cp /var/jenkins_home/jobs/odd-booking-android/branches/dev/workspace/local.properties local.properties
-                    """
+                        echo $PATH
+                       """
                 }
             }
             stage("unit test"){
                 steps{
                     sh """
-                        export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
                         ./gradlew clean testDevDe
                     """
                 }
@@ -27,7 +25,6 @@ pipeline{
             stage("build and push to firebase"){
                 steps{
                     sh """
-                        export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
                         fastlane android distribute
                     """
                 }
