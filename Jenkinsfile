@@ -1,8 +1,6 @@
 pipeline{
     //  กำหนด ชื่อ,IP,.. ของ agent --> any : can run any agent
-    agent {
-        docker 'openjdk:8-jre'
-    }
+    agent none
      stages{
 
             stage("Set Environment"){
@@ -13,7 +11,7 @@ pipeline{
                 }
             }
             stage('Example Test') {
-                        agent { docker 'openjdk:8-jre' }
+                        agent docker { image 'openjdk:8-jre' }
                         steps {
                             echo 'Hello, JDK'
                             sh 'java -version'
