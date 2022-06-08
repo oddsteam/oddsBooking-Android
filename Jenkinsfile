@@ -8,14 +8,14 @@ pipeline{
 
      stages{
 
-//             stage("Set Environment"){
-//                 steps{
-//                     sh """
-//                         cd fastlane & ls
-//                         cp /Users/Jerry/odds/oddsBooking-Android/local.properties local.properties
-//                     """
-//                 }
-//             }
+            stage("Set Environment"){
+                steps{
+                    sh """
+                        cd fastlane & ls
+                        cp /var/jenkins_home/jobs/odd-booking-android/branches/dev/workspace/local.properties local.properties
+                    """
+                }
+            }
             stage("unit test"){
                 steps{
                     sh """
