@@ -32,14 +32,16 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val rooms = resources.getStringArray(R.array.rooms)
-        val arrayAdapter =
-            ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
-        val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.roomFormDropdown)
-        autocompleteTV.setAdapter(arrayAdapter)
+        val arrayAdapter = ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
+        binding.roomFormDropdown.setAdapter(arrayAdapter)
 
         with(binding) {
-
 //            presenter check onChange
             nameFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateName(text.toString())
@@ -69,7 +71,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                 presenter.validateToTime(text.toString())
             }
 
-
 //            showDialog date/time picker
             fromDateFormEditText.setOnClickListener {
                 showDatePickerDialog(fromDateFormEditText)
@@ -98,7 +99,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                 }
             }
         }
-        return binding.root
     }
 
     private fun phoneValidator(phone: String) {
