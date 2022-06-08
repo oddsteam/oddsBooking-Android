@@ -148,7 +148,47 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
 
     override fun onPhoneValid() {
         binding.phoneFormContainer.isErrorEnabled = false
+    }
 
+    override fun onFromDateError(errMsg: String) {
+        val fromDateContainer = binding.fromDateFormContainer
+        fromDateContainer.isErrorEnabled = true
+        fromDateContainer.error = errMsg
+    }
+
+    override fun onFromDateValid() {
+        binding.fromDateFormContainer.isErrorEnabled = false
+    }
+
+    override fun onFromTimeError(errMsg: String) {
+        val fromTimeContainer = binding.fromTimeFormContainer
+        fromTimeContainer.isErrorEnabled = true
+        fromTimeContainer.error = errMsg
+    }
+
+    override fun onFromTimeValid() {
+        binding.fromTimeFormContainer.isErrorEnabled = false
+    }
+
+    override fun onToDateError(errMsg: String) {
+        val toDateContainer = binding.toDateFormContainer
+        toDateContainer.isErrorEnabled = true
+        toDateContainer.error = errMsg
+
+    }
+
+    override fun onToDateValid() {
+        binding.toDateFormContainer.isErrorEnabled = false
+    }
+
+    override fun onToTimeError(errMsg: String) {
+        val toTimeContainer = binding.toTimeFormContainer
+        toTimeContainer.isErrorEnabled = true
+        toTimeContainer.error = errMsg
+    }
+
+    override fun onToTimeValid() {
+        binding.toTimeFormContainer.isErrorEnabled = false
     }
 
     // TODO : Implement Date Picker Dialog with minDate and maxDate

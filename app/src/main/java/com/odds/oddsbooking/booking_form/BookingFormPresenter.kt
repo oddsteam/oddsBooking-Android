@@ -17,6 +17,14 @@ class BookingFormPresenter {
         fun onEmailValid()
         fun onPhoneError(errMsg: String)
         fun onPhoneValid()
+        fun onFromDateError(errMsg: String)
+        fun onFromDateValid()
+        fun onFromTimeError(errMsg: String)
+        fun onFromTimeValid()
+        fun onToDateError(errMsg: String)
+        fun onToDateValid()
+        fun onToTimeError(errMsg: String)
+        fun onToTimeValid()
     }
 
     fun validateName(name: String) {
@@ -74,20 +82,50 @@ class BookingFormPresenter {
     }
 
     fun validateFromDate(fromDate: String) {
-
+        when {
+            fromDate.isEmpty() -> {
+                view.onFromDateError("empty From Date")
+            }
+            else -> {
+                view.onFromDateValid()
+            }
+        }
     }
 
     fun validateFromTime(fromTime: String) {
+        when {
+            fromTime.isEmpty() -> {
+                view.onFromTimeError("empty from time")
+            }
+            else -> {
+                view.onFromTimeValid()
+            }
+        }
 
     }
 
     fun validateToDate(toDate: String) {
-
+        when {
+            toDate.isEmpty() -> {
+                view.onToDateError("empty To Date")
+            }
+            else -> {
+                view.onToDateValid()
+            }
+        }
     }
 
     fun validateToTime(toTime: String) {
-
+        when {
+            toTime.isEmpty() -> {
+                view.onToTimeError("empty To Time")
+            }
+            else -> {
+                view.onToTimeValid()
+            }
+        }
     }
+
 
 
 }
