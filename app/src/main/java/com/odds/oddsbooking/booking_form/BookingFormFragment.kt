@@ -107,9 +107,10 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         if (phone.isEmpty()) {
             phoneFormContainer.isErrorEnabled = true
             phoneFormContainer.error = "please enter phone"
-        } else if(!phone.startsWith("08")){
+        } else if(!(phone.startsWith("08") || phone.startsWith("06"))){
             phoneFormContainer.isErrorEnabled = true
             phoneFormContainer.error = "invalid pattern"
+
         }else if (phone.length != 10) {
             phoneFormContainer.isErrorEnabled = true
             phoneFormContainer.error = "invalid phone"
