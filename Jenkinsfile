@@ -16,7 +16,7 @@ pipeline{
                 }
             }
             stage("unit test"){
-                agent{ docker 'androidsdk/android-31:latest'}
+                agent{ docker 'gradle:7.4-jdk17-alpine'}
                 steps{
                     sh """
                         export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
