@@ -1,6 +1,6 @@
 pipeline{
     //  กำหนด ชื่อ,IP,.. ของ agent --> any : can run any agent
-    agent any
+    agent none
 
     environment{
         PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/Jerry/.rvm/bin"
@@ -16,9 +16,10 @@ pipeline{
                 }
             }
             stage("unit test"){
+                agent{ docker 'androidsdk/android-31:latest'}
                 steps{
                     sh """
-                        export PATH = "/var/jenkins_home/jobs/odd-booking-android/branches/dev/workspace/local.properties"
+                        export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
                         ./gradlew clean testDevDe
                     """
                 }
