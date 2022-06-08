@@ -18,6 +18,7 @@ pipeline{
             stage("unit test"){
                 steps{
                     sh """
+                        export PATH = "/var/jenkins_home/jobs/odd-booking-android/branches/dev/workspace/local.properties"
                         ./gradlew clean testDevDe
                     """
                 }
