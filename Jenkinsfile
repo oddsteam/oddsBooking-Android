@@ -13,14 +13,6 @@ pipeline{
     }
 
      stages{
-
-            stage("Set environment"){
-                steps{
-                    sh """
-                        cp /Users/Jerry/odds/oddsBooking-Android/fastlane/Fastfile
-                    """
-                }
-            }
             stage("unit test"){
                 steps{
                     sh """

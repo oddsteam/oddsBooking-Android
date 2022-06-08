@@ -31,9 +31,9 @@ desc "Android Distribute"
         )
 
         firebase_app_distribution(
-            app: "1:435114910085:android:9fd5fc533d9661c9c824ec",
-            testers: "Odds-Mola",
-            release_notes: "this is release_notes"
+            app: ENV['FIREBASE_APP_ID'],
+            testers: "jerry@odds.team",
+            release_notes: "this is release_notes1.0"
         )
 
     end
