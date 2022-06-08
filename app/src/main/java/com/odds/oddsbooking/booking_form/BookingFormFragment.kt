@@ -89,11 +89,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             toTimeFormEditText.setOnClickListener {
                 showTimePickerDialog(toTimeFormEditText)
             }
-
-            phoneFormEditText.doOnTextChanged{ text, _, _, _ ->
-                phoneValidator(text.toString())
-            }
-
             previewButton.setOnClickListener {
                 findNavController().apply {
                     navigate(
@@ -104,39 +99,9 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         }
     }
 
-    private fun phoneValidator(phone: String) {
-        val phoneFormContainer = binding.phoneFormContainer
-//        val phoneText = binding.phoneFormEditText.text.toString()
-        if (phone.isEmpty()) {
-            phoneFormContainer.isErrorEnabled = true
-            phoneFormContainer.error = "please enter phone"
-        } else if(!(phone.startsWith("08") || phone.startsWith("06") || phone.startsWith("09"))){
-            phoneFormContainer.isErrorEnabled = true
-            phoneFormContainer.error = "invalid pattern"
-
-        }else if (phone.length != 10) {
-            phoneFormContainer.isErrorEnabled = true
-            phoneFormContainer.error = "invalid phone"
-        } else {
-            phoneFormContainer.isErrorEnabled = false
-        }
-    }
-
-    private fun reasonValidator(reason: String) {
-        val reasonFormContainer = binding.reasonFormContainer
-        if (reason.isEmpty()) {
-            reasonFormContainer.isErrorEnabled = true
-            reasonFormContainer.error = "plzzzzzz"
-        }
-        else {
-            reasonFormContainer.isErrorEnabled = false
-        }
-    }
-
     override fun onNameError(errMsg: String) {
         val nameFormContainer = binding.nameFormContainer
         nameFormContainer.isErrorEnabled = true
-        //        TODO: change String type to int & declaration @String
         nameFormContainer.error = errMsg
     }
 
@@ -155,7 +120,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
     override fun onEmailError(errMsg: String) {
         val emailFormContainer = binding.emailFormContainer
         emailFormContainer.isErrorEnabled = true
-        //        TODO: change String type to int & declaration @String
         emailFormContainer.error = errMsg
     }
 
@@ -171,6 +135,26 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
 
     override fun onPhoneValid() {
         binding.phoneFormContainer.isErrorEnabled = false
+    }
+
+    override fun onRoomError(errMsg: String) {
+        val roomFormContainer = binding.roomFormContainer
+        roomFormContainer.isErrorEnabled = true
+        roomFormContainer.error = errMsg
+    }
+
+    override fun onRoomValid() {
+        binding.roomFormContainer.isErrorEnabled = false
+    }
+
+    override fun onReasonError(errMsg: String) {
+        val reasonFormContainer = binding.reasonFormContainer
+        reasonFormContainer.isErrorEnabled = true
+        reasonFormContainer.error = errMsg
+    }
+
+    override fun onReasonValid() {
+        binding.reasonFormContainer.isErrorEnabled = false
     }
 
     override fun onFromDateError(errMsg: String) {

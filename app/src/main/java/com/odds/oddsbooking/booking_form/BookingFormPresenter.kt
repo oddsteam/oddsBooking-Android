@@ -18,6 +18,10 @@ class BookingFormPresenter {
         fun onEmailValid()
         fun onPhoneError(errMsg: String)
         fun onPhoneValid()
+        fun onRoomError(errMsg: String)
+        fun onRoomValid()
+        fun onReasonError(errMsg: String)
+        fun onReasonValid()
         fun onFromDateError(errMsg: String)
         fun onFromDateValid()
         fun onFromTimeError(errMsg: String)
@@ -43,13 +47,12 @@ class BookingFormPresenter {
     }
 
     fun validateEmail(email: String) {
+        // TODO: change String type to int & declaration @String
         when {
             email.isEmpty() -> {
-                // TODO: change String type to int & declaration @String
                 view.onEmailError("empty email")
             }
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                // TODO: change String type to int & declaration @String
                 view.onEmailError("email invalid")
             }
             else -> {
@@ -58,31 +61,46 @@ class BookingFormPresenter {
 
         }
     }
-    fun phoneValidator(phone: String){
-       when {
-           phone.isEmpty() ->{
-               view.onPhoneError("phone number is empty")
-           }
-           !Patterns.PHONE.matcher(phone).matches() -> {
-               view.onPhoneError("phone number invalid")
-           }else -> {
-               view.onPhoneValid()
-           }
+
+    fun validatePhoneNumber(phone: String) {
+        when {
+            phone.isEmpty() -> {
+                view.onPhoneError("phone number is empty")
+            }
+            !(phone.startsWith("08") || phone.startsWith("06") || phone.startsWith("02") || phone.startsWith("09")) -> {
+                view.onPhoneError("phone number invalid (should start with 06,08,09)")
+            }
+            phone.length != 10 -> {
+                view.onPhoneError("phone number must be 10 digits")
+            }
+            else -> {
+                view.onPhoneValid()
+            }
         }
 
     }
 
 
-    fun validatePhoneNumber(phoneNumber: String) {
-
-    }
-
     fun validateRoom(room: String) {
-
+        when {
+            room.isEmpty() -> {
+                view.onRoomError("empty room")
+            }
+            else -> {
+                view.onRoomValid()
+            }
+        }
     }
 
     fun validateReason(reason: String) {
-
+        when {
+            reason.isEmpty() -> {
+                view.onReasonError("empty reason")
+            }
+            else -> {
+                view.onReasonValid()
+            }
+        }
     }
 
     fun validateFromDate(fromDate: String) {
@@ -129,7 +147,6 @@ class BookingFormPresenter {
             }
         }
     }
-
 
 
 }
