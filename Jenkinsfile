@@ -15,8 +15,14 @@ pipeline{
                        """
                 }
             }
+            stage('Example Test') {
+                        agent { docker 'openjdk:8-jre' }
+                        steps {
+                            echo 'Hello, JDK'
+                            sh 'java -version'
+                        }
+                    }
             stage("unit test"){
-                agent{ docker 'gradle:7.4-jdk17-alpine'}
                 steps{
                     sh """
                         export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
