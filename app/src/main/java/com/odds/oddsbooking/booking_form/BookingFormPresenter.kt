@@ -35,7 +35,7 @@ class BookingFormPresenter {
     fun validateName(name: String) {
         when {
             name.isEmpty() -> {
-                view.onNameError("empty name")
+                view.onNameError("Please enter name")
             }
             else -> {
                 view.onNameValid()
@@ -50,10 +50,11 @@ class BookingFormPresenter {
         // TODO: change String type to int & declaration @String
         when {
             email.isEmpty() -> {
-                view.onEmailError("empty email")
+                // TODO: change String type to int & declaration @String
+                view.onEmailError("Please enter email")
             }
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                view.onEmailError("email invalid")
+                view.onEmailError("Email invalid")
             }
             else -> {
                 view.onEmailValid()
@@ -65,13 +66,13 @@ class BookingFormPresenter {
     fun validatePhoneNumber(phone: String) {
         when {
             phone.isEmpty() -> {
-                view.onPhoneError("phone number is empty")
+                view.onPhoneError("Please enter phone number")
             }
             !(phone.startsWith("08") || phone.startsWith("06") || phone.startsWith("02") || phone.startsWith("09")) -> {
-                view.onPhoneError("phone number invalid (should start with 06,08,09)")
+                view.onPhoneError("Phone number invalid (should start with 06,08,09)")
             }
             phone.length != 10 -> {
-                view.onPhoneError("phone number must be 10 digits")
+                view.onPhoneError("Phone number must be 10 digits")
             }
             else -> {
                 view.onPhoneValid()
@@ -84,7 +85,7 @@ class BookingFormPresenter {
     fun validateRoom(room: String) {
         when {
             room.isEmpty() -> {
-                view.onRoomError("empty room")
+                view.onRoomError("Please enter room")
             }
             else -> {
                 view.onRoomValid()
@@ -95,10 +96,10 @@ class BookingFormPresenter {
     fun validateReason(reason: String) {
         when {
             reason.isEmpty() -> {
-                view.onReasonError("empty reason")
+                view.onNameError("Please enter reason")
             }
             else -> {
-                view.onReasonValid()
+                view.onNameValid()
             }
         }
     }
@@ -106,7 +107,7 @@ class BookingFormPresenter {
     fun validateFromDate(fromDate: String) {
         when {
             fromDate.isEmpty() -> {
-                view.onFromDateError("empty From Date")
+                view.onFromDateError("Please enter from date")
             }
             else -> {
                 view.onFromDateValid()
@@ -117,7 +118,7 @@ class BookingFormPresenter {
     fun validateFromTime(fromTime: String) {
         when {
             fromTime.isEmpty() -> {
-                view.onFromTimeError("empty from time")
+                view.onFromTimeError("Please enter from time")
             }
             else -> {
                 view.onFromTimeValid()
@@ -129,7 +130,7 @@ class BookingFormPresenter {
     fun validateToDate(toDate: String) {
         when {
             toDate.isEmpty() -> {
-                view.onToDateError("empty To Date")
+                view.onToDateError("Please enter to date")
             }
             else -> {
                 view.onToDateValid()
@@ -140,7 +141,7 @@ class BookingFormPresenter {
     fun validateToTime(toTime: String) {
         when {
             toTime.isEmpty() -> {
-                view.onToTimeError("empty To Time")
+                view.onToTimeError("Please enter to time")
             }
             else -> {
                 view.onToTimeValid()

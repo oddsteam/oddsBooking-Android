@@ -110,7 +110,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
     }
 
     override fun onNameAutoFormat(term : String) {
-        val nameFormatter = term.lowercase().trim().split(" ").toMutableList()
+        val nameFormatter = term.lowercase().trim().split("\\s+".toRegex()).toMutableList()
         for (index in nameFormatter.indices) {
             nameFormatter[index] = nameFormatter[index].replaceFirstChar { it.uppercaseChar() }
         }
