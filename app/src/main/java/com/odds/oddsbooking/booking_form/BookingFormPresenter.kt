@@ -15,6 +15,8 @@ class BookingFormPresenter {
         fun onNameValid()
         fun onEmailError(errMsg: String)
         fun onEmailValid()
+        fun onPhoneError(errMsg: String)
+        fun onPhoneValid()
     }
 
     fun validateName(name: String) {
@@ -44,6 +46,20 @@ class BookingFormPresenter {
 
         }
     }
+    fun phoneValidator(phone: String){
+       when {
+           phone.isEmpty() ->{
+               view.onPhoneError("phone number is empty")
+           }
+           !Patterns.PHONE.matcher(phone).matches() -> {
+               view.onPhoneError("phone number invalid")
+           }else -> {
+               view.onPhoneValid()
+           }
+        }
+
+    }
+
 
     fun validatePhoneNumber(phoneNumber: String) {
 

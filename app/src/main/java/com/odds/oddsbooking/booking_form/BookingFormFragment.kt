@@ -87,7 +87,9 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                 showTimePickerDialog(toTimeFormEditText)
             }
 
-//            onClick previewButton
+            phoneFormEditText.doOnTextChanged{ text, _, _, _ ->
+                phoneValidator(text.toString())
+            }
             previewButton.setOnClickListener {
                 findNavController().apply {
                     navigate(
@@ -97,6 +99,23 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             }
         }
         return binding.root
+    }
+
+    private fun phoneValidator(phone: String) {
+        val phoneFormContainer = binding.phoneFormContainer
+//        val phoneText = binding.phoneFormEditText.text.toString()
+        if (phone.isEmpty()) {
+            phoneFormContainer.isErrorEnabled = true
+            phoneFormContainer.error = "please enter phone"
+        } else if(!phone.startsWith("08")){
+            phoneFormContainer.isErrorEnabled = true
+            phoneFormContainer.error = "invalid pattern"
+        }else if (phone.length != 10) {
+            phoneFormContainer.isErrorEnabled = true
+            phoneFormContainer.error = "invalid phone"
+        } else {
+            phoneFormContainer.isErrorEnabled = false
+        }
     }
 
     override fun onNameError(errMsg: String) {
@@ -119,6 +138,17 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
 
     override fun onEmailValid() {
         binding.emailFormContainer.isErrorEnabled = false
+    }
+
+    override fun onPhoneError(errMsg: String) {
+        val phoneFormContainer = binding.phoneFormContainer
+        phoneFormContainer.isErrorEnabled = true
+        phoneFormContainer.error = errMsg
+    }
+
+    override fun onPhoneValid() {
+        binding.phoneFormContainer.isErrorEnabled = false
+
     }
 
     // TODO : Implement Date Picker Dialog with minDate and maxDate
