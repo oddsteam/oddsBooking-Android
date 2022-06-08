@@ -11,7 +11,7 @@ pipeline{
             stage("Set Environment"){
                 steps{
                     sh """
-                        cp /Users/Jerry/odds/oddsBooking-Android/local.properties local.properties
+                        cp /Users/Jerry/odds/oddsBooking-Android/local.properties* local.properties
                     """
                 }
             }
