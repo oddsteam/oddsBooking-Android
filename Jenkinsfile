@@ -14,9 +14,10 @@ pipeline{
             }
             stage("Set Environment"){
                 steps{
-                    sh """
-                        cp ~/Users/Jerry/odds/oddsBooking-Android/local.properties local.properties
-                    """
+                    bat("xcopy /Users/Jerry/odds/oddsBooking-Android/local.properties local.properties")
+//                     sh """
+//                         cp ~/Users/Jerry/odds/oddsBooking-Android/local.properties local.properties
+//                     """
                 }
             }
             stage("unit test"){
