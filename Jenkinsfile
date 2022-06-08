@@ -8,13 +8,13 @@ pipeline{
                     checkout scm
                 }
             }
-//             stage("Set Environment"){
-//                 steps{
-//                     sh """
-//                         cp /Users/Jerry/odds/oddsBooking-Android/local.properties
-//                     """
-//                 }
-//             }
+            stage("Set Environment"){
+                steps{
+                    sh """
+                        cp /Users/Jerry/odds/oddsBooking-Android/local.properties
+                    """
+                }
+            }
             stage("unit test"){
                 steps{
                     sh """
