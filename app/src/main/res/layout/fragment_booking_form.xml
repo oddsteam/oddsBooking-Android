@@ -219,7 +219,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
-                android:backgroundTint="@color/purple_color"
+                android:backgroundTint="@color/gray_outline"
+                android:enabled="false"
                 android:text="@string/preview_string"
                 android:textSize="20sp"
                 android:textStyle="bold" />
