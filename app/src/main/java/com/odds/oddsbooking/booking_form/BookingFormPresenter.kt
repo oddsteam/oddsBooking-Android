@@ -66,7 +66,7 @@ class BookingFormPresenter {
     fun isPhone(value: String, tagName: String): Boolean {
         when {
             !Regex("^0[9, 8, 6, 2][0-9]{8}\$").matches(value) -> {
-                view.onErrorMessage(tagName, "format email error")
+                view.onErrorMessage(tagName, "format phone number error")
                 return true
             }
             else -> {
@@ -85,6 +85,7 @@ class BookingFormPresenter {
         when {
             room.isEmpty() -> {
                 view.onRoomError("Please enter room")
+
             }
             else -> {
                 view.onRoomValid()

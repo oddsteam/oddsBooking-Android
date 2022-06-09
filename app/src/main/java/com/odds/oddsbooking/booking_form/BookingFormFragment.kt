@@ -2,12 +2,15 @@ package com.odds.oddsbooking.booking_form
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Patterns
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,6 +26,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
     private val presenter by lazy {
         BookingFormPresenter()
     }
+
     private val editTextArray by lazy {
         arrayOf<FormValidate>(
             FormValidate(
@@ -76,8 +80,8 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             ),
             FormValidate(
                 "endTime",
-                binding.fromDateFormContainer,
-                binding.fromDateFormEditText,
+                binding.toTimeFormContainer,
+                binding.toTimeFormEditText,
                 "error from date empty",
                 arrayOf(presenter::isEmpty)
             ),
@@ -89,10 +93,13 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         presenter.attachView(this)
     }
 
+    private lateinit var bookingData: BookingData
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
         val rooms = resources.getStringArray(R.array.rooms)
         val arrayAdapter =
             ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
@@ -106,6 +113,32 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                     it.fieldBindingEditText.setOnFocusChangeListener { _, _ ->
                         presenter.autoFormatName(text.toString())
                     }
+                when (it.tagName) {
+                    "name" -> {
+                        bookingData.fullName = text.toString()
+                    }
+                    "phone" -> {
+                        bookingData.phoneNumber = text.toString()
+                    }
+                    "email" -> {
+                        bookingData.email = text.toString()
+                    }
+                    "reason" -> {
+                        bookingData.reason = text.toString()
+                    }
+                    "startDate" -> {
+                        bookingData.fromDate = text.toString()
+                    }
+                    "startTime" -> {
+                        bookingData.fromTime = text.toString()
+                    }
+                    "endDate" -> {
+                        bookingData.toDate = text.toString()
+                    }
+                    "endTime" -> {
+                        bookingData.toTime = text.toString()
+                    }
+                }
             }
         }
 
@@ -114,7 +147,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             roomFormDropdown.doOnTextChanged { text, _, _, _ ->
                 presenter.validateRoom(text.toString())
             }
-//            showDialog date/time picker
+            // showDialog date/time picker
             fromDateFormEditText.setOnClickListener {
                 showDatePickerDialog(fromDateFormEditText)
             }
@@ -131,20 +164,36 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                 showTimePickerDialog(toTimeFormEditText)
             }
 
-//            onClick previewButton
+            // onClick previewButton
             previewButton.setOnClickListener {
                 findNavController().apply {
                     navigate(
-                        R.id.bookingPreviewFragment
+                        R.id.bookingPreviewFragment,
+                        bundleOf(
+                            BookingFormActivity.EXTRA_BOOKING to bookingData
+                        )
                     )
                 }
             }
+
+            nameFormEditText.addTextChangedListener(textWatcher())
+            emailFormEditText.addTextChangedListener(textWatcher())
+            phoneFormEditText.addTextChangedListener(textWatcher())
+            roomFormDropdown.addTextChangedListener(textWatcher())
+            reasonFormEditText.addTextChangedListener(textWatcher())
+            fromDateFormEditText.addTextChangedListener(textWatcher())
+            fromTimeFormEditText.addTextChangedListener(textWatcher())
+            toDateFormEditText.addTextChangedListener(textWatcher())
+            toTimeFormEditText.addTextChangedListener(textWatcher())
         }
+
+        bind()
+
         return binding.root
     }
 
-    override fun onNameAutoFormat(term : String) {
-        val nameFormatter = term.lowercase().trim().split("\\s+".toRegex()).toMutableList()
+    override fun onNameAutoFormat(name: String) {
+        val nameFormatter = name.lowercase().trim().split("\\s+".toRegex()).toMutableList()
         for (index in nameFormatter.indices) {
             nameFormatter[index] = nameFormatter[index].replaceFirstChar { it.uppercaseChar() }
         }
@@ -159,6 +208,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
 
     override fun onRoomValid() {
         binding.roomFormContainer.isErrorEnabled = false
+        bookingData.room = binding.roomFormDropdown.text.toString()
     }
 
     override fun onError(tagName: String) {
@@ -187,7 +237,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         container?.error = errMsg
     }
 
-    // TODO : Implement Date Picker Dialog with minDate and maxDate
     private fun showDatePickerDialog(
         editText: com.google.android.material.textfield.TextInputEditText,
         minDate: Long = System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
@@ -215,7 +264,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         dialog.show()
     }
 
-    // TODO : Implement the library and set selected TimePoint
     private fun showTimePickerDialog(
         editText: com.google.android.material.textfield.TextInputEditText,
     ) {
@@ -235,12 +283,96 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         tpd.show(childFragmentManager, "TimepickerDialog")
     }
 
+    private fun textWatcher() = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            if (bookingData.isValid()) {
+                var numberOfValid = 0
+                editTextArray.forEach {
+                    if (!it.fieldBindingContainer.isErrorEnabled)
+                        numberOfValid++
+                    Log.d(
+                        "bookingData",
+                        "${it.tagName} : ${it.fieldBindingContainer.isErrorEnabled}"
+                    )
+                }
+                if (!binding.roomFormContainer.isErrorEnabled)
+                    numberOfValid++
+                Log.d(
+                    "bookingData",
+                    "room : ${binding.roomFormContainer.isErrorEnabled}"
+                )
+                if (numberOfValid == 9) {
+                    enablePreviewButton()
+                } else {
+                    disablePreviewButton()
+                }
+                Log.d("bookingData", "numberOfValid: $numberOfValid")
+            } else {
+                disablePreviewButton()
+            }
+            Log.d("bookingData", bookingData.toString())
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        fun enablePreviewButton() {
+            binding.previewButton.isEnabled = true
+            binding.previewButton.setBackgroundColor(
+                resources.getColor(
+                    R.color.purple_color,
+                    null
+                )
+            )
+        }
+
+        fun disablePreviewButton() {
+            binding.previewButton.isEnabled = false
+            binding.previewButton.setBackgroundColor(
+                resources.getColor(
+                    R.color.gray_outline,
+                    null
+                )
+            )
+        }
+    }
+
+    private fun bind() {
+        bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!
+        with(binding) {
+            if (bookingData.fullName.isNotEmpty())
+                nameFormEditText.setText(bookingData.fullName)
+            if (bookingData.email.isNotEmpty())
+                emailFormEditText.setText(bookingData.email)
+            if (bookingData.phoneNumber.isNotEmpty())
+                phoneFormEditText.setText(bookingData.phoneNumber)
+            if (bookingData.room.isNotEmpty())
+                roomFormDropdown.setText(bookingData.room, false)
+            if (bookingData.reason.isNotEmpty())
+                reasonFormEditText.setText(bookingData.reason)
+            if (bookingData.fromDate.isNotEmpty())
+                fromDateFormEditText.setText(bookingData.fromDate)
+            if (bookingData.fromTime.isNotEmpty())
+                fromTimeFormEditText.setText(bookingData.fromTime)
+            if (bookingData.toDate.isNotEmpty())
+                toDateFormEditText.setText(bookingData.toDate)
+            if (bookingData.toTime.isNotEmpty())
+                toTimeFormEditText.setText(bookingData.toTime)
+        }
+    }
 
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BookingFormFragment().apply {
+        fun newInstance(bookingData: BookingData): BookingFormFragment {
+            return BookingFormFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(BookingFormActivity.EXTRA_BOOKING, bookingData)
+                }
             }
+        }
     }
 }
