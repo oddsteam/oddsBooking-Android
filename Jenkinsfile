@@ -2,11 +2,12 @@ pipeline{
     //  กำหนด ชื่อ,IP,.. ของ agent --> any : can run any agent
     agent {
         docker {
-             image 'oddsbooking-sdk31:dev'
-             registryUrl 'swr.ap-southeast-2.myhuaweicloud.com'
+             image 'odds-booking/oddsbooking-sdk31:dev'
+             registryUrl 'https://swr.ap-southeast-2.myhuaweicloud.com'
              registryCredentialsId 'swr-adroid31'
          }
     }
+
 
     stages {
         stage("unit test") {
@@ -21,6 +22,8 @@ pipeline{
             steps {
                 sh """
                     export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+                    export LC_ALL="en_US.UTF-8"
+                    export LANG="en_US.UTF-8"
                     fastlane android distribute
                 """
             }
