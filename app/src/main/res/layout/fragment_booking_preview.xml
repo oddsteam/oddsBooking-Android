@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".booking_form.BookingPreviewFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -185,10 +186,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@id/bookingPreviewLayout"
             app:layout_constraintStart_toStartOf="@id/bookingPreviewLayout"
@@ -216,7 +217,21 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_outline"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </ScrollView>

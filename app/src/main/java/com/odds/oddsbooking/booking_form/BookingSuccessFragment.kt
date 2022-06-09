@@ -25,7 +25,7 @@ class BookingSuccessFragment : Fragment() {
         bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!
 
         val dummy = BookingData(
-            "Success",
+            "Taliw Cute Boy",
             bookingData.email,
             bookingData.phoneNumber,
             "",
