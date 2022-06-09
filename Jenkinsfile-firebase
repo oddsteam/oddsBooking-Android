@@ -1,12 +1,6 @@
 pipeline{
     //  กำหนด ชื่อ,IP,.. ของ agent --> any : can run any agent
-    agent {
-        docker {
-             image 'oddsbooking-sdk31:dev'
-             registryUrl 'swr.ap-southeast-2.myhuaweicloud.com'
-             registryCredentialsId 'swr-adroid31'
-         }
-    }
+    agent any
 
     stages {
         stage("unit test") {

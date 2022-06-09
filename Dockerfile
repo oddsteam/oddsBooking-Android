@@ -1,17 +1,16 @@
-FROM gradle:7.4-jdk17-alpine AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build --no-daemon
+FROM androidsdk/android-31
+#RUN  apt-get update && \
+#     apt-get install -y sudo && \
+#     apt-get install -y ruby2.7.6 ruby-dev  && \
+#     sudo gem install fastlane
 
-FROM openjdk:17-jre-slim
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y --allow-unauthenticated build-essential git ruby-full && \
+    gem install rake && \
+    gem install fastlane && \
+    gem install bundler && \
+    # Clean up
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get autoremove -y && \
+    apt-get clean
 
-RUN mkdir /app
-
-COPY --from=build /home/gradle/src/build/libs/ /app/
-
-ENTRYPOINT ["java","-jar","/app/kotlin-docker-gradle-app.jar"]
-
-ADD ./entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
-ENTRYPOINT /app/entrypoint.sh
