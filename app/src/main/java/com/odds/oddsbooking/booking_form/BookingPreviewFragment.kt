@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
@@ -14,19 +15,22 @@ class BookingPreviewFragment : Fragment() {
 
     private val binding by lazy { FragmentBookingPreviewBinding.inflate(layoutInflater) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var bookingData: BookingData
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
+        bind()
 
         binding.backToBookingFormButton.setOnClickListener {
             findNavController().apply {
                 navigate(
-                    R.id.bookingFormFragment
+                    R.id.bookingFormFragment,
+                    bundleOf(
+                        BookingFormActivity.EXTRA_BOOKING to bookingData
+                    )
                 )
             }
 
@@ -35,28 +39,39 @@ class BookingPreviewFragment : Fragment() {
         binding.confirmButton.setOnClickListener {
             findNavController().apply {
                 navigate(
-                    R.id.bookingSuccessFragment
+                    R.id.bookingSuccessFragment,
+                    bundleOf(
+                        BookingFormActivity.EXTRA_BOOKING to bookingData
+                    )
                 )
             }
         }
 
         return binding.root
-        //return inflater.inflate(R.layout.fragment_booking_preview, container, false)
+    }
+
+    private fun bind() {
+        bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!
+        with(binding) {
+            namePreviewEditText.setText(bookingData.fullName)
+            emailPreviewEditText.setText(bookingData.email)
+            phonePreviewEditText.setText(bookingData.phoneNumber)
+            roomPreviewEditText.setText(bookingData.room)
+            reasonPreviewEditText.setText(bookingData.reason)
+            fromDateTimePreviewEditText.setText("${bookingData.fromDate}T${bookingData.fromTime}")
+            toDateTimePreviewEditText.setText("${bookingData.toDate}T${bookingData.toTime}")
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BookingPreviewFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BookingPreviewFragment().apply {
+        fun newInstance(bookingData: BookingData): BookingPreviewFragment {
+            return BookingPreviewFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(BookingFormActivity.EXTRA_BOOKING, bookingData)
+                }
             }
+        }
     }
 }
