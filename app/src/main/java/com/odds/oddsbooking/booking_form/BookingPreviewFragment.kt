@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingPreviewBinding
@@ -73,7 +75,14 @@ class BookingPreviewFragment : Fragment(), BookingPreviewPresenter.BookingPrevie
         return "${year}-${month}-${day}"
     }
 
+    override fun showProgressBar() {
+        binding.layoutProgressBar.isVisible = true
+        binding.confirmButton.isEnabled = false
+        binding.backToBookingFormButton.isEnabled = false
+    }
+
     override fun goToSuccessPage() {
+        binding.layoutProgressBar.isGone = true
         findNavController().apply {
             navigate(
                 R.id.bookingSuccessFragment,

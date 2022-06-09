@@ -11,6 +11,7 @@ class BookingPreviewPresenter constructor(private val api: BookingAPI) {
 
     //TODO create interface view file
     interface BookingPreviewView {
+        fun showProgressBar()
         fun goToSuccessPage()
         fun backToBookingFormPage()
         fun showToastMessage(errorMessage: String)
@@ -21,10 +22,13 @@ class BookingPreviewPresenter constructor(private val api: BookingAPI) {
     }
 
     fun createBooking(booking: Booking) {
+        view.showProgressBar()
         scope.launch {
             try {
                 val response = api.createBooking(booking)
-                if (response.isSuccessful) view.goToSuccessPage()
+                if (response.isSuccessful) {
+                    view.goToSuccessPage()
+                }
                 else view.showToastMessage("${response.errorBody()?.string()}")
             } catch (e: Exception) {
                 Log.d("res", "error : /$e")
