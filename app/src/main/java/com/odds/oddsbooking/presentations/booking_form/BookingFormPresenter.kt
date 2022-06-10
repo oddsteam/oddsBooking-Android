@@ -2,6 +2,7 @@ package com.odds.oddsbooking.presentations.booking_form
 
 import android.util.Log
 import android.util.Patterns
+import com.odds.oddsbooking.R
 import com.odds.oddsbooking.interfaces.BookingData
 import com.wdullaer.materialdatetimepicker.time.Timepoint
 import java.text.SimpleDateFormat
@@ -234,9 +235,9 @@ class BookingFormPresenter {
         }
     }
 
-    fun validateForm(data: BookingData) {
+    fun validateForm(data: BookingData, formValid : Boolean) {
         when {
-            data.isValid() -> {
+            data.isValid()&&formValid -> {
                 view.enablePreviewButton()
             }
             else -> {
