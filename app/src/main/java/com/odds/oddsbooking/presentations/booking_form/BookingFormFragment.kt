@@ -20,6 +20,7 @@ import com.odds.oddsbooking.R
 import com.odds.oddsbooking.interfaces.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
+import com.wdullaer.materialdatetimepicker.time.Timepoint
 import java.util.*
 
 class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
@@ -70,22 +71,24 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                 presenter.validateReason(text.toString())
             }
 
+            fromTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+            toTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+            toDateFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+
             fromDateFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateFromDate(text.toString())
             }
-
             fromTimeFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateFromTime(text.toString())
+                presenter.validateFromTime(text.toString(), fromDateFormEditText.text.toString())
             }
-
             toDateFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateToDate(text.toString())
+                presenter.validateToDate(text.toString(), fromDateFormEditText.text.toString(), fromTimeFormEditText.text.toString())
             }
-
-            toTimeFormEditText.doOnTextChanged { text, _, _, _ ->
+            toDateFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateToTime(text.toString())
             }
 
+           //preview button disable check
             nameFormEditText.doAfterTextChanged { text ->
                 bookingData.fullName = text.toString()
                 presenter.validateForm(bookingData)
@@ -124,20 +127,24 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             }
 
             fromDateFormEditText.setOnClickListener {
-                showDatePickerDialog(fromDateFormEditText)
+                showDatePickerDialog(
+                    fromDateFormEditText,
+                    System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
+                    null
+                )
             }
 
-            toDateFormEditText.setOnClickListener {
-                showDatePickerDialog(toDateFormEditText)
-            }
-
-            fromTimeFormEditText.setOnClickListener {
-                showTimePickerDialog(fromTimeFormEditText)
-            }
-
-            toTimeFormEditText.setOnClickListener {
-                showTimePickerDialog(toTimeFormEditText)
-            }
+//            toDateFormEditText.setOnClickListener {
+//                showDatePickerDialog(toDateFormEditText)
+//            }
+//
+//            fromTimeFormEditText.setOnClickListener {
+//                showTimePickerDialog(fromTimeFormEditText)
+//            }
+//
+//            toTimeFormEditText.setOnClickListener {
+//                showTimePickerDialog(toTimeFormEditText)
+//            }
 
             // onClick previewButton
             previewButton.setOnClickListener {
@@ -157,10 +164,16 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }
+
     private fun showDatePickerDialog(
         editText: com.google.android.material.textfield.TextInputEditText,
-        minDate: Long = System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
-        maxDate: Long = System.currentTimeMillis() + (15 * 24 * 60 * 60 * 1000)
+        minDate: Long,
+        maxDate: Long?
     ) {
         val calendar = Calendar.getInstance()
         val years = calendar.get(Calendar.YEAR)
@@ -180,12 +193,14 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             days
         )
         dialog.datePicker.minDate = minDate
-        dialog.datePicker.maxDate = maxDate
+        if (maxDate != null)
+            dialog.datePicker.maxDate = maxDate
         dialog.show()
     }
 
     private fun showTimePickerDialog(
         editText: com.google.android.material.textfield.TextInputEditText,
+        timePoint: Array<Timepoint>
     ) {
         val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute, _ ->
             val time = String.format("%02d:%02d", hourOfDay, minute)
@@ -198,7 +213,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             Calendar.getInstance().get(Calendar.MINUTE),
             true
         )
-        tpd.setTimeInterval(2)
+        tpd.setSelectableTimes(timePoint)
         tpd.show(childFragmentManager, "TimepickerDialog")
     }
 
@@ -268,10 +283,30 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         container.error = errMsg
     }
 
-    override fun onValidateFromDateSuccess() {
+    override fun onValidateFromDateSuccess(timeEnable: Array<Timepoint>) {
         val container = binding.fromDateFormContainer
         container.isErrorEnabled = false
         container.error = null
+        with(binding){
+            fromTimeFormEditText.isEnabled = true
+            fromTimeFormEditText.setOnClickListener {
+                showTimePickerDialog(binding.fromTimeFormEditText, timeEnable)
+            }
+            //clear text in fromTime
+            if (fromTimeFormEditText.text!!.isNotEmpty()) {
+                fromTimeFormEditText.setText("")
+            }
+
+            //disable and clear text in FromTime/ToDate/ToTime
+            toDateFormEditText.isEnabled = false
+            toTimeFormEditText.isEnabled = false
+            if (toDateFormEditText.text!!.isNotEmpty()) {
+                toDateFormEditText.setText("")
+            }
+            if (toTimeFormEditText.text!!.isNotEmpty()) {
+                toTimeFormEditText.setText("")
+            }
+        }
     }
 
     override fun onValidateFromTimeError(errMsg: String) {
@@ -280,10 +315,28 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         container.error = errMsg
     }
 
-    override fun onValidateFromTimeSuccess() {
+    override fun onValidateFromTimeSuccess(minDate: Long, maxDate: Long) {
         val container = binding.fromTimeFormContainer
         container.isErrorEnabled = false
         container.error = null
+
+        with(binding){
+            toDateFormEditText.isEnabled = true
+            toDateFormEditText.setOnClickListener {
+                showDatePickerDialog( binding.toDateFormEditText, minDate, maxDate)
+            }
+
+            //clear text in ToDate
+            if (toDateFormEditText.text!!.isNotEmpty()) {
+                toDateFormEditText.setText("")
+            }
+
+            //disable and clear text in ToTime
+            toTimeFormEditText.isEnabled = false
+            if (toTimeFormEditText.text!!.isNotEmpty()) {
+                toTimeFormEditText.setText("")
+            }
+        }
     }
 
     override fun onValidateToDateError(errMsg: String) {
@@ -292,10 +345,22 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         container.error = errMsg
     }
 
-    override fun onValidateToDateSuccess() {
+    override fun onValidateToDateSuccess(timeEnable: Array<Timepoint>) {
         val container = binding.toDateFormContainer
         container.isErrorEnabled = false
         container.error = null
+
+        with(binding){
+            toTimeFormEditText.isEnabled = true
+            toTimeFormEditText.setOnClickListener {
+                showTimePickerDialog(binding.toTimeFormEditText, timeEnable)
+            }
+
+            //clear text in toTime
+            if (toTimeFormEditText.text!!.isNotEmpty()) {
+                toTimeFormEditText.setText("")
+            }
+        }
     }
 
     override fun onValidateToTimeError(errMsg: String) {

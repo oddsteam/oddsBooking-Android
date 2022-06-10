@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 
 class SplashActivity : AppCompatActivity(), SplashPresenter.SplashView {
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }
-    private val presenter by lazy { SplashPresenter(Dispatchers.Main,2000) }
+    private val presenter by lazy { SplashPresenter(Dispatchers.Main,500) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
