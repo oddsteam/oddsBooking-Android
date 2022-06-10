@@ -7,8 +7,6 @@ pipeline{
              registryCredentialsId 'swr-adroid31'
          }
     }
-
-
     stages {
         stage("unit test") {
             steps {
