@@ -40,84 +40,71 @@ class BookingFormPresenter {
         fun onValidateToTimeSuccess()
     }
 
-    fun validateFullName(fullName: String): Boolean {
+    fun validateFullName(fullName: String){
         when {
             fullName.isEmpty() -> {
                 view.onValidateNameError("fullName can't be empty")
-                return false
             }
             else -> {
                 view.onValidateNameSuccess()
             }
         }
-        return true
     }
 
-    fun validateEmail(email: String) : Boolean {
+    fun validateEmail(email: String) {
         when {
             email.isEmpty() -> {
                 view.onValidateEmailError("Email can't be empty")
-                return false
             }
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                 view.onValidateEmailError("Format email error")
-                return false
             }
             else -> {
                 view.onValidateEmailSuccess()
             }
         }
-        return true
     }
 
-    fun validatePhoneNumber(phoneNumber: String): Boolean {
+    fun validatePhoneNumber(phoneNumber: String) {
         when {
             phoneNumber.isEmpty() -> {
                 view.onValidatePhoneNumberError("Phone number can't be empty")
-                return false
             }
             !Regex("^0[9, 8, 6, 2][0-9]{8}\$").matches(phoneNumber) -> {
                 view.onValidatePhoneNumberError("Format phone number error")
-                return false
             }
             else -> {
                 view.onValidatePhoneNumberSuccess()
             }
         }
-        return true
     }
 
-    fun validateRoom(room: String) : Boolean {
+    fun validateRoom(room: String) {
         when {
             room.isEmpty() -> {
                 view.onValidateRoomError("Please enter room")
-                return false
             }
             else -> {
                 view.onValidateRoomSuccess()
             }
         }
-        return true
     }
 
-    fun validateReason(reason: String) : Boolean {
+    fun validateReason(reason: String) {
         when {
             reason.isEmpty() -> {
                 view.onValidateReasonError("Reason can't be empty")
-                return false
             }
             else -> {
                 view.onValidateReasonSuccess()
             }
         }
-        return true
     }
 
-    fun validateFromDate(fromDate: String): Boolean {
+    fun validateFromDate(fromDate: String) {
         when {
             fromDate.isEmpty() -> {
                 view.onValidateFromDateError("From date can't be empty")
-                return false
             }
             else -> {
                 //on week end
@@ -135,14 +122,12 @@ class BookingFormPresenter {
                 }
             }
         }
-        return true
     }
 
-    fun validateFromTime(fromTime: String, fromDate: String): Boolean {
+    fun validateFromTime(fromTime: String, fromDate: String) {
         when {
             fromTime.isEmpty() -> {
                 view.onValidateFromTimeError("From time can't be empty")
-                return false
             }
             else -> {
                 val date = formatter.parse(fromDate)
@@ -186,15 +171,13 @@ class BookingFormPresenter {
 
             }
         }
-        return true
     }
 
-    fun validateToDate(toDate: String,  fromDate: String, fromTime: String) : Boolean {
+    fun validateToDate(toDate: String,  fromDate: String, fromTime: String) {
         var toTime = "00:00"
         when {
             toDate.isEmpty() -> {
                 view.onValidateToDateError("To date can't be empty")
-                return false
             }
             else -> {
                 val fromTimeArray = fromTime.split(":")
@@ -238,20 +221,17 @@ class BookingFormPresenter {
                 }
             }
         }
-        return true
     }
 
-    fun validateToTime(toTime: String) : Boolean {
+    fun validateToTime(toTime: String) {
         when {
             toTime.isEmpty() -> {
                 view.onValidateToTimeError("To time can't be empty")
-                return false
             }
             else -> {
                 view.onValidateToTimeSuccess()
             }
         }
-        return true
     }
 
     fun validateForm(data: BookingData) {

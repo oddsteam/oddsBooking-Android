@@ -42,7 +42,13 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // dropdown room
         val rooms = resources.getStringArray(R.array.rooms)
         val arrayAdapter =
             ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
@@ -50,6 +56,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
         autocompleteTV.setAdapter(arrayAdapter)
 
         with(binding) {
+            // onChange validate
             nameFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateFullName(text.toString())
                 nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
@@ -70,11 +77,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             reasonFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateReason(text.toString())
             }
-
-            fromTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
-            toTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
-            toDateFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
-
             fromDateFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateFromDate(text.toString())
             }
@@ -88,7 +90,14 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                 presenter.validateToTime(text.toString())
             }
 
-           //preview button disable check
+            //start fromTime/toDate/toTime
+            fromTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+            toTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+            toDateFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+
+
+
+            //preview button disable check
             nameFormEditText.doAfterTextChanged { text ->
                 bookingData.fullName = text.toString()
                 presenter.validateForm(bookingData)
@@ -126,6 +135,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                 presenter.validateForm(bookingData)
             }
 
+            //set ShowDatePicker to fromDate (start select with fromDate)
             fromDateFormEditText.setOnClickListener {
                 showDatePickerDialog(
                     fromDateFormEditText,
@@ -133,18 +143,6 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                     null
                 )
             }
-
-//            toDateFormEditText.setOnClickListener {
-//                showDatePickerDialog(toDateFormEditText)
-//            }
-//
-//            fromTimeFormEditText.setOnClickListener {
-//                showTimePickerDialog(fromTimeFormEditText)
-//            }
-//
-//            toTimeFormEditText.setOnClickListener {
-//                showTimePickerDialog(toTimeFormEditText)
-//            }
 
             // onClick previewButton
             previewButton.setOnClickListener {
@@ -156,17 +154,9 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
                         )
                     )
                 }
-
-
             }
         }
         bind()
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
 
     }
 
