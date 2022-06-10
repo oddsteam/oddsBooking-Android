@@ -164,6 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/from_time_string"
+
                 app:startIconDrawable="@drawable/ic_time">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -171,6 +172,7 @@
                     android:focusable="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/disable_color"
                     android:hint=""
                     android:inputType="phone" />
 
@@ -190,6 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
+                    android:background="@color/disable_color"
                     android:hint="" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -209,6 +212,7 @@
                     android:focusable="false"
                     android:layout_height="wrap_content"
                     android:hint=""
+                    android:background="@color/disable_color"
                     android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>

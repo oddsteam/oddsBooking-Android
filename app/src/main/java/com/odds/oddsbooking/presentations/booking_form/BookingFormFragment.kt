@@ -2,16 +2,12 @@ package com.odds.oddsbooking.presentations.booking_form
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -54,110 +50,8 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
             ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
         val autocompleteTV = binding.root.findViewById<AutoCompleteTextView>(R.id.roomFormDropdown)
         autocompleteTV.setAdapter(arrayAdapter)
-
-        with(binding) {
-            // onChange validate
-            nameFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateFullName(text.toString())
-                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
-            }
-
-            emailFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateEmail(text.toString())
-            }
-
-            phoneFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validatePhoneNumber(text.toString())
-            }
-
-            roomFormDropdown.doOnTextChanged { text, _, _, _ ->
-                presenter.validateRoom(text.toString())
-            }
-
-            reasonFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateReason(text.toString())
-            }
-            fromDateFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateFromDate(text.toString())
-            }
-            fromTimeFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateFromTime(text.toString(), fromDateFormEditText.text.toString())
-            }
-            toDateFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateToDate(text.toString(), fromDateFormEditText.text.toString(), fromTimeFormEditText.text.toString())
-            }
-            toDateFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateToTime(text.toString())
-            }
-
-            //start fromTime/toDate/toTime
-            fromTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
-            toTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
-            toDateFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
-
-
-
-            //preview button disable check
-            nameFormEditText.doAfterTextChanged { text ->
-                bookingData.fullName = text.toString()
-                presenter.validateForm(bookingData)
-            }
-            emailFormEditText.doAfterTextChanged { text ->
-                bookingData.email = text.toString()
-                presenter.validateForm(bookingData)
-            }
-            phoneFormEditText.doAfterTextChanged { text ->
-                bookingData.phoneNumber = text.toString()
-                presenter.validateForm(bookingData)
-            }
-            roomFormDropdown.doAfterTextChanged { text ->
-                bookingData.room = text.toString()
-                presenter.validateForm(bookingData)
-            }
-            reasonFormEditText.doAfterTextChanged { text ->
-                bookingData.reason = text.toString()
-                presenter.validateForm(bookingData)
-            }
-            fromDateFormEditText.doAfterTextChanged { text ->
-                bookingData.fromDate = text.toString()
-                presenter.validateForm(bookingData)
-            }
-            fromTimeFormEditText.doAfterTextChanged { text ->
-                bookingData.fromTime = text.toString()
-                presenter.validateForm(bookingData)
-            }
-            toDateFormEditText.doAfterTextChanged { text ->
-                bookingData.toDate = text.toString()
-                presenter.validateForm(bookingData)
-            }
-            toTimeFormEditText.doAfterTextChanged { text ->
-                bookingData.toTime = text.toString()
-                presenter.validateForm(bookingData)
-            }
-
-            //set ShowDatePicker to fromDate (start select with fromDate)
-            fromDateFormEditText.setOnClickListener {
-                showDatePickerDialog(
-                    fromDateFormEditText,
-                    System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
-                    null
-                )
-            }
-
-            // onClick previewButton
-            previewButton.setOnClickListener {
-                findNavController().apply {
-                    navigate(
-                        R.id.bookingPreviewFragment,
-                        bundleOf(
-                            BookingFormActivity.EXTRA_BOOKING to bookingData
-                        )
-                    )
-                }
-            }
-        }
-        bind()
-
+        onCreateBinding()
+        onReturnBinding()
     }
 
     private fun showDatePickerDialog(
@@ -274,11 +168,15 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
     }
 
     override fun onValidateFromDateSuccess(timeEnable: Array<Timepoint>) {
+        val whiteColor = resources.getColor(R.color.white_color, null)
+        val disableColor = resources.getColor(R.color.disable_color, null)
+
         val container = binding.fromDateFormContainer
         container.isErrorEnabled = false
         container.error = null
-        with(binding){
+        with(binding) {
             fromTimeFormEditText.isEnabled = true
+            fromTimeFormEditText.setBackgroundColor(whiteColor)
             fromTimeFormEditText.setOnClickListener {
                 showTimePickerDialog(binding.fromTimeFormEditText, timeEnable)
             }
@@ -289,7 +187,9 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
 
             //disable and clear text in FromTime/ToDate/ToTime
             toDateFormEditText.isEnabled = false
+            toDateFormEditText.setBackgroundColor(disableColor)
             toTimeFormEditText.isEnabled = false
+            toTimeFormEditText.setBackgroundColor(disableColor)
             if (toDateFormEditText.text!!.isNotEmpty()) {
                 toDateFormEditText.setText("")
             }
@@ -306,14 +206,16 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
     }
 
     override fun onValidateFromTimeSuccess(minDate: Long, maxDate: Long) {
-        val container = binding.fromTimeFormContainer
-        container.isErrorEnabled = false
-        container.error = null
+        val whiteColor = resources.getColor(R.color.white_color, null)
+        val disableColor = resources.getColor(R.color.disable_color, null)
+        with(binding) {
+            fromTimeFormContainer.isErrorEnabled = false
+            fromTimeFormContainer.error = null
 
-        with(binding){
             toDateFormEditText.isEnabled = true
+            toDateFormEditText.setBackgroundColor(whiteColor)
             toDateFormEditText.setOnClickListener {
-                showDatePickerDialog( binding.toDateFormEditText, minDate, maxDate)
+                showDatePickerDialog(binding.toDateFormEditText, minDate, maxDate)
             }
 
             //clear text in ToDate
@@ -323,6 +225,7 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
 
             //disable and clear text in ToTime
             toTimeFormEditText.isEnabled = false
+            toTimeFormEditText.setBackgroundColor(disableColor)
             if (toTimeFormEditText.text!!.isNotEmpty()) {
                 toTimeFormEditText.setText("")
             }
@@ -336,12 +239,13 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
     }
 
     override fun onValidateToDateSuccess(timeEnable: Array<Timepoint>) {
-        val container = binding.toDateFormContainer
-        container.isErrorEnabled = false
-        container.error = null
+        val whiteColor = resources.getColor(R.color.white_color, null)
+        with(binding) {
+            toDateFormContainer.isErrorEnabled = false
+            toDateFormContainer.error = null
 
-        with(binding){
             toTimeFormEditText.isEnabled = true
+            toTimeFormEditText.setBackgroundColor(whiteColor)
             toTimeFormEditText.setOnClickListener {
                 showTimePickerDialog(binding.toTimeFormEditText, timeEnable)
             }
@@ -374,46 +278,137 @@ class BookingFormFragment : Fragment(), BookingFormPresenter.BookingFormView {
     }
 
     override fun enablePreviewButton() {
+        val colors = resources.getColor(R.color.purple_color, null)
         binding.previewButton.isEnabled = true
-        binding.previewButton.setBackgroundColor(
-            resources.getColor(
-                R.color.purple_color,
-                null
-            )
-        )
+        binding.previewButton.setBackgroundColor(colors)
     }
 
     override fun disablePreviewButton() {
+        val colors = resources.getColor(R.color.gray_outline,null)
         binding.previewButton.isEnabled = false
-        binding.previewButton.setBackgroundColor(
-            resources.getColor(
-                R.color.gray_outline,
-                null
-            )
-        )
+        binding.previewButton.setBackgroundColor(colors)
     }
 
-    private fun bind() {
+    private fun onCreateBinding() {
+        with(binding) {
+            // onChange validate
+            nameFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateFullName(text.toString())
+                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
+            }
+
+            emailFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateEmail(text.toString())
+            }
+
+            phoneFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validatePhoneNumber(text.toString())
+            }
+
+            roomFormDropdown.doOnTextChanged { text, _, _, _ ->
+                presenter.validateRoom(text.toString())
+            }
+
+            reasonFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateReason(text.toString())
+            }
+            fromDateFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateFromDate(text.toString())
+            }
+            fromTimeFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateFromTime(text.toString(), fromDateFormEditText.text.toString())
+            }
+            toDateFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateToDate(
+                    text.toString(),
+                    fromDateFormEditText.text.toString(),
+                    fromTimeFormEditText.text.toString()
+                )
+            }
+            toDateFormEditText.doOnTextChanged { text, _, _, _ ->
+                presenter.validateToTime(text.toString())
+            }
+
+            //start fromTime/toDate/toTime
+            fromTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+            toTimeFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+            toDateFormEditText.isEnabled = fromTimeFormEditText.text?.isNotEmpty() == true
+
+            //preview button disable check
+            nameFormEditText.doAfterTextChanged { text ->
+                bookingData.fullName = text.toString()
+                presenter.validateForm(bookingData)
+            }
+            emailFormEditText.doAfterTextChanged { text ->
+                bookingData.email = text.toString()
+                presenter.validateForm(bookingData)
+            }
+            phoneFormEditText.doAfterTextChanged { text ->
+                bookingData.phoneNumber = text.toString()
+                presenter.validateForm(bookingData)
+            }
+            roomFormDropdown.doAfterTextChanged { text ->
+                bookingData.room = text.toString()
+                presenter.validateForm(bookingData)
+            }
+            reasonFormEditText.doAfterTextChanged { text ->
+                bookingData.reason = text.toString()
+                presenter.validateForm(bookingData)
+            }
+            fromDateFormEditText.doAfterTextChanged { text ->
+                bookingData.fromDate = text.toString()
+                presenter.validateForm(bookingData)
+            }
+            fromTimeFormEditText.doAfterTextChanged { text ->
+                bookingData.fromTime = text.toString()
+                presenter.validateForm(bookingData)
+            }
+            toDateFormEditText.doAfterTextChanged { text ->
+                bookingData.toDate = text.toString()
+                presenter.validateForm(bookingData)
+            }
+            toTimeFormEditText.doAfterTextChanged { text ->
+                bookingData.toTime = text.toString()
+                presenter.validateForm(bookingData)
+            }
+
+            //set ShowDatePicker to fromDate (start select with fromDate)
+            fromDateFormEditText.setOnClickListener {
+                showDatePickerDialog(
+                    fromDateFormEditText,
+                    System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
+                    null
+                )
+            }
+
+            // onClick previewButton
+            previewButton.setOnClickListener {
+                findNavController().apply {
+                    navigate(
+                        R.id.bookingPreviewFragment,
+                        bundleOf(
+                            BookingFormActivity.EXTRA_BOOKING to bookingData
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun onReturnBinding() {
         bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!
         with(binding) {
-            if (bookingData.fullName.isNotEmpty())
+            if (bookingData.isValid()) {
                 nameFormEditText.setText(bookingData.fullName)
-            if (bookingData.email.isNotEmpty())
                 emailFormEditText.setText(bookingData.email)
-            if (bookingData.phoneNumber.isNotEmpty())
                 phoneFormEditText.setText(bookingData.phoneNumber)
-            if (bookingData.room.isNotEmpty())
                 roomFormDropdown.setText(bookingData.room, false)
-            if (bookingData.reason.isNotEmpty())
                 reasonFormEditText.setText(bookingData.reason)
-            if (bookingData.fromDate.isNotEmpty())
                 fromDateFormEditText.setText(bookingData.fromDate)
-            if (bookingData.fromTime.isNotEmpty())
                 fromTimeFormEditText.setText(bookingData.fromTime)
-            if (bookingData.toDate.isNotEmpty())
                 toDateFormEditText.setText(bookingData.toDate)
-            if (bookingData.toTime.isNotEmpty())
                 toTimeFormEditText.setText(bookingData.toTime)
+            }
         }
     }
 
