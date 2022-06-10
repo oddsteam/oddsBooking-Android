@@ -99,14 +99,7 @@ class BookingPreviewFragment : Fragment(), BookingPreviewPresenter.BookingPrevie
     }
 
     override fun backToBookingFormPage() {
-        findNavController().apply {
-            navigate(
-                R.id.bookingFormFragment,
-                bundleOf(
-                    BookingFormActivity.EXTRA_BOOKING to bookingData
-                )
-            )
-        }
+        findNavController().popBackStack()
     }
 
     override fun showToastMessage(errorMessage: String) {
