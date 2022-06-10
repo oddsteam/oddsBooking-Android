@@ -16,10 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".booking_form.BookingFormActivity"
+            android:name=".presentations.booking_form.BookingFormActivity"
             android:exported="false" />
         <activity
-            android:name=".splash_screen.SplashActivity"
+            android:name="com.odds.oddsbooking.presentations.splash_screen.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

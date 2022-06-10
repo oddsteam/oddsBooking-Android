@@ -1,4 +1,4 @@
-package com.odds.oddsbooking.booking_form
+package com.odds.oddsbooking.presentations.booking_success
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
+import com.odds.oddsbooking.presentations.booking_form.BookingFormActivity
+import com.odds.oddsbooking.interfaces.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingSuccessBinding
 
 

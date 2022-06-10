@@ -1,6 +1,7 @@
-package com.odds.oddsbooking.booking_form
+package com.odds.oddsbooking.presentations.booking_preview
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,9 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
+import com.odds.oddsbooking.presentations.booking_form.BookingFormActivity
+import com.odds.oddsbooking.interfaces.Booking
+import com.odds.oddsbooking.interfaces.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingPreviewBinding
 import com.odds.oddsbooking.services.booking.BookingAPIFactory
 
@@ -36,6 +40,7 @@ class BookingPreviewFragment : Fragment(), BookingPreviewPresenter.BookingPrevie
         savedInstanceState: Bundle?
     ): View {
         val bookingInfo = bind()
+        Log.d("BookingPreviewFragment", "bookingInfo: $bookingInfo")
         binding.confirmButton.setOnClickListener {
             presenter.createBooking(bookingInfo)
         }
@@ -71,7 +76,7 @@ class BookingPreviewFragment : Fragment(), BookingPreviewPresenter.BookingPrevie
     }
 
     private fun dateTimeGeneralFormat(dateTime: String): String {
-        val (day, month, year) = dateTime.split("-").toTypedArray()
+        val (year, month, day) = dateTime.split("/").toTypedArray()
         return "${year}-${month}-${day}"
     }
 

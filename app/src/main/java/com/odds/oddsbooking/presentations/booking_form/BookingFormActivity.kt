@@ -1,10 +1,11 @@
-package com.odds.oddsbooking.booking_form
+package com.odds.oddsbooking.presentations.booking_form
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.NavHostFragment
 import com.odds.oddsbooking.R
+import com.odds.oddsbooking.interfaces.BookingData
 import com.odds.oddsbooking.databinding.ActivityBookingFormBinding
 
 class BookingFormActivity : AppCompatActivity() {
@@ -17,19 +18,7 @@ class BookingFormActivity : AppCompatActivity() {
         val navController = nav.navController
         navController.setGraph(
             R.navigation.oddsbooking_navigation,
-            bundleOf(
-                EXTRA_BOOKING to BookingData(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            bundleOf(EXTRA_BOOKING to BookingData())
         )
     }
 

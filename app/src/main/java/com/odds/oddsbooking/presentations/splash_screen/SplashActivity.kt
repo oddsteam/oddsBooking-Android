@@ -1,14 +1,11 @@
-package com.odds.oddsbooking.splash_screen
+package com.odds.oddsbooking.presentations.splash_screen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import com.odds.oddsbooking.booking_form.BookingFormActivity
+import com.odds.oddsbooking.presentations.booking_form.BookingFormActivity
 import com.odds.oddsbooking.databinding.ActivitySplashBinding
 import kotlinx.coroutines.Dispatchers
-import okhttp3.Dispatcher
 
 class SplashActivity : AppCompatActivity(), SplashPresenter.SplashView {
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }

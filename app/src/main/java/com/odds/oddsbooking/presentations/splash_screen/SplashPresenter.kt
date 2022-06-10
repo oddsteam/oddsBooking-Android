@@ -1,7 +1,6 @@
-package com.odds.oddsbooking.splash_screen
+package com.odds.oddsbooking.presentations.splash_screen
 
 import kotlinx.coroutines.*
-import okhttp3.Dispatcher
 
 class SplashPresenter constructor(
     private val dispatcher: CoroutineDispatcher,

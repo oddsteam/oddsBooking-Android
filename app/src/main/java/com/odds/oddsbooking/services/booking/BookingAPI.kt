@@ -1,6 +1,6 @@
 package com.odds.oddsbooking.services.booking
 
-import com.odds.oddsbooking.booking_form.Booking
+import com.odds.oddsbooking.interfaces.Booking
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers

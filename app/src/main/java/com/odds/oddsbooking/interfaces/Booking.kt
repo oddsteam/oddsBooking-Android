@@ -1,4 +1,4 @@
-package com.odds.oddsbooking.booking_form
+package com.odds.oddsbooking.interfaces
 
 data class Booking(
     val fullName: String, val email: String,
