@@ -3,7 +3,7 @@ package com.odds.oddsbooking.presentations.splash_screen
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.odds.oddsbooking.presentations.booking_form.BookingFormActivity
+import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.odds.oddsbooking.databinding.ActivitySplashBinding
 import kotlinx.coroutines.Dispatchers
 
@@ -20,7 +20,11 @@ class SplashActivity : AppCompatActivity(), SplashPresenter.SplashView {
     }
 
     override fun goToBookingForm() {
-        val intent = Intent(this, BookingFormActivity::class.java)
-        startActivity(intent)
+        Intent(this, BookingFormActivity::class.java).apply {
+            val flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            addFlags(flags)
+            startActivity(this)
+        }
     }
 }

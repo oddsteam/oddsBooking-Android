@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bookingFormFragment"
-        android:name="com.odds.oddsbooking.presentations.booking_form.BookingFormFragment"
+        android:name="com.odds.oddsbooking.presentations.booking.form.BookingFormFragment"
         android:label="fragment_booking_form"
         tools:layout="@layout/fragment_booking_form">
 
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/bookingPreviewFragment"
-        android:name="com.odds.oddsbooking.presentations.booking_preview.BookingPreviewFragment"
+        android:name="com.odds.oddsbooking.presentations.booking.preview.BookingPreviewFragment"
         android:label="fragment_booking_preview"
         tools:layout="@layout/fragment_booking_preview">
 
@@ -35,12 +35,14 @@
 
     <fragment
         android:id="@+id/bookingSuccessFragment"
-        android:name="com.odds.oddsbooking.presentations.booking_success.BookingSuccessFragment"
+        android:name="com.odds.oddsbooking.presentations.booking.success.BookingSuccessFragment"
         android:label="fragment_booking_success"
+
         tools:layout="@layout/fragment_booking_success">
 
         <action
             android:id="@+id/action_bookingSuccessFragment_to_bookingFormFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/bookingFormFragment" />
 
     </fragment>

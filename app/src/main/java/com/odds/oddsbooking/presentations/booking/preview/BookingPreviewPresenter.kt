@@ -1,7 +1,8 @@
-package com.odds.oddsbooking.presentations.booking_preview
+package com.odds.oddsbooking.presentations.booking.preview
 
 import android.util.Log
 import com.odds.oddsbooking.interfaces.Booking
+import com.odds.oddsbooking.interfaces.BookingPreviewView
 import com.odds.oddsbooking.services.booking.BookingAPI
 import kotlinx.coroutines.*
 import java.lang.Exception
@@ -9,14 +10,6 @@ import java.lang.Exception
 class BookingPreviewPresenter constructor(private val api: BookingAPI) {
     private val scope = MainScope()
     private lateinit var view: BookingPreviewView
-
-    //TODO create interface view file
-    interface BookingPreviewView {
-        fun showProgressBar()
-        fun goToSuccessPage()
-        fun backToBookingFormPage()
-        fun showToastMessage(errorMessage: String)
-    }
 
     fun attachView(view: BookingPreviewView) {
         this.view = view

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentations.booking_success.BookingSuccessFragment">
+    tools:context=".presentations.booking.success.BookingSuccessFragment">
 
     <LinearLayout
         android:id="@+id/bookingSuccessLayout"

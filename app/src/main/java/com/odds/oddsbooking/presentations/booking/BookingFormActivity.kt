@@ -1,4 +1,4 @@
-package com.odds.oddsbooking.presentations.booking_form
+package com.odds.oddsbooking.presentations.booking
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

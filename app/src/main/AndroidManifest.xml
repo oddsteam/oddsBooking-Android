@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentations.booking_form.BookingFormActivity"
+            android:name="com.odds.oddsbooking.presentations.booking.BookingFormActivity"
             android:exported="false" />
         <activity
             android:name="com.odds.oddsbooking.presentations.splash_screen.SplashActivity"

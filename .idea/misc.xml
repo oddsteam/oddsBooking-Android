@@ -7,13 +7,19 @@
         <entry key="../oddsBooking-Android/app/src/main/res/layout/fragment_booking_preview.xml" value="0.14375" />
         <entry key="../oddsBooking-Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="../oddsBooking-Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/disable_edit_text.xml" value="0.131" />
+        <entry key="app/src/main/res/drawable/enable_edit_text.xml" value="0.131" />
+        <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.131" />
         <entry key="app/src/main/res/drawable/ic_success.xml" value="0.1945" />
         <entry key="app/src/main/res/layout/activity_booking_form.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_booking_success.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11550151975683891" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25483856201171873" />
-        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.32110443115234377" />
+        <entry key="app/src/main/res/layout/disable_edit_text.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.31004366812227074" />
         <entry key="app/src/main/res/layout/fragment_booking_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/timepicker_dialog.xml" value="0.14427083333333332" />
       </map>
     </option>
   </component>

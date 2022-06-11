@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentations.booking_form.BookingFormFragment">
+    tools:context=".presentations.booking.form.BookingFormFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:id="@+id/textTitleBookingForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bookings"
+                android:text="@string/bookings"
                 android:textColor="@color/black_color"
                 android:textSize="38sp"
                 android:textStyle="bold" />
@@ -108,11 +108,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="@string/room_string"
                 app:startIconDrawable="@drawable/ic_room">
 
                 <AutoCompleteTextView
                     android:id="@+id/roomFormDropdown"
+                    android:hint="@string/room"
+                    android:textColorHint="@color/disable_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none" />
@@ -164,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/from_time_string"
-
+                app:boxBackgroundColor="@color/disable_color"
                 app:startIconDrawable="@drawable/ic_time">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -172,9 +173,7 @@
                     android:focusable="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/disable_color"
-                    android:hint=""
-                    android:inputType="phone" />
+                    android:hint="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -185,6 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/to_date_string"
+                app:boxBackgroundColor="@color/disable_color"
                 app:startIconDrawable="@drawable/ic_calendar">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -192,7 +192,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
-                    android:background="@color/disable_color"
                     android:hint="" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -204,6 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/to_time_string"
+                app:boxBackgroundColor="@color/disable_color"
                 app:startIconDrawable="@drawable/ic_time">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -212,7 +212,6 @@
                     android:focusable="false"
                     android:layout_height="wrap_content"
                     android:hint=""
-                    android:background="@color/disable_color"
                     android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -228,7 +227,6 @@
                 android:text="@string/preview_string"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
