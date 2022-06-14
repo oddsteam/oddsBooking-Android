@@ -170,7 +170,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/fromTimeFormDropdown"
-                    android:hint="From time"
+                    android:hint="@string/from_time_string"
                     android:focusable="false"
                     android:textColorHint="@color/disable_color"
                     android:layout_width="match_parent"
@@ -210,7 +210,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/toTimeFormDropDown"
-                    android:hint="To time"
+                    android:hint="@string/to_time_string"
                     android:focusable="false"
                     android:textColorHint="@color/disable_color"
                     android:layout_width="match_parent"

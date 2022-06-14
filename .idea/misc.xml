@@ -17,8 +17,9 @@
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25483856201171873" />
         <entry key="app/src/main/res/layout/disable_edit_text.xml" value="0.14427083333333332" />
         <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.14842376708984373" />
         <entry key="app/src/main/res/layout/fragment_booking_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_booking_success.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/timepicker_dialog.xml" value="0.14427083333333332" />
       </map>
     </option>

@@ -28,4 +28,6 @@
     <string name="bookings">Bookings</string>
     <string name="room">Room*</string>
     <string name="textview">TextView</string>
+    <string name="thank_you_for_booking">Thank you \nfor your booking</string>
+    <string name="booking_again">BOOKING AGAIN</string>
 </resources>

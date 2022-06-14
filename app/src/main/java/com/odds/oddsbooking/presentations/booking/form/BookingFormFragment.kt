@@ -17,8 +17,6 @@ import com.odds.oddsbooking.interfaces.BookingData
 import com.odds.oddsbooking.interfaces.BookingFormView
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import com.wdullaer.materialdatetimepicker.time.Timepoint
 import java.util.*
 
 class BookingFormFragment : Fragment(), BookingFormView {
@@ -71,7 +69,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         var days = calendar.get(Calendar.DAY_OF_MONTH)
 
         if(editText.text!!.isNotEmpty()){
-            var dates = editText.text.toString().split("/")
+            val dates = editText.text.toString().split("/")
             years = dates[0].toInt()
             months = dates[1].toInt() -1
             days = dates[2].toInt()
@@ -428,13 +426,13 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(bookingData: BookingData): BookingFormFragment {
-            return BookingFormFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(BookingFormActivity.EXTRA_BOOKING, bookingData)
-                }
-            }
-        }
+//        @JvmStatic
+//        fun newInstance(bookingData: BookingData): BookingFormFragment {
+//            return BookingFormFragment().apply {
+//                arguments = Bundle().apply {
+//                    putParcelable(BookingFormActivity.EXTRA_BOOKING, bookingData)
+//                }
+//            }
+//        }
     }
 }

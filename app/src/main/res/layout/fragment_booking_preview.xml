@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
 
         <LinearLayout
@@ -38,7 +38,7 @@
                 android:id="@+id/textTitleBookingPreview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bookings"
+                android:text="@string/bookings"
                 android:textColor="@color/black_color"
                 android:textSize="38sp"
                 android:textStyle="bold" />
@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/name_string"
-                    android:text="Somchai Jaidee"
+                    android:text=""
                     android:textColor="@color/black_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email_string"
-                    android:text="somchai@odds.team"
+                    android:text=""
                     android:textColor="@color/black_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -106,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/phone_number_string"
-                    android:text="0999999999"
+                    android:text=""
                     android:textColor="@color/black_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -125,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/room_string"
-                    android:text="Neon"
+                    android:text=""
                     android:textColor="@color/black_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -144,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:hint="@string/reason_string"
-                    android:text="booking room for android class"
+                    android:text=""
                     android:textColor="@color/black_color" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -162,7 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/from_date_string"
-                    android:text="2022-07-08T01:00:00"
+                    android:text=""
                     android:textColor="@color/black_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -181,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/to_date_string"
-                    android:text="2022-07-08T06:00:00"
+                    android:text=""
                     android:textColor="@color/black_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -208,7 +208,7 @@
                 android:textAllCaps="true"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                />
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/confirmButton"
@@ -219,7 +219,7 @@
                 android:textAllCaps="true"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                />
+                style="?android:attr/buttonBarButtonStyle" />
 
         </LinearLayout>
 
