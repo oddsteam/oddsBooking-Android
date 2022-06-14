@@ -106,45 +106,62 @@ class BookingFormPresenter {
                 fromDateErrorFlag = true
             }
             else -> {
+                val date = formatter.parse(fromDate)
                 //on week end
-                if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
-                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
+                if (checkDay(fromDate) == "Saturday") {
+                    val minDate: Long = date.time
+                    val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
+                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"), minDate, maxDate)
+                }else if (checkDay(fromDate) == "Sunday"){
+                    val minDate: Long = date.time
+                    val maxDate: Long = date.time
+                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"), minDate, maxDate)
                 }
                 //on week day
                 else {
-                    view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"))
+                    val minDate: Long = date.time
+                    val maxDate: Long = date.time
+                    view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"), minDate, maxDate)
                 }
                 fromDateErrorFlag = false
             }
         }
     }
 
-    fun validateFromTime(fromTime: String, fromDate: String) {
+    fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {
+        var toTime = "00:00"
         when {
             fromTime.isEmpty() -> {
                 view.onValidateFromTimeError("From time can't be empty")
                 fromDateErrorFlag = true
             }
             else -> {
-                val date = formatter.parse(fromDate)
-                //on weekend (Saturday)
-                if (checkDay(fromDate) == "Saturday") {
-                    val minDate: Long = date.time
-                    val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
-                    view.onValidateFromTimeSuccess(minDate, maxDate)
+                val fromTimeArray = fromTime.split(":")
+                toTime =
+                    "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}"
+
+                //same day
+                if (fromDate == toDate) {
+                    //on weekend
+                    if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
+                        view.onValidateFromTimeSuccess(getTimeSlot(toTime, "21:00"))
+                    }
+                    //on weekday
+                    else {
+                        view.onValidateFromTimeSuccess(getTimeSlot(toTime, "23:00"))
+                    }
                 }
-                //on weekend (Sunday)
-                else if (checkDay(fromDate) == "Sunday") {
-                    val minDate: Long = date.time
-                    val maxDate: Long = date.time
-                    view.onValidateFromTimeSuccess(minDate, maxDate)
-                }
-                //on weekday
+                //other day
                 else {
-                    //fromTime >= 18:00, next day can booking (00:00 - 06:00)
-                    val minDate: Long = date.time
-                    val maxDate: Long = date.time
-                    view.onValidateFromTimeSuccess(minDate, maxDate)
+                    val dayOfWeek = checkDay(fromDate)
+                    //on weekend
+                    if (arrayListOf<String>("Saturday", "Sunday").contains(dayOfWeek)) {
+                        view.onValidateFromTimeSuccess(getTimeSlot("09:30", "21:00"))
+                    }
+                    //on weekday
+                    else {
+                        view.onValidateFromTimeSuccess(getTimeSlot("18:30", "23:00"))
+                    }
                 }
                 fromTimeErrorFlag = false
             }
@@ -158,10 +175,11 @@ class BookingFormPresenter {
                 view.onValidateToDateError("To date can't be empty")
                 toDateErrorFlag = true
             }
+            fromTime.isEmpty() -> {}
             else -> {
                 val fromTimeArray = fromTime.split(":")
                 toTime =
-                    "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}" // toTime equ fromTime + 1 minute
+                    "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}"
 
                 //same day
                 if (fromDate == toDate) {
@@ -179,11 +197,11 @@ class BookingFormPresenter {
                     val dayOfWeek = checkDay(fromDate)
                     //on weekend
                     if (arrayListOf<String>("Saturday", "Sunday").contains(dayOfWeek)) {
-                        view.onValidateToDateSuccess(getTimeSlot("09:00", "21:00"))
+                        view.onValidateToDateSuccess(getTimeSlot("09:30", "21:00"))
                     }
                     //on weekday
                     else {
-                        view.onValidateToDateSuccess(getTimeSlot("18:00", "23:00"))
+                        view.onValidateToDateSuccess(getTimeSlot("18:30", "23:00"))
                     }
                 }
                 toDateErrorFlag = false
