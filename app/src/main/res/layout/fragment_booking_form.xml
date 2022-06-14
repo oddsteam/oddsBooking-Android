@@ -160,7 +160,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fromTimeFormContainer"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -168,12 +168,14 @@
                 app:boxBackgroundColor="@color/disable_color"
                 app:startIconDrawable="@drawable/ic_time">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fromTimeFormEditText"
+                <AutoCompleteTextView
+                    android:id="@+id/fromTimeFormDropdown"
+                    android:hint="From time"
                     android:focusable="false"
+                    android:textColorHint="@color/disable_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="" />
+                    android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -198,7 +200,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/toTimeFormContainer"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -206,13 +208,14 @@
                 app:boxBackgroundColor="@color/disable_color"
                 app:startIconDrawable="@drawable/ic_time">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/toTimeFormEditText"
-                    android:layout_width="match_parent"
+                <AutoCompleteTextView
+                    android:id="@+id/toTimeFormDropDown"
+                    android:hint="To time"
                     android:focusable="false"
+                    android:textColorHint="@color/disable_color"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=""
-                    android:inputType="phone" />
+                    android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

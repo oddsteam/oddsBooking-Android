@@ -17,11 +17,11 @@ interface BookingFormView {
     fun onValidateReasonError(errMsg: String)
     fun onValidateReasonSuccess()
     fun onValidateFromDateError(errMsg: String)
-    fun onValidateFromDateSuccess(timeEnable: Array<Timepoint>)
+    fun onValidateFromDateSuccess(timeSlot: Array<String>)
     fun onValidateFromTimeError(errMsg: String)
     fun onValidateFromTimeSuccess(minDate: Long, maxDate: Long)
     fun onValidateToDateError(errMsg: String)
-    fun onValidateToDateSuccess(timeEnable: Array<Timepoint>)
+    fun onValidateToDateSuccess(timeSlot: Array<String>)
     fun onValidateToTimeError(errMsg: String)
     fun onValidateToTimeSuccess()
 }

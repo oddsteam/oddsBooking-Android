@@ -108,12 +108,11 @@ class BookingFormPresenter {
             else -> {
                 //on week end
                 if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
-                    view.onValidateFromDateSuccess(getTimePoint("09:00", "20:59"))
+                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
                 }
                 //on week day
                 else {
-                    val timePoints = getTimePoint("00:00", "05:59") + getTimePoint("18:00", "23:59")
-                    view.onValidateFromDateSuccess(timePoints)
+                    view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"))
                 }
                 fromDateErrorFlag = false
             }
@@ -142,20 +141,10 @@ class BookingFormPresenter {
                 }
                 //on weekday
                 else {
-                    val startTimeArray = fromTime.split(":")
                     //fromTime >= 18:00, next day can booking (00:00 - 06:00)
-                    if (startTimeArray[0].toInt() >= 18) {
-                        val minDate: Long = date.time
-                        val maxDate: Long =
-                            date.time + (24 * 60 * 60 * 1000) // can booking next day
-                        view.onValidateFromTimeSuccess(minDate, maxDate)
-                    }
-                    //fromTime < 18:00, next day can't booking
-                    else {
-                        val minDate: Long = date.time
-                        val maxDate: Long = date.time
-                        view.onValidateFromTimeSuccess(minDate, maxDate)
-                    }
+                    val minDate: Long = date.time
+                    val maxDate: Long = date.time
+                    view.onValidateFromTimeSuccess(minDate, maxDate)
                 }
                 fromTimeErrorFlag = false
             }
@@ -171,24 +160,18 @@ class BookingFormPresenter {
             }
             else -> {
                 val fromTimeArray = fromTime.split(":")
-
-                //TODO: Test check toTime min = 59 -> hour +1
                 toTime =
-                    "${fromTimeArray[0].toInt()}:${fromTimeArray[1].toInt() + 1}" // toTime equ fromTime + 1 minute
+                    "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}" // toTime equ fromTime + 1 minute
 
                 //same day
                 if (fromDate == toDate) {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
-                        view.onValidateToDateSuccess(getTimePoint(toTime, "21:00"))
+                        view.onValidateToDateSuccess(getTimeSlot(toTime, "21:00"))
                     }
                     //on weekday
                     else {
-                        if (fromTimeArray[0].toInt() >= 18) {
-                            view.onValidateToDateSuccess(getTimePoint(toTime, "23:59"))
-                        } else {
-                            view.onValidateToDateSuccess(getTimePoint(toTime, "06:00"))
-                        }
+                        view.onValidateToDateSuccess(getTimeSlot(toTime, "23:00"))
                     }
                 }
                 //other day
@@ -196,17 +179,11 @@ class BookingFormPresenter {
                     val dayOfWeek = checkDay(fromDate)
                     //on weekend
                     if (arrayListOf<String>("Saturday", "Sunday").contains(dayOfWeek)) {
-                        view.onValidateToDateSuccess(getTimePoint("09:00", "21:00"))
+                        view.onValidateToDateSuccess(getTimeSlot("09:00", "21:00"))
                     }
                     //on weekday
                     else {
-                        if (fromTimeArray[0].toInt() >= 18) {
-                            view.onValidateToDateSuccess(getTimePoint("00:00", "06:00"))
-                        } else {
-                            val timePoints =
-                                getTimePoint("00:00", "06:00") + getTimePoint("18:00", "23:59")
-                            view.onValidateToDateSuccess(timePoints)
-                        }
+                        view.onValidateToDateSuccess(getTimeSlot("18:00", "23:00"))
                     }
                 }
                 toDateErrorFlag = false
@@ -257,43 +234,32 @@ class BookingFormPresenter {
         return SimpleDateFormat("EEEE", Locale.US).format(date)
     }
 
-    private fun getTimePoint(startTime: String, endTime: String): Array<Timepoint> {
+    private fun getTimeSlot(startTime: String, endTime: String): Array<String> {
+        var timeSlot = arrayOf<String>()
         val startTimeArray = startTime.split(":")
         val endTimeArray = endTime.split(":")
-        var timesEnable = arrayOf<Timepoint>()
-        for (i in startTimeArray[0].toInt()..endTimeArray[0].toInt()) {
-            //hour start = hour end
-            if (startTimeArray[0].toInt() == endTimeArray[0].toInt()) {
-                for (j in startTimeArray[1].toInt()..endTimeArray[1].toInt()) {
-                    timesEnable += Timepoint(i, j)
-                }
-            }
-            //hour start != hour end
-            else {
-                when (i) {
-                    // first hour
-                    startTimeArray[0].toInt() -> {
-                        for (j in startTimeArray[1].toInt()..59) {
-                            timesEnable += Timepoint(i, j)
-                        }
-                    }
-                    //last hour
-                    endTimeArray[0].toInt() -> {
-                        for (j in 0..endTimeArray[1].toInt()) {
-                            timesEnable += Timepoint(i, j)
-                        }
-                    }
-                    //between hour start and end
-                    else -> {
-                        for (j in 0..59) {
-                            timesEnable += Timepoint(i, j)
-                        }
-                    }
+        val startHr = startTimeArray[0].toInt()
+        val startMin = startTimeArray[1].toInt()
+        val endHr = endTimeArray[0].toInt()
+        val endMin = endTimeArray[1].toInt()
+        if(startHr == endHr){
+            if (startMin == 0) timeSlot += "$startHr:00"
+            if (startMin == 30) timeSlot += "$startHr:30"
+        }else{
+            for (i in startHr..endHr) {
+                if (i == startHr) {
+                    if (startMin == 0) timeSlot += "$i:00"
+                    timeSlot += "$i:30"
+                } else if (i != endHr) {
+                    timeSlot += "$i:00"
+                } else {
+                    timeSlot += "$i:00"
+                    if (endMin == 30) timeSlot += "$i:30"
                 }
             }
         }
-        Log.d("toTime", timesEnable.toString())
-        return timesEnable
+        Log.d("TimeSlot", timeSlot.toString())
+        return timeSlot
     }
 
 
