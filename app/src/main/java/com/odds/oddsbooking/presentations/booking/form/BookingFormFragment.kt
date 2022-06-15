@@ -68,7 +68,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         var months = calendar.get(Calendar.MONTH)
         var days = calendar.get(Calendar.DAY_OF_MONTH)
 
-        if(editText.text!!.isNotEmpty()){
+        if(editText.text.isNullOrEmpty()){
             val dates = editText.text.toString().split("/")
             years = dates[0].toInt()
             months = dates[1].toInt() -1
@@ -177,9 +177,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             fromTimeFormContainer.setBoxBackgroundColorResource(enable)
             toDateFormContainer.isEnabled = false
             toDateFormContainer.setBoxBackgroundColorResource(disable)
-//            toDateFormContainer.isEnabled = true
-//            toDateFormContainer.setBoxBackgroundColorResource(enable)
-            toDateFormEditText.text = fromDateFormEditText.text!!
+            fromDateFormEditText.text?.let { toDateFormEditText.text = it  }
             // set FromTime dropdown
             val fromTime: Array<String> = timeSlot
             val arrayAdapterFromTime =
@@ -189,12 +187,12 @@ class BookingFormFragment : Fragment(), BookingFormView {
             autocompleteTVFromTime.setAdapter(arrayAdapterFromTime)
 
             //disable and clear text in FromTime/ToDate/ToTime
-            if (fromTimeFormDropdown.text!!.isNotEmpty()) {
+            if (fromTimeFormDropdown.text.isNullOrEmpty()) {
                 fromTimeFormDropdown.setText("")
             }
             toTimeFormContainer.setBoxBackgroundColorResource(disable)
             toTimeFormDropDown.isEnabled = false
-            if (toTimeFormDropDown.text!!.isNotEmpty()) {
+            if (toTimeFormDropDown.text.isNullOrEmpty()) {
                 toTimeFormDropDown.setText("")
             }
         }
@@ -211,6 +209,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             fromTimeFormContainer.isErrorEnabled = false
             fromTimeFormContainer.error = null
 
+            //TODO: change comment to func
             // set ToTime dropdown
             val toTime: Array<String> = timeSlot
             val arrayAdapterToTime =
@@ -228,7 +227,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
             toTimeFormDropDown.isEnabled = true
             toTimeFormContainer.setBoxBackgroundColorResource(enable)
-            if (toTimeFormDropDown.text!!.isNotEmpty()) {
+            if (toTimeFormDropDown.text.isNullOrEmpty()) {
                 toTimeFormDropDown.setText("")
             }
         }
@@ -247,6 +246,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             toTimeFormDropDown.isEnabled = true
             toTimeFormContainer.setBoxBackgroundColorResource(enable)
 
+            //TODO: change comment to func
             // set ToTime dropdown
             val toTime: Array<String> = timeSlot
             val arrayAdapterToTime =
@@ -256,7 +256,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             autocompleteTVFromTime.setAdapter(arrayAdapterToTime)
 
             //clear text in toTime
-            if (toTimeFormDropDown.text!!.isNotEmpty()) {
+            if (toTimeFormDropDown.text.isNullOrEmpty()) {
                 toTimeFormDropDown.setText("")
             }
         }
@@ -385,6 +385,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 presenter.validateForm()
             }
 
+            //TODO: change comment to func
             //set ShowDatePicker to fromDate (start select with fromDate)
             fromDateFormEditText.setOnClickListener {
                 showDatePickerDialog(
@@ -394,6 +395,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 )
             }
 
+            //TODO: change comment to func
             // onClick previewButton
             previewButton.setOnClickListener {
                 findNavController().apply {
@@ -409,7 +411,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
     private fun onReturnBinding() {
-        bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!
+        arguments?.getParcelable<BookingData>(BookingFormActivity.EXTRA_BOOKING)?.let { bookingData = it  }
         with(binding) {
             if (bookingData.validateBookingData()) {
                 nameFormEditText.setText(bookingData.fullName)
@@ -423,16 +425,5 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 toTimeFormDropDown.setText(bookingData.toTime)
             }
         }
-    }
-
-    companion object {
-//        @JvmStatic
-//        fun newInstance(bookingData: BookingData): BookingFormFragment {
-//            return BookingFormFragment().apply {
-//                arguments = Bundle().apply {
-//                    putParcelable(BookingFormActivity.EXTRA_BOOKING, bookingData)
-//                }
-//            }
-//        }
     }
 }
