@@ -18,7 +18,7 @@ pipeline {
 
     stage('Distribute App to Firebase') {
         steps {
-                scp serviceaccount.json oddsbooking@159.138.240.167:./serviceaccount.json
+                sh 'scp serviceaccount.json oddsbooking@159.138.240.167:./serviceaccount.json'
                 sh './gradlew assembleDevRelease appDistributionUploadDevRelease'
         }
     }
