@@ -9,6 +9,8 @@ RUN apt-get update && \
     gem install rake && \
     gem install fastlane && \
     gem install bundler && \
+    bundle update fastlane && \
+    fastlane update_plugins && \
     # Clean up
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     apt-get autoremove -y && \

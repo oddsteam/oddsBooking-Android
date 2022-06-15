@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:664673294014:android:ec1ac9acd59d3ccc6030ef",
+        "mobilesdk_app_id": "1:435114910085:android:9fd5fc533d9661c9c824ec",
         "android_client_info": {
-          "package_name": "com.odds.oddsbooking"
+          "package_name": "com.odds.oddsbooking.dev"
         }
       },
       "oauth_client": [
@@ -38,7 +38,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:664673294014:android:ec1ac9acd59d3ccc6030ef",
+        "mobilesdk_app_id": "1:435114910085:android:9fd5fc533d9661c9c824ec",
         "android_client_info": {
           "package_name": "com.odds.oddsbooking.dev"
         }

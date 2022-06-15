@@ -1,23 +1,33 @@
-pipeline{
-    //  กำหนด ชื่อ,IP,.. ของ agent --> any : can run any agent
-    agent any
+pipeline {
+  agent {
+    docker { image 'androidsdk/android-31' }
+  }
 
-    stages {
-        stage("unit test") {
-            steps {
-                sh """
-                    export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
-                    ./gradlew clean testDevDe
-                """
-            }
+  environment {
+    FIREBASE_TOKEN_CREDENTIALS_ID = 'firebase_token_credentials_id'
+  }
+
+  stages {
+    stage('Unit Test') {
+        steps {
+            sh './gradlew clean testDevDebugUnitTest'
         }
-        stage("build and push to firebase") {
-            steps {
-                sh """
-                    export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
-                    fastlane android distribute
-                """
+    }
+
+    stage('Build') {
+        steps {
+            sh './gradlew assembleDevRelease'
+        }
+    }
+
+    stage('Distribute App to Firebase') {
+        steps {
+            withCredentials([string(credentialsId: "$FIREBASE_TOKEN_CREDENTIALS_ID", variable: 'FIREBASE_TOKEN')]) {
+                sh ("curl -u export FIREBASE_TOKEN=${FIREBASE_TOKEN}")
+                sh 'FIREBASE_TOKEN=${FIREBASE_TOKEN} ./gradlew appDistributionUploadRelease'
+                sh './gradlew appDistributionUploadDevRelease'
             }
         }
     }
+  }
 }
