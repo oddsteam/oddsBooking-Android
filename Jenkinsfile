@@ -18,7 +18,7 @@ pipeline {
 
     stage('Distribute App to Firebase') {
         steps {
-                sh './gradlew appDistributionUploadRelease'
+                sh './gradlew assembleDevRelease appDistributionUploadDevRelease'
         }
     }
   }
