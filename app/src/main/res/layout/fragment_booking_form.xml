@@ -160,7 +160,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fromTimeFormContainer"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -168,13 +168,13 @@
                 app:boxBackgroundColor="@color/disable_color"
                 app:startIconDrawable="@drawable/ic_time">
 
-                <AutoCompleteTextView
-                    android:id="@+id/fromTimeFormDropdown"
-                    android:hint="@string/from_time_string"
-                    android:textColorHint="@color/disable_color"
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fromTimeFormEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:focusable="false"
+                    android:hint="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -199,7 +199,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/toTimeFormContainer"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -207,13 +207,12 @@
                 app:boxBackgroundColor="@color/disable_color"
                 app:startIconDrawable="@drawable/ic_time">
 
-                <AutoCompleteTextView
-                    android:id="@+id/toTimeFormDropDown"
-                    android:hint="@string/to_time_string"
-                    android:textColorHint="@color/disable_color"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/toTimeFromEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:focusable="false"
+                    android:hint="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
