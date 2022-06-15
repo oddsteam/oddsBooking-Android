@@ -252,7 +252,7 @@ class BookingFormPresenter {
         return SimpleDateFormat("EEEE", Locale.US).format(date)
     }
 
-    private fun getTimeSlot(startTime: String, endTime: String): Array<String> {
+    private fun getTimeSlot(startTime: String, endTime: String, ): Array<String> {
         var timeSlot = arrayOf<String>()
         val startTimeArray = startTime.split(":")
         val endTimeArray = endTime.split(":")
@@ -270,6 +270,7 @@ class BookingFormPresenter {
                     timeSlot += "$i:30"
                 } else if (i != endHr) {
                     timeSlot += "$i:00"
+                    timeSlot += "$i:30"
                 } else {
                     timeSlot += "$i:00"
                     if (endMin == 30) timeSlot += "$i:30"
