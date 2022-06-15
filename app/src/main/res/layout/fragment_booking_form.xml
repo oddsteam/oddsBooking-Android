@@ -171,7 +171,6 @@
                 <AutoCompleteTextView
                     android:id="@+id/fromTimeFormDropdown"
                     android:hint="@string/from_time_string"
-                    android:focusable="false"
                     android:textColorHint="@color/disable_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -211,7 +210,6 @@
                 <AutoCompleteTextView
                     android:id="@+id/toTimeFormDropDown"
                     android:hint="@string/to_time_string"
-                    android:focusable="false"
                     android:textColorHint="@color/disable_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

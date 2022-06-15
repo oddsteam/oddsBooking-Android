@@ -1,5 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.form
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.odds.oddsbooking.interfaces.BookingFormView
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.*
+
 
 class BookingFormFragment : Fragment(), BookingFormView {
 
@@ -63,12 +65,16 @@ class BookingFormFragment : Fragment(), BookingFormView {
         minDate: Long,
         maxDate: Long?
     ) {
+        editText.isFocusableInTouchMode = true;
+        editText.isFocusable = true;
+        editText.requestFocus()
+
         val calendar = Calendar.getInstance()
         var years = calendar.get(Calendar.YEAR)
         var months = calendar.get(Calendar.MONTH)
         var days = calendar.get(Calendar.DAY_OF_MONTH)
 
-        if(editText.text.isNullOrEmpty()){
+        if(editText.text.toString().isNotEmpty()) {
             val dates = editText.text.toString().split("/")
             years = dates[0].toInt()
             months = dates[1].toInt() -1
@@ -78,6 +84,18 @@ class BookingFormFragment : Fragment(), BookingFormView {
         val listener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
             val date = String.format("%d/%02d/%02d", year, month + 1, day)
             editText.setText(date)
+            editText.isFocusableInTouchMode = false
+            editText.isFocusable = false
+        }
+
+        val listenerDismiss = DialogInterface.OnDismissListener {
+            editText.isFocusableInTouchMode = false
+            editText.isFocusable = false
+        }
+
+        val listenerCancel = DialogInterface.OnCancelListener {
+            editText.isFocusableInTouchMode = false
+            editText.isFocusable = false
         }
 
         val dpd = DatePickerDialog.newInstance(
@@ -86,6 +104,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
             months,
             days
         )
+        dpd.setOnDismissListener(listenerDismiss)
+        dpd.setOnCancelListener(listenerCancel)
 
         calendar.timeInMillis = minDate
         dpd.minDate = calendar
@@ -324,10 +344,11 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             fromTimeFormDropdown.doOnTextChanged { text, _, _, _ ->
-                presenter.validateFromTime(text.toString(),
+                presenter.validateFromTime(
+                    text.toString(),
                     fromDateFormEditText.text.toString(),
                     toDateFormEditText.text.toString(),
-                    )
+                )
             }
 
             toDateFormEditText.doOnTextChanged { text, _, _, _ ->
@@ -396,7 +417,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             //TODO: change comment to func
-            // onClick previewButton
+            //onClick previewButton
             previewButton.setOnClickListener {
                 findNavController().apply {
                     navigate(
