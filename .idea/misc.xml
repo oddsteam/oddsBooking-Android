@@ -8,7 +8,13 @@
         <entry key="app/src/main/res/layout/activity_booking_success.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11550151975683891" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25483856201171873" />
+<<<<<<< Updated upstream
         <entry key="app/src/main/res/layout/fragment_booking_success.xml" value="0.1421875" />
+=======
+        <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.30978260869565216" />
+        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.2823674740998641" />
+        <entry key="app/src/main/res/layout/fragment_booking_preview.xml" value="0.30978260869565216" />
+>>>>>>> Stashed changes
       </map>
     </option>
   </component>

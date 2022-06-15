@@ -45,9 +45,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/oddsTitleBookingForm">
 
@@ -98,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/phone_number_string"
                     android:inputType="number"
-                    android:maxLength="10"/>
+                    android:maxLength="10" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,11 +113,11 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/roomFormDropdown"
-                    android:hint="@string/room"
-                    android:textColorHint="@color/disable_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:hint="@string/room"
+                    android:inputType="none"
+                    android:textColorHint="@color/disable_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,82 +140,102 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fromDateFormContainer"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/from_date_string"
-                app:startIconDrawable="@drawable/ic_calendar">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fromDateFormEditText"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fromDateFormContainer"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="" />
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="0.5"
+                    android:hint="@string/from_date_string"
+                    app:startIconDrawable="@drawable/ic_calendar">
 
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fromTimeFormContainer"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fromDateFormEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fromTimeFormContainer"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/from_time_string"
+                    app:boxBackgroundColor="@color/disable_color"
+                    app:startIconDrawable="@drawable/ic_time">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fromTimeFormEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/from_time_string"
-                app:boxBackgroundColor="@color/disable_color"
-                app:startIconDrawable="@drawable/ic_time">
+                android:layout_weight="1">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fromTimeFormEditText"
-                    android:focusable="false"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/toDateFormContainer"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="" />
+                    android:layout_weight="0.5"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/to_date_string"
+                    app:boxBackgroundColor="@color/disable_color"
+                    app:startIconDrawable="@drawable/ic_calendar">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/toDateFormEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/toDateFormContainer"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/to_date_string"
-                app:boxBackgroundColor="@color/disable_color"
-                app:startIconDrawable="@drawable/ic_calendar">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/toDateFormEditText"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/toTimeFormContainer"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="" />
+                    android:layout_weight="0.3"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/to_time_string"
+                    app:boxBackgroundColor="@color/disable_color"
+                    app:startIconDrawable="@drawable/ic_time">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/toTimeFormEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint=""
+                        android:inputType="phone" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/toTimeFormContainer"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/to_time_string"
-                app:boxBackgroundColor="@color/disable_color"
-                app:startIconDrawable="@drawable/ic_time">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/toTimeFormEditText"
-                    android:layout_width="match_parent"
-                    android:focusable="false"
-                    android:layout_height="wrap_content"
-                    android:hint=""
-                    android:inputType="phone" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/previewButton"
