@@ -28,9 +28,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Thank you \nfor your booking"
+            android:text="Thank you!\nPlease check your email"
             android:textAlignment="center"
-            android:textSize="40sp"
+            android:textSize="32sp"
             android:textStyle="bold" />
 
         <Button
