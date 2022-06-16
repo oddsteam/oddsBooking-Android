@@ -33,8 +33,9 @@ android {
             firebaseAppDistribution {
                 appId="1:435114910085:android:9fd5fc533d9661c9c824ec"
                 serviceCredentialsFile = "/var/jenkins_home/jobs/odd-booking-android/branches/dev/workspace/serviceaccount.json"
+                //serviceCredentialsFile = "/Users/Jerry/odds/oddsBooking-Android/serviceaccount.json"
                 artifactType="APK"
-                testers="odds-mola"
+                groups="odds-mola"
             }
 //            minifyEnabled false
 //            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
