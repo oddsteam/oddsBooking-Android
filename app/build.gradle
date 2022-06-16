@@ -32,7 +32,7 @@ android {
         release {
             firebaseAppDistribution {
                 appId="1:435114910085:android:9fd5fc533d9661c9c824ec"
-                serviceCredentialsFile = "/Users/Jerry/odds/oddsBooking-Android/serviceaccount.json"
+                serviceCredentialsFile = "/serviceaccount.json"
                 artifactType="APK"
                 testers="jerry@odds.team"
             }
