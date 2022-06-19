@@ -3,7 +3,6 @@ package com.odds.oddsbooking.presentations.booking.form
 import android.util.Log
 import android.util.Patterns
 import com.odds.oddsbooking.interfaces.BookingFormView
-import com.wdullaer.materialdatetimepicker.time.Timepoint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -106,55 +105,61 @@ class BookingFormPresenter {
                 fromDateErrorFlag = true
             }
             else -> {
+                val date = formatter.parse(fromDate)
                 //on week end
-                if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
-                    view.onValidateFromDateSuccess(getTimePoint("09:00", "20:59"))
+                if (checkDay(fromDate) == "Saturday") {
+                    val minDate: Long = date.time
+                    val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
+                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"), minDate, maxDate)
+                }else if (checkDay(fromDate) == "Sunday"){
+                    val minDate: Long = date.time
+                    val maxDate: Long = date.time
+                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"), minDate, maxDate)
                 }
                 //on week day
                 else {
-                    val timePoints = getTimePoint("00:00", "05:59") + getTimePoint("18:00", "23:59")
-                    view.onValidateFromDateSuccess(timePoints)
+                    val minDate: Long = date.time
+                    val maxDate: Long = date.time
+                    view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"), minDate, maxDate)
                 }
                 fromDateErrorFlag = false
             }
         }
     }
 
-    fun validateFromTime(fromTime: String, fromDate: String) {
+    fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {
+        var toTime = "00:00"
         when {
             fromTime.isEmpty() -> {
                 view.onValidateFromTimeError("From time can't be empty")
                 fromDateErrorFlag = true
             }
             else -> {
-                val date = formatter.parse(fromDate)
-                //on weekend (Saturday)
-                if (checkDay(fromDate) == "Saturday") {
-                    val minDate: Long = date.time
-                    val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
-                    view.onValidateFromTimeSuccess(minDate, maxDate)
-                }
-                //on weekend (Sunday)
-                else if (checkDay(fromDate) == "Sunday") {
-                    val minDate: Long = date.time
-                    val maxDate: Long = date.time
-                    view.onValidateFromTimeSuccess(minDate, maxDate)
-                }
-                //on weekday
-                else {
-                    val startTimeArray = fromTime.split(":")
-                    //fromTime >= 18:00, next day can booking (00:00 - 06:00)
-                    if (startTimeArray[0].toInt() >= 18) {
-                        val minDate: Long = date.time
-                        val maxDate: Long =
-                            date.time + (24 * 60 * 60 * 1000) // can booking next day
-                        view.onValidateFromTimeSuccess(minDate, maxDate)
+                val fromTimeArray = fromTime.split(":")
+                toTime =
+                    "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}"
+
+                //same day
+                if (fromDate == toDate) {
+                    //on weekend
+                    if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
+                        view.onValidateFromTimeSuccess(getTimeSlot(toTime, "21:00"))
                     }
-                    //fromTime < 18:00, next day can't booking
+                    //on weekday
                     else {
-                        val minDate: Long = date.time
-                        val maxDate: Long = date.time
-                        view.onValidateFromTimeSuccess(minDate, maxDate)
+                        view.onValidateFromTimeSuccess(getTimeSlot(toTime, "23:00"))
+                    }
+                }
+                //other day
+                else {
+                    val dayOfWeek = checkDay(fromDate)
+                    //on weekend
+                    if (arrayListOf<String>("Saturday", "Sunday").contains(dayOfWeek)) {
+                        view.onValidateFromTimeSuccess(getTimeSlot("09:30", "21:00"))
+                    }
+                    //on weekday
+                    else {
+                        view.onValidateFromTimeSuccess(getTimeSlot("18:30", "23:00"))
                     }
                 }
                 fromTimeErrorFlag = false
@@ -169,26 +174,21 @@ class BookingFormPresenter {
                 view.onValidateToDateError("To date can't be empty")
                 toDateErrorFlag = true
             }
+            fromTime.isEmpty() -> {}
             else -> {
                 val fromTimeArray = fromTime.split(":")
-
-                //TODO: Test check toTime min = 59 -> hour +1
                 toTime =
-                    "${fromTimeArray[0].toInt()}:${fromTimeArray[1].toInt() + 1}" // toTime equ fromTime + 1 minute
+                    "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}"
 
                 //same day
                 if (fromDate == toDate) {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
-                        view.onValidateToDateSuccess(getTimePoint(toTime, "21:00"))
+                        view.onValidateToDateSuccess(getTimeSlot(toTime, "21:00"))
                     }
                     //on weekday
                     else {
-                        if (fromTimeArray[0].toInt() >= 18) {
-                            view.onValidateToDateSuccess(getTimePoint(toTime, "23:59"))
-                        } else {
-                            view.onValidateToDateSuccess(getTimePoint(toTime, "06:00"))
-                        }
+                        view.onValidateToDateSuccess(getTimeSlot(toTime, "23:00"))
                     }
                 }
                 //other day
@@ -196,17 +196,11 @@ class BookingFormPresenter {
                     val dayOfWeek = checkDay(fromDate)
                     //on weekend
                     if (arrayListOf<String>("Saturday", "Sunday").contains(dayOfWeek)) {
-                        view.onValidateToDateSuccess(getTimePoint("09:00", "21:00"))
+                        view.onValidateToDateSuccess(getTimeSlot("09:30", "21:00"))
                     }
                     //on weekday
                     else {
-                        if (fromTimeArray[0].toInt() >= 18) {
-                            view.onValidateToDateSuccess(getTimePoint("00:00", "06:00"))
-                        } else {
-                            val timePoints =
-                                getTimePoint("00:00", "06:00") + getTimePoint("18:00", "23:59")
-                            view.onValidateToDateSuccess(timePoints)
-                        }
+                        view.onValidateToDateSuccess(getTimeSlot("18:30", "23:00"))
                     }
                 }
                 toDateErrorFlag = false
@@ -257,43 +251,33 @@ class BookingFormPresenter {
         return SimpleDateFormat("EEEE", Locale.US).format(date)
     }
 
-    private fun getTimePoint(startTime: String, endTime: String): Array<Timepoint> {
+    private fun getTimeSlot(startTime: String, endTime: String, ): Array<String> {
+        var timeSlot = arrayOf<String>()
         val startTimeArray = startTime.split(":")
         val endTimeArray = endTime.split(":")
-        var timesEnable = arrayOf<Timepoint>()
-        for (i in startTimeArray[0].toInt()..endTimeArray[0].toInt()) {
-            //hour start = hour end
-            if (startTimeArray[0].toInt() == endTimeArray[0].toInt()) {
-                for (j in startTimeArray[1].toInt()..endTimeArray[1].toInt()) {
-                    timesEnable += Timepoint(i, j)
-                }
-            }
-            //hour start != hour end
-            else {
-                when (i) {
-                    // first hour
-                    startTimeArray[0].toInt() -> {
-                        for (j in startTimeArray[1].toInt()..59) {
-                            timesEnable += Timepoint(i, j)
-                        }
-                    }
-                    //last hour
-                    endTimeArray[0].toInt() -> {
-                        for (j in 0..endTimeArray[1].toInt()) {
-                            timesEnable += Timepoint(i, j)
-                        }
-                    }
-                    //between hour start and end
-                    else -> {
-                        for (j in 0..59) {
-                            timesEnable += Timepoint(i, j)
-                        }
-                    }
+        val startHr = startTimeArray[0].toInt()
+        val startMin = startTimeArray[1].toInt()
+        val endHr = endTimeArray[0].toInt()
+        val endMin = endTimeArray[1].toInt()
+        if(startHr == endHr){
+            if (startMin == 0) timeSlot += "$startHr:00"
+            if (startMin == 30) timeSlot += "$startHr:30"
+        }else{
+            for (i in startHr..endHr) {
+                if (i == startHr) {
+                    if (startMin == 0) timeSlot += "$i:00"
+                    timeSlot += "$i:30"
+                } else if (i != endHr) {
+                    timeSlot += "$i:00"
+                    timeSlot += "$i:30"
+                } else {
+                    timeSlot += "$i:00"
+                    if (endMin == 30) timeSlot += "$i:30"
                 }
             }
         }
-        Log.d("toTime", timesEnable.toString())
-        return timesEnable
+        Log.d("TimeSlot", timeSlot.toString())
+        return timeSlot
     }
 
 
