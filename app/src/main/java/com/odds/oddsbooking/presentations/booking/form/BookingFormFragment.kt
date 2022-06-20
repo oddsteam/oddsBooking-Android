@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
 import com.odds.oddsbooking.interfaces.BookingData
+import com.odds.oddsbooking.interfaces.FromDate
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.*
@@ -74,6 +75,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         editText.isFocusableInTouchMode = true
         editText.isFocusable = true
         editText.requestFocus()
+        //TODO: move calendar to presenter
         val calendar = Calendar.getInstance()
         var years = calendar.get(Calendar.YEAR)
         var months = calendar.get(Calendar.MONTH)
@@ -119,6 +121,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onDateSetListener(editText: TextInputEditText) =
         DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            //TODO: move date format to presenter
             val date = String.format("%d/%02d/%02d", year, month + 1, day)
             editText.setText(date)
             editText.isFocusableInTouchMode = false
@@ -195,10 +198,13 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
         with(binding) {
             removeErrorContainer(fromDateFormContainer)
+
             toDateFormEditText.setOnClickListener {
+                // TODO: move showDatePicker to presenter
                 showDatePickerDialog(binding.toDateFormEditText, minDate, maxDate)
             }
 
+            //TODO: change to func
             fromTimeFormDropdown.isEnabled = true
             fromTimeFormContainer.setBoxBackgroundColorResource(enable)
             toDateFormContainer.isEnabled = false
@@ -270,6 +276,14 @@ class BookingFormFragment : Fragment(), BookingFormView {
         removeErrorContainer(binding.toTimeFormContainer)
     }
 
+    override fun onDatePickerDialogFormDate(fromDate: FromDate) {
+        showDatePickerDialog(
+            binding.fromDateFormEditText,
+            fromDate.minDate,
+            fromDate.maxDate
+        )
+    }
+
     private fun removeErrorContainer(inputLayout: TextInputLayout) {
         inputLayout.isErrorEnabled = false
         inputLayout.error = null
@@ -277,6 +291,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
 
     override fun onNameAutoFormat(name: String) {
+        //TODO: move name formatter to presenter or util
         val nameFormatter = name.lowercase().trim().split("\\s+".toRegex()).toMutableList()
         for (index in nameFormatter.indices) {
             nameFormatter[index] = nameFormatter[index].replaceFirstChar { it.uppercaseChar() }
@@ -417,14 +432,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onFromDateClicked() {
         binding.fromDateFormEditText.setOnClickListener {
-            showDatePickerDialog(
-                binding.fromDateFormEditText,
-                System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
-                null
-            )
+            presenter.onFromDateClick()
         }
     }
-
 
     private fun onReturnBinding() {
         arguments?.getParcelable<BookingData>(BookingFormActivity.EXTRA_BOOKING)

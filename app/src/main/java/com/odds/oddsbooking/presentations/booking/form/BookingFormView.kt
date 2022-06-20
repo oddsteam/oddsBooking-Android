@@ -1,5 +1,7 @@
 package com.odds.oddsbooking.presentations.booking.form
 
+import com.odds.oddsbooking.interfaces.FromDate
+
 interface BookingFormView {
     fun onNameAutoFormat(name: String)
     fun enablePreviewButton()
@@ -22,4 +24,5 @@ interface BookingFormView {
     fun onValidateToDateSuccess(timeSlot: Array<String>)
     fun onValidateToTimeError(errMsg: String)
     fun onValidateToTimeSuccess()
+    fun onDatePickerDialogFormDate(fromDate: FromDate)
 }

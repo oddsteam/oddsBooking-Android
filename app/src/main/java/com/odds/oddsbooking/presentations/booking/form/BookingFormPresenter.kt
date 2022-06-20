@@ -2,6 +2,7 @@ package com.odds.oddsbooking.presentations.booking.form
 
 import android.util.Log
 import android.util.Patterns
+import com.odds.oddsbooking.interfaces.FromDate
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,6 +20,9 @@ class BookingFormPresenter {
     private var fromTimeErrorFlag = true
     private var toDateErrorFlag = true
     private var toTimeErrorFlag = true
+
+    private var fromDateDialog =
+        FromDate(System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000), null)
 
     fun attachView(view: BookingFormView) {
         this.view = view
@@ -110,7 +114,7 @@ class BookingFormPresenter {
                     val minDate: Long = date.time
                     val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
                     view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"), minDate, maxDate)
-                }else if (checkDay(fromDate) == "Sunday"){
+                } else if (checkDay(fromDate) == "Sunday") {
                     val minDate: Long = date.time
                     val maxDate: Long = date.time
                     view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"), minDate, maxDate)
@@ -126,6 +130,11 @@ class BookingFormPresenter {
         }
     }
 
+    fun onFromDateClick() {
+        fromDateDialog = FromDate(System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000), null)
+        view.onDatePickerDialogFormDate(fromDateDialog)
+    }
+
     fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {
         when {
             fromTime.isEmpty() -> {
@@ -135,7 +144,7 @@ class BookingFormPresenter {
             else -> {
                 val fromTimeArray = fromTime.split(":")
                 val toTime =
-                    "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}"
+                    "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
 
                 //same day
                 if (fromDate == toDate) {
@@ -175,7 +184,7 @@ class BookingFormPresenter {
             else -> {
                 val fromTimeArray = fromTime.split(":")
                 val toTime =
-                    "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}"
+                    "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
 
                 //same day
                 if (fromDate == toDate) {
@@ -248,7 +257,7 @@ class BookingFormPresenter {
         return SimpleDateFormat("EEEE", Locale.US).format(date)
     }
 
-    private fun getTimeSlot(startTime: String, endTime: String ): Array<String> {
+    private fun getTimeSlot(startTime: String, endTime: String): Array<String> {
         var timeSlot = arrayOf<String>()
         val startTimeArray = startTime.split(":")
         val endTimeArray = endTime.split(":")
@@ -256,10 +265,10 @@ class BookingFormPresenter {
         val startMin = startTimeArray[1].toInt()
         val endHr = endTimeArray[0].toInt()
         val endMin = endTimeArray[1].toInt()
-        if(startHr == endHr){
+        if (startHr == endHr) {
             if (startMin == 0) timeSlot += "$startHr:00"
             if (startMin == 30) timeSlot += "$startHr:30"
-        }else{
+        } else {
             for (i in startHr..endHr) {
                 if (i == startHr) {
                     if (startMin == 0) timeSlot += "$i:00"
