@@ -1,4 +1,4 @@
-package com.odds.oddsbooking.interfaces
+package com.odds.oddsbooking.presentations.booking.preview
 
 interface BookingPreviewView {
     fun showProgressBar()

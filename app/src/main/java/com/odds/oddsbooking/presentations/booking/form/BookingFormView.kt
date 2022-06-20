@@ -1,6 +1,4 @@
-package com.odds.oddsbooking.interfaces
-
-import com.wdullaer.materialdatetimepicker.time.Timepoint
+package com.odds.oddsbooking.presentations.booking.form
 
 interface BookingFormView {
     fun onNameAutoFormat(name: String)

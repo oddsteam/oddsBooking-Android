@@ -2,7 +2,6 @@ package com.odds.oddsbooking.presentations.booking.form
 
 import android.util.Log
 import android.util.Patterns
-import com.odds.oddsbooking.interfaces.BookingFormView
 import java.text.SimpleDateFormat
 import java.util.*
 

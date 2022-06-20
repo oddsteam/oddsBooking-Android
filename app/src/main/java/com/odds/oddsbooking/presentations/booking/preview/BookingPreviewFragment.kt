@@ -16,7 +16,6 @@ import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.odds.oddsbooking.interfaces.Booking
 import com.odds.oddsbooking.interfaces.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingPreviewBinding
-import com.odds.oddsbooking.interfaces.BookingPreviewView
 import com.odds.oddsbooking.services.booking.BookingAPIFactory
 
 class BookingPreviewFragment : Fragment(), BookingPreviewView {

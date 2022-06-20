@@ -17,7 +17,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
 import com.odds.oddsbooking.interfaces.BookingData
-import com.odds.oddsbooking.interfaces.BookingFormView
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.*

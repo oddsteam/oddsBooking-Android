@@ -2,7 +2,6 @@ package com.odds.oddsbooking.presentations.booking.preview
 
 import android.util.Log
 import com.odds.oddsbooking.interfaces.Booking
-import com.odds.oddsbooking.interfaces.BookingPreviewView
 import com.odds.oddsbooking.services.booking.BookingAPI
 import kotlinx.coroutines.*
 import java.lang.Exception
