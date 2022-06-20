@@ -363,11 +363,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             toDateFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateToDate(
-                    text.toString(),
-                    fromDateFormEditText.text.toString(),
-                    fromTimeFormDropdown.text.toString()
-                )
+                presenter.validateToDate(text.toString(), fromDateFormEditText.text.toString(), fromTimeFormDropdown.text.toString())
             }
 
             toTimeFormDropDown.doOnTextChanged { text, _, _, _ ->

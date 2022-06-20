@@ -180,7 +180,9 @@ class BookingFormPresenter {
                 view.onValidateToDateError("To date can't be empty")
                 toDateErrorFlag = true
             }
-            fromTime.isEmpty() -> {}
+            fromTime.isEmpty() -> {
+                toDateErrorFlag = false
+            }
             else -> {
                 val fromTimeArray = fromTime.split(":")
                 val toTime =
