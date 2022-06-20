@@ -128,15 +128,14 @@ class BookingFormPresenter {
     }
 
     fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {
-        var toTime = "00:00"
         when {
             fromTime.isEmpty() -> {
-                view.onValidateFromTimeError("From time can't be empty")
+                view.onValidateFromTimeError("Time can't be empty")
                 fromDateErrorFlag = true
             }
             else -> {
                 val fromTimeArray = fromTime.split(":")
-                toTime =
+                val toTime =
                     "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}"
 
                 //same day
@@ -154,7 +153,7 @@ class BookingFormPresenter {
                 else {
                     val dayOfWeek = checkDay(fromDate)
                     //on weekend
-                    if (arrayListOf<String>("Saturday", "Sunday").contains(dayOfWeek)) {
+                    if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
                         view.onValidateFromTimeSuccess(getTimeSlot("09:30", "21:00"))
                     }
                     //on weekday
@@ -168,7 +167,6 @@ class BookingFormPresenter {
     }
 
     fun validateToDate(toDate: String, fromDate: String, fromTime: String) {
-        var toTime = "00:00"
         when {
             toDate.isEmpty() -> {
                 view.onValidateToDateError("To date can't be empty")
@@ -177,7 +175,7 @@ class BookingFormPresenter {
             fromTime.isEmpty() -> {}
             else -> {
                 val fromTimeArray = fromTime.split(":")
-                toTime =
+                val toTime =
                     "${fromTimeArray[0].toInt()+1}:${fromTimeArray[1].toInt()}"
 
                 //same day
@@ -195,7 +193,7 @@ class BookingFormPresenter {
                 else {
                     val dayOfWeek = checkDay(fromDate)
                     //on weekend
-                    if (arrayListOf<String>("Saturday", "Sunday").contains(dayOfWeek)) {
+                    if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
                         view.onValidateToDateSuccess(getTimeSlot("09:30", "21:00"))
                     }
                     //on weekday
@@ -211,7 +209,7 @@ class BookingFormPresenter {
     fun validateToTime(toTime: String) {
         toTimeErrorFlag = when {
             toTime.isEmpty() -> {
-                view.onValidateToTimeError("To time can't be empty")
+                view.onValidateToTimeError("Time can't be empty")
                 true
             }
             else -> {
@@ -251,7 +249,7 @@ class BookingFormPresenter {
         return SimpleDateFormat("EEEE", Locale.US).format(date)
     }
 
-    private fun getTimeSlot(startTime: String, endTime: String, ): Array<String> {
+    private fun getTimeSlot(startTime: String, endTime: String ): Array<String> {
         var timeSlot = arrayOf<String>()
         val startTimeArray = startTime.split(":")
         val endTimeArray = endTime.split(":")
