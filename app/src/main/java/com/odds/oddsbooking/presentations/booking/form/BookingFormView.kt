@@ -1,6 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.form
 
-import com.odds.oddsbooking.interfaces.FromDate
+import com.odds.oddsbooking.models.FromDate
 
 interface BookingFormView {
     fun onNameAutoFormat(name: String)

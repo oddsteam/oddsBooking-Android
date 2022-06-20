@@ -16,8 +16,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
-import com.odds.oddsbooking.interfaces.BookingData
-import com.odds.oddsbooking.interfaces.FromDate
+import com.odds.oddsbooking.models.BookingData
+import com.odds.oddsbooking.models.FromDate
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.*
@@ -204,13 +204,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 showDatePickerDialog(binding.toDateFormEditText, minDate, maxDate)
             }
 
-            //TODO: change to func
-            fromTimeFormDropdown.isEnabled = true
-            fromTimeFormContainer.setBoxBackgroundColorResource(enable)
-            toDateFormContainer.isEnabled = false
-            toDateFormContainer.setBoxBackgroundColorResource(disable)
-            toTimeFormDropDown.isEnabled = false
-            toTimeFormContainer.setBoxBackgroundColorResource(disable)
+            setFromTimeEnable(true, enable)
+            setToDateEnable(false, disable)
+            setToTimeEnable(false, disable)
 
             fromDateFormEditText.text?.let { toDateFormEditText.text = it }
 
@@ -218,6 +214,21 @@ class BookingFormFragment : Fragment(), BookingFormView {
             setDropDownWithValueToEmpty(fromTimeFormDropdown)
             setDropDownWithValueToEmpty(toTimeFormDropDown)
         }
+    }
+
+    private fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int){
+        binding.fromTimeFormDropdown.isEnabled = isEnable
+        binding.fromTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
+    }
+
+    private fun setToDateEnable(isEnable: Boolean, backgroundColor: Int){
+        binding.toDateFormContainer.isEnabled = isEnable
+        binding.toDateFormContainer.setBoxBackgroundColorResource(backgroundColor)
+    }
+
+    private fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int){
+        binding.toTimeFormDropDown.isEnabled = isEnable
+        binding.toTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
 
     private fun setDropDownWithValueToEmpty(editText: AutoCompleteTextView) {
@@ -238,10 +249,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
             setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
 
-            toDateFormContainer.isEnabled = true
-            toDateFormContainer.setBoxBackgroundColorResource(enable)
-            toTimeFormDropDown.isEnabled = true
-            toTimeFormContainer.setBoxBackgroundColorResource(enable)
+            setToDateEnable(true, enable)
+            setToTimeEnable(true, enable)
 
             setDropDownWithValueToEmpty(toTimeFormDropDown)
         }
@@ -257,8 +266,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         with(binding) {
             removeErrorContainer(toDateFormContainer)
 
-            toTimeFormDropDown.isEnabled = true
-            toTimeFormContainer.setBoxBackgroundColorResource(enable)
+            setToTimeEnable(true, enable)
 
             setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
 

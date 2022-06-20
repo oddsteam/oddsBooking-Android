@@ -1,4 +1,4 @@
-package com.odds.oddsbooking.interfaces
+package com.odds.oddsbooking.models
 
 import android.os.Parcelable
 import android.util.Patterns

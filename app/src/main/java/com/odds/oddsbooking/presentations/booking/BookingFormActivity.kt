@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.NavHostFragment
 import com.odds.oddsbooking.R
-import com.odds.oddsbooking.interfaces.BookingData
+import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.databinding.ActivityBookingFormBinding
 
 class BookingFormActivity : AppCompatActivity() {

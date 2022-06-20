@@ -1,4 +1,4 @@
-package com.odds.oddsbooking.interfaces
+package com.odds.oddsbooking.models
 
 data class FromDate(
     val minDate: Long,

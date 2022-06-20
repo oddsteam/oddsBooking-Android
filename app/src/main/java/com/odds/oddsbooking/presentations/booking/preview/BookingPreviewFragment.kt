@@ -13,8 +13,8 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
-import com.odds.oddsbooking.interfaces.Booking
-import com.odds.oddsbooking.interfaces.BookingData
+import com.odds.oddsbooking.models.Booking
+import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingPreviewBinding
 import com.odds.oddsbooking.services.booking.BookingAPIFactory
 

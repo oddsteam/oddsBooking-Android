@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
-import com.odds.oddsbooking.interfaces.BookingData
+import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingSuccessBinding
 
 
