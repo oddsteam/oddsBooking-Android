@@ -305,10 +305,10 @@ class BookingFormPresenter {
         return nameFormatter.joinToString(" ")
     }
 
-<<<<<<< Updated upstream
-    fun getDateFormatter(year: Int, month : Int, day : Int) : String{
+    fun getDateFormatter(year: Int, month: Int, day: Int): String {
         return String.format("%d/%02d/%02d", year, month + 1, day)
-=======
+    }
+
     fun getCurrentCalendar(timePicked: String): CalendarDate {
         calendarDate = if (timePicked.isNotEmpty()) {
             val dates = timePicked.split("/")
@@ -316,14 +316,12 @@ class BookingFormPresenter {
             val months = dates[1].toInt() - 1
             val days = dates[2].toInt()
             CalendarDate(calendar, years, months, days)
-        }else{
+        } else {
             val years = calendar.get(Calendar.YEAR)
             val months = calendar.get(Calendar.MONTH)
             val days = calendar.get(Calendar.DAY_OF_MONTH)
             CalendarDate(calendar, years, months, days)
         }
         return calendarDate
->>>>>>> Stashed changes
     }
-
 }
