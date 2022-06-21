@@ -72,36 +72,27 @@ class BookingFormFragment : Fragment(), BookingFormView {
         minDate: Long,
         maxDate: Long?
     ) {
+        //TODO: move focus to other func after & before date picker with flag by presenter
         editText.isFocusableInTouchMode = true
         editText.isFocusable = true
         editText.requestFocus()
-        //TODO: move calendar to presenter
-        val calendar = Calendar.getInstance()
-        var years = calendar.get(Calendar.YEAR)
-        var months = calendar.get(Calendar.MONTH)
-        var days = calendar.get(Calendar.DAY_OF_MONTH)
-        if (editText.text.toString().isNotEmpty()) {
-            val dates = editText.text.toString().split("/")
-            years = dates[0].toInt()
-            months = dates[1].toInt() - 1
-            days = dates[2].toInt()
-        }
+        val calendarDate = presenter.getCurrentCalendar(editText.text.toString())
         val listener = onDateSetListener(editText)
         val listenerDismiss = onDismissListener(editText)
         val listenerCancel = onCancelListener(editText)
         val dpd = DatePickerDialog.newInstance(
             listener,
-            years,
-            months,
-            days
+            calendarDate.years,
+            calendarDate.months,
+            calendarDate.days
         )
         dpd.setOnDismissListener(listenerDismiss)
         dpd.setOnCancelListener(listenerCancel)
-        calendar.timeInMillis = minDate
-        dpd.minDate = calendar
+        calendarDate.calendar.timeInMillis = minDate
+        dpd.minDate = calendarDate.calendar
         if (maxDate != null) {
-            calendar.timeInMillis = maxDate
-            dpd.maxDate = calendar
+            calendarDate.calendar.timeInMillis = maxDate
+            dpd.maxDate = calendarDate.calendar
         }
         dpd.setTitle("Select ${editText.hint}")
         dpd.show(childFragmentManager, "DatePickerDialog")
@@ -199,7 +190,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             removeErrorContainer(fromDateFormContainer)
 
             toDateFormEditText.setOnClickListener {
-                // TODO: move showDatePicker to presenter
+                // TODO: Bug**** move showDatePicker to presenter
                 showDatePickerDialog(binding.toDateFormEditText, minDate, maxDate)
             }
 

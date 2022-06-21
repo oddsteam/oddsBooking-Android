@@ -2,6 +2,7 @@ package com.odds.oddsbooking.presentations.booking.form
 
 import android.util.Log
 import android.util.Patterns
+import com.odds.oddsbooking.models.CalendarDate
 import com.odds.oddsbooking.models.FromDate
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,6 +24,14 @@ class BookingFormPresenter {
 
     private var fromDateDialog =
         FromDate(System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000), null)
+
+    private var calendar = Calendar.getInstance()
+    private var calendarDate = CalendarDate(
+        calendar,
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
 
     fun attachView(view: BookingFormView) {
         this.view = view
@@ -288,7 +297,7 @@ class BookingFormPresenter {
         return timeSlot
     }
 
-    fun getNameFormatter(name: String): String{
+    fun getNameFormatter(name: String): String {
         val nameFormatter = name.lowercase().trim().split("\\s+".toRegex()).toMutableList()
         for (index in nameFormatter.indices) {
             nameFormatter[index] = nameFormatter[index].replaceFirstChar { it.uppercaseChar() }
@@ -296,8 +305,25 @@ class BookingFormPresenter {
         return nameFormatter.joinToString(" ")
     }
 
+<<<<<<< Updated upstream
     fun getDateFormatter(year: Int, month : Int, day : Int) : String{
         return String.format("%d/%02d/%02d", year, month + 1, day)
+=======
+    fun getCurrentCalendar(timePicked: String): CalendarDate {
+        calendarDate = if (timePicked.isNotEmpty()) {
+            val dates = timePicked.split("/")
+            val years = dates[0].toInt()
+            val months = dates[1].toInt() - 1
+            val days = dates[2].toInt()
+            CalendarDate(calendar, years, months, days)
+        }else{
+            val years = calendar.get(Calendar.YEAR)
+            val months = calendar.get(Calendar.MONTH)
+            val days = calendar.get(Calendar.DAY_OF_MONTH)
+            CalendarDate(calendar, years, months, days)
+        }
+        return calendarDate
+>>>>>>> Stashed changes
     }
 
 }
