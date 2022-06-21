@@ -4,6 +4,7 @@ import android.util.Log
 import android.util.Patterns
 import com.odds.oddsbooking.models.CalendarDate
 import com.odds.oddsbooking.models.FromDate
+import com.odds.oddsbooking.models.ToDate
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,6 +25,8 @@ class BookingFormPresenter {
 
     private var fromDateDialog =
         FromDate(System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000), null)
+    private var toDateDialog =
+        ToDate(0,0)
 
     private var calendar = Calendar.getInstance()
     private var calendarDate = CalendarDate(
@@ -122,17 +125,20 @@ class BookingFormPresenter {
                 if (checkDay(fromDate) == "Saturday") {
                     val minDate: Long = date.time
                     val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
-                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"), minDate, maxDate)
+                    toDateDialog = ToDate(minDate, maxDate)
+                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
                 } else if (checkDay(fromDate) == "Sunday") {
                     val minDate: Long = date.time
                     val maxDate: Long = date.time
-                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"), minDate, maxDate)
+                    toDateDialog = ToDate(minDate, maxDate)
+                    view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
                 }
                 //on week day
                 else {
                     val minDate: Long = date.time
                     val maxDate: Long = date.time
-                    view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"), minDate, maxDate)
+                    toDateDialog = ToDate(minDate, maxDate)
+                    view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"))
                 }
                 fromDateErrorFlag = false
             }
@@ -142,6 +148,10 @@ class BookingFormPresenter {
     fun onFromDateClick() {
         fromDateDialog = FromDate(System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000), null)
         view.onDatePickerDialogFormDate(fromDateDialog)
+    }
+
+    fun onToDateClick() {
+        view.onDatePickerDialogToDate(toDateDialog)
     }
 
     fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {

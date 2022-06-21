@@ -18,9 +18,9 @@ import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.FromDate
+import com.odds.oddsbooking.models.ToDate
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import java.util.*
 
 
 class BookingFormFragment : Fragment(), BookingFormView {
@@ -184,16 +184,11 @@ class BookingFormFragment : Fragment(), BookingFormView {
         container.error = errMsg
     }
 
-    override fun onValidateFromDateSuccess(timeSlot: Array<String>, minDate: Long, maxDate: Long) {
+    override fun onValidateFromDateSuccess(timeSlot: Array<String>) {
 
         with(binding) {
             removeErrorContainer(fromDateFormContainer)
-
-            toDateFormEditText.setOnClickListener {
-                // TODO: Bug**** move showDatePicker to presenter
-                showDatePickerDialog(binding.toDateFormEditText, minDate, maxDate)
-            }
-
+            onToDateClicked()
             setFromTimeEnable(true, enable)
             setToDateEnable(false, disable)
             setToTimeEnable(false, disable)
@@ -279,6 +274,14 @@ class BookingFormFragment : Fragment(), BookingFormView {
             binding.fromDateFormEditText,
             fromDate.minDate,
             fromDate.maxDate
+        )
+    }
+
+    override fun onDatePickerDialogToDate(toDate: ToDate) {
+        showDatePickerDialog(
+            binding.toDateFormEditText,
+            toDate.minDate,
+            toDate.maxDate
         )
     }
 
@@ -422,6 +425,12 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private fun onFromDateClicked() {
         binding.fromDateFormEditText.setOnClickListener {
             presenter.onFromDateClick()
+        }
+    }
+
+    private fun onToDateClicked() {
+        binding.toDateFormEditText.setOnClickListener {
+            presenter.onToDateClick()
         }
     }
 
