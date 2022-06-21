@@ -1,6 +1,7 @@
 package com.odds.oddsbooking.presentations.booking.form
 
 import com.odds.oddsbooking.models.FromDate
+import com.odds.oddsbooking.models.ToDate
 
 interface BookingFormView {
     fun onNameAutoFormat(name: String)
@@ -17,7 +18,7 @@ interface BookingFormView {
     fun onValidateReasonError(errMsg: String)
     fun onValidateReasonSuccess()
     fun onValidateFromDateError(errMsg: String)
-    fun onValidateFromDateSuccess(timeSlot: Array<String>,minDate: Long, maxDate: Long)
+    fun onValidateFromDateSuccess(timeSlot: Array<String>)
     fun onValidateFromTimeError(errMsg: String)
     fun onValidateFromTimeSuccess(timeSlot: Array<String>)
     fun onValidateToDateError(errMsg: String)
@@ -25,4 +26,5 @@ interface BookingFormView {
     fun onValidateToTimeError(errMsg: String)
     fun onValidateToTimeSuccess()
     fun onDatePickerDialogFormDate(fromDate: FromDate)
+    fun onDatePickerDialogToDate(toDate: ToDate)
 }
