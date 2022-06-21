@@ -1,8 +1,9 @@
 package com.odds.oddsbooking.presentations.booking.form
 
+import com.google.android.material.textfield.TextInputEditText
 import com.odds.oddsbooking.models.DateInTimePicker
 
-interface BookingFormView{
+interface BookingFormView : IDatePicker{
     fun onNameAutoFormat(name: String)
     fun enablePreviewButton()
     fun disablePreviewButton()
@@ -28,9 +29,10 @@ interface BookingFormView{
     fun onDatePickerDialogToDate(toDate: DateInTimePicker)
 }
 
-// TODO: rename
-interface AA{
+interface IDatePicker{
     fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int)
     fun setToDateEnable(isEnable: Boolean, backgroundColor: Int)
     fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int)
+    fun setDisableFromDate()
+    fun setDisableToDate()
 }

@@ -96,19 +96,20 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onCancelListener(editText: TextInputEditText) =
         DialogInterface.OnCancelListener {
-            setEditTextIsFocus(editText, false)
+//            setEditTextIsFocus(editText, false)
+            presenter.onDatePickerCancel()
         }
 
     private fun onDismissListener(editText: TextInputEditText) =
         DialogInterface.OnDismissListener {
-            setEditTextIsFocus(editText, false)
+            presenter.onDatePickerDismiss()
         }
 
     private fun onDateSetListener(editText: TextInputEditText) = //confirm
         DatePickerDialog.OnDateSetListener { _, year, month, day ->
             val date = presenter.getDateFormatter(year, month, day)
             editText.setText(date)
-            setEditTextIsFocus(editText, false)
+            presenter.onDatePickerConfirm()
         }
 
     override fun onValidateNameError(errMsg: String) {
@@ -195,19 +196,27 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
     }
 
-    private fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int){
+    override fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int){
         binding.fromTimeFormDropdown.isEnabled = isEnable
         binding.fromTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
 
-    private fun setToDateEnable(isEnable: Boolean, backgroundColor: Int){
+    override fun setToDateEnable(isEnable: Boolean, backgroundColor: Int){
         binding.toDateFormContainer.isEnabled = isEnable
         binding.toDateFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
 
-    private fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int){
+    override fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int){
         binding.toTimeFormDropDown.isEnabled = isEnable
         binding.toTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
+    }
+
+    override fun setDisableFromDate() {
+        setEditTextIsFocus(binding.fromDateFormEditText, false)
+    }
+
+    override fun setDisableToDate() {
+        setEditTextIsFocus(binding.toDateFormEditText, false)
     }
 
     private fun setDropDownWithValueToEmpty(editText: AutoCompleteTextView) {

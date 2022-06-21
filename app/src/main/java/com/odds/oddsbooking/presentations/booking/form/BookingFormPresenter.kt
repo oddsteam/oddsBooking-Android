@@ -355,15 +355,28 @@ class BookingFormPresenter {
     }
 
     fun onDatePickerCancel() {
-        //TODO: move from fragment to here
+        if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
+            view.setDisableFromDate()
+        }else{
+            view.setDisableToDate()
+        }
+
     }
 
     fun onDatePickerDismiss() {
-        //TODO: move from fragment to here
+        if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
+            view.setDisableFromDate()
+        }else{
+            view.setDisableToDate()
+        }
     }
 
     fun onDatePickerConfirm() {
-        //TODO: move from fragment to here
+        if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
+            view.setDisableFromDate()
+        }else{
+            view.setDisableToDate()
+        }
     }
 
 
