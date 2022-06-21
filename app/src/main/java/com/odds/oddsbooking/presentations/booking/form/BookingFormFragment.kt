@@ -121,8 +121,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onDateSetListener(editText: TextInputEditText) =
         DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            //TODO: move date format to presenter
-            val date = String.format("%d/%02d/%02d", year, month + 1, day)
+            val date = presenter.getDateFormatter(year, month, day)
             editText.setText(date)
             editText.isFocusableInTouchMode = false
             editText.isFocusable = false
