@@ -30,9 +30,13 @@ interface BookingFormView : IDatePicker{
 }
 
 interface IDatePicker{
-    fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int)
-    fun setToDateEnable(isEnable: Boolean, backgroundColor: Int)
-    fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int)
-    fun setDisableFromDate()
+    fun setDisableFromDateEditText()
+    fun setDisableToDateEditText()
+    fun setEnableFromTime()
+    fun setDisableFromTime()
+    fun setEnableToDate()
     fun setDisableToDate()
+    fun setEnableToTime()
+    fun setDisableToTime()
+
 }

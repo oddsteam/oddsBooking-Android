@@ -183,9 +183,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
             removeErrorContainer(fromDateFormContainer)
             onToDateClicked()
             //TODO: create set... into interface and call in presenter
-            setFromTimeEnable(true, enable)
-            setToDateEnable(false, disable)
-            setToTimeEnable(false, disable)
+//            setFromTimeEnable(true, enable)
+//            setToDateEnable(false, disable)
+//            setToTimeEnable(false, disable)
 
             fromDateFormEditText.text?.let { toDateFormEditText.text = it }
 
@@ -195,27 +195,51 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
     }
 
-    override fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int){
+    private fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int){
         binding.fromTimeFormDropdown.isEnabled = isEnable
         binding.fromTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
 
-    override fun setToDateEnable(isEnable: Boolean, backgroundColor: Int){
+    private fun setToDateEnable(isEnable: Boolean, backgroundColor: Int){
         binding.toDateFormContainer.isEnabled = isEnable
         binding.toDateFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
 
-    override fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int){
+    private fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int){
         binding.toTimeFormDropDown.isEnabled = isEnable
         binding.toTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
 
-    override fun setDisableFromDate() {
+    override fun setDisableFromDateEditText() {
         setEditTextIsFocus(binding.fromDateFormEditText, false)
     }
 
-    override fun setDisableToDate() {
+    override fun setDisableToDateEditText() {
         setEditTextIsFocus(binding.toDateFormEditText, false)
+    }
+
+    override fun setEnableFromTime() {
+        setFromTimeEnable(true, enable)
+    }
+
+    override fun setDisableFromTime() {
+        setFromTimeEnable(false, disable)
+    }
+
+    override fun setEnableToDate() {
+        setToDateEnable(true, enable)
+    }
+
+    override fun setDisableToDate() {
+        setToDateEnable(false, disable)
+    }
+
+    override fun setEnableToTime() {
+        setToTimeEnable(true, enable)
+    }
+
+    override fun setDisableToTime() {
+        setToTimeEnable(false, disable)
     }
 
     private fun setDropDownWithValueToEmpty(editText: AutoCompleteTextView) {
@@ -236,8 +260,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
             setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
 
-            setToDateEnable(true, enable)
-            setToTimeEnable(true, enable)
+//            setToDateEnable(true, enable)
+//            setToTimeEnable(true, enable)
 
             setDropDownWithValueToEmpty(toTimeFormDropDown)
         }
@@ -253,7 +277,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         with(binding) {
             removeErrorContainer(toDateFormContainer)
 
-            setToTimeEnable(true, enable)
+//            setToTimeEnable(true, enable)
 
             setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
 

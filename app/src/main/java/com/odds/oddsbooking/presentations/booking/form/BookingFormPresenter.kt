@@ -46,6 +46,8 @@ class BookingFormPresenter {
         calendar.get(Calendar.DAY_OF_MONTH)
     )
 
+    private var fromDate = ""
+
     fun attachView(view: BookingFormView) {
         this.view = view
     }
@@ -124,34 +126,35 @@ class BookingFormPresenter {
     }
 
     fun validateFromDate(fromDate: String) {
+        this.fromDate = fromDate
         when {
             fromDate.isEmpty() -> {
                 view.onValidateFromDateError("From date can't be empty")
                 fromDateErrorFlag = true
             }
             else -> {
-                val date = formatter.parse(fromDate)
-                //on week end
+//                //on week end
                 if (checkDay(fromDate) == "Saturday") {
-                    val minDate: Long = date.time
-                    val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
-                    dateInTimePickerDialog =
-                        DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
+
                     view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
+
+                    view.setEnableFromTime()
+                    view.setDisableToDate()
+                    view.setDisableToTime()
                 } else if (checkDay(fromDate) == "Sunday") {
-                    val minDate: Long = date.time
-                    val maxDate: Long = date.time
-                    dateInTimePickerDialog =
-                        DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
                     view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
+
+                    view.setEnableFromTime()
+                    view.setDisableToDate()
+                    view.setDisableToTime()
                 }
                 //on week day
                 else {
-                    val minDate: Long = date.time
-                    val maxDate: Long = date.time
-                    dateInTimePickerDialog =
-                        DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
                     view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"))
+
+                    view.setEnableFromTime()
+                    view.setDisableToDate()
+                    view.setDisableToTime()
                 }
                 fromDateErrorFlag = false
             }
@@ -168,6 +171,26 @@ class BookingFormPresenter {
     }
 
     fun onToDateClick() {
+        val date = formatter.parse(fromDate)
+        //on week end
+        if (checkDay(fromDate) == "Saturday") {
+            val minDate: Long = date.time
+            val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
+            dateInTimePickerDialog =
+                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
+        } else if (checkDay(fromDate) == "Sunday") {
+            val minDate: Long = date.time
+            val maxDate: Long = date.time
+            dateInTimePickerDialog =
+                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
+        }
+        //on week day
+        else {
+            val minDate: Long = date.time
+            val maxDate: Long = date.time
+            dateInTimePickerDialog =
+                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
+        }
         //reset when click in toDate datePicker
         view.onDatePickerDialogToDate(dateInTimePickerDialog)
     }
@@ -188,10 +211,14 @@ class BookingFormPresenter {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
                         view.onValidateFromTimeSuccess(getTimeSlot(toTime, "21:00"))
+                        view.setEnableToDate()
+                        view.setEnableToTime()
                     }
                     //on weekday
                     else {
                         view.onValidateFromTimeSuccess(getTimeSlot(toTime, "23:00"))
+                        view.setEnableToDate()
+                        view.setEnableToTime()
                     }
                 }
                 //other day
@@ -200,10 +227,14 @@ class BookingFormPresenter {
                     //on weekend
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
                         view.onValidateFromTimeSuccess(getTimeSlot("09:30", "21:00"))
+                        view.setEnableToDate()
+                        view.setEnableToTime()
                     }
                     //on weekday
                     else {
                         view.onValidateFromTimeSuccess(getTimeSlot("18:30", "23:00"))
+                        view.setEnableToDate()
+                        view.setEnableToTime()
                     }
                 }
                 fromTimeErrorFlag = false
@@ -230,10 +261,12 @@ class BookingFormPresenter {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
                         view.onValidateToDateSuccess(getTimeSlot(toTime, "21:00"))
+                        view.setEnableToTime()
                     }
                     //on weekday
                     else {
                         view.onValidateToDateSuccess(getTimeSlot(toTime, "23:00"))
+                        view.setEnableToTime()
                     }
                 }
                 //other day
@@ -242,10 +275,12 @@ class BookingFormPresenter {
                     //on weekend
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
                         view.onValidateToDateSuccess(getTimeSlot("09:30", "21:00"))
+                        view.setEnableToTime()
                     }
                     //on weekday
                     else {
                         view.onValidateToDateSuccess(getTimeSlot("18:30", "23:00"))
+                        view.setEnableToTime()
                     }
                 }
                 toDateErrorFlag = false
@@ -257,6 +292,7 @@ class BookingFormPresenter {
         toTimeErrorFlag = when {
             toTime.isEmpty() -> {
                 view.onValidateToTimeError("Time can't be empty")
+
                 true
             }
             else -> {
@@ -356,26 +392,26 @@ class BookingFormPresenter {
 
     fun onDatePickerCancel() {
         if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
-            view.setDisableFromDate()
+            view.setDisableFromDateEditText()
         }else{
-            view.setDisableToDate()
+            view.setDisableToDateEditText()
         }
 
     }
 
     fun onDatePickerDismiss() {
         if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
-            view.setDisableFromDate()
+            view.setDisableFromDateEditText()
         }else{
-            view.setDisableToDate()
+            view.setDisableToDateEditText()
         }
     }
 
     fun onDatePickerConfirm() {
         if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
-            view.setDisableFromDate()
+            view.setDisableFromDateEditText()
         }else{
-            view.setDisableToDate()
+            view.setDisableToDateEditText()
         }
     }
 }
