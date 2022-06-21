@@ -1,9 +1,8 @@
 package com.odds.oddsbooking.presentations.booking.form
 
-import com.odds.oddsbooking.models.FromDate
-import com.odds.oddsbooking.models.ToDate
+import com.odds.oddsbooking.models.DateInTimePicker
 
-interface BookingFormView {
+interface BookingFormView{
     fun onNameAutoFormat(name: String)
     fun enablePreviewButton()
     fun disablePreviewButton()
@@ -25,6 +24,13 @@ interface BookingFormView {
     fun onValidateToDateSuccess(timeSlot: Array<String>)
     fun onValidateToTimeError(errMsg: String)
     fun onValidateToTimeSuccess()
-    fun onDatePickerDialogFormDate(fromDate: FromDate)
-    fun onDatePickerDialogToDate(toDate: ToDate)
+    fun onDatePickerDialogFormDate(fromDate: DateInTimePicker)
+    fun onDatePickerDialogToDate(toDate: DateInTimePicker)
+}
+
+// TODO: rename
+interface AA{
+    fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int)
+    fun setToDateEnable(isEnable: Boolean, backgroundColor: Int)
+    fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int)
 }
