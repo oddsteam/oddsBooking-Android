@@ -96,7 +96,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onCancelListener(editText: TextInputEditText) =
         DialogInterface.OnCancelListener {
-//            setEditTextIsFocus(editText, false)
             presenter.onDatePickerCancel()
         }
 
@@ -274,7 +273,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     override fun onDatePickerDialogFormDate(dateInTimePicker: DateInTimePicker) {
         setEditTextIsFocus(binding.fromDateFormEditText, true)
-
         showDatePickerDialog(
             binding.fromDateFormEditText,
             dateInTimePicker.minDate,
@@ -430,14 +428,12 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onFromDateClicked() {
         binding.fromDateFormEditText.setOnClickListener {
-            setEditTextIsFocus(binding.fromDateFormEditText, true)
             presenter.onFromDateClick()
         }
     }
 
     private fun onToDateClicked() {
         binding.toDateFormEditText.setOnClickListener {
-            setEditTextIsFocus(binding.toDateFormEditText, true)
             presenter.onToDateClick()
         }
     }

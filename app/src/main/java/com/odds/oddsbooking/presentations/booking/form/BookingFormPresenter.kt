@@ -378,6 +378,4 @@ class BookingFormPresenter {
             view.setDisableToDate()
         }
     }
-
-
 }
