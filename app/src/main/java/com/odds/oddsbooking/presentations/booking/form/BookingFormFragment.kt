@@ -73,8 +73,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         maxDate: Long?
     ) {
         //TODO: move focus to other func after & before date picker with flag by presenter
-        editText.isFocusableInTouchMode = true
-        editText.isFocusable = true
+        setEditTextIsFocus(editText, true)
         editText.requestFocus()
         val calendarDate = presenter.getCurrentCalendar(editText.text.toString())
         val listener = onDateSetListener(editText)
@@ -100,22 +99,25 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onCancelListener(editText: TextInputEditText) =
         DialogInterface.OnCancelListener {
-            editText.isFocusableInTouchMode = false
-            editText.isFocusable = false
+//            editText.isFocusableInTouchMode = false
+//            editText.isFocusable = false
+            setEditTextIsFocus(editText, false)
         }
 
     private fun onDismissListener(editText: TextInputEditText) =
         DialogInterface.OnDismissListener {
-            editText.isFocusableInTouchMode = false
-            editText.isFocusable = false
+//            editText.isFocusableInTouchMode = false
+//            editText.isFocusable = false
+            setEditTextIsFocus(editText, false)
         }
 
     private fun onDateSetListener(editText: TextInputEditText) =
         DatePickerDialog.OnDateSetListener { _, year, month, day ->
             val date = presenter.getDateFormatter(year, month, day)
             editText.setText(date)
-            editText.isFocusableInTouchMode = false
-            editText.isFocusable = false
+//            editText.isFocusableInTouchMode = false
+//            editText.isFocusable = false
+            setEditTextIsFocus(editText, false)
         }
 
     override fun onValidateNameError(errMsg: String) {
@@ -441,5 +443,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 toTimeFormDropDown.setText(bookingData.toTime)
             }
         }
+    }
+
+    private fun setEditTextIsFocus(editText: TextInputEditText, isFocus: Boolean){
+        editText.isFocusableInTouchMode = isFocus
+        editText.isFocusable = isFocus
     }
 }
