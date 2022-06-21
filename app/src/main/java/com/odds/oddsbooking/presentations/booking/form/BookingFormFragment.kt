@@ -73,8 +73,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         maxDate: Long?
     ) {
         //TODO: move focus to other func after & before date picker with flag by presenter
-        setEditTextIsFocus(editText, true)
-        editText.requestFocus()
         val calendarDate = presenter.getCurrentCalendar(editText.text.toString())
         val listener = onDateSetListener(editText)
         val listenerDismiss = onDismissListener(editText)
@@ -99,15 +97,11 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onCancelListener(editText: TextInputEditText) =
         DialogInterface.OnCancelListener {
-//            editText.isFocusableInTouchMode = false
-//            editText.isFocusable = false
             setEditTextIsFocus(editText, false)
         }
 
     private fun onDismissListener(editText: TextInputEditText) =
         DialogInterface.OnDismissListener {
-//            editText.isFocusableInTouchMode = false
-//            editText.isFocusable = false
             setEditTextIsFocus(editText, false)
         }
 
@@ -115,8 +109,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         DatePickerDialog.OnDateSetListener { _, year, month, day ->
             val date = presenter.getDateFormatter(year, month, day)
             editText.setText(date)
-//            editText.isFocusableInTouchMode = false
-//            editText.isFocusable = false
             setEditTextIsFocus(editText, false)
         }
 
@@ -426,12 +418,14 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onFromDateClicked() {
         binding.fromDateFormEditText.setOnClickListener {
+            setEditTextIsFocus(binding.fromDateFormEditText, true)
             presenter.onFromDateClick()
         }
     }
 
     private fun onToDateClicked() {
         binding.toDateFormEditText.setOnClickListener {
+            setEditTextIsFocus(binding.toDateFormEditText, true)
             presenter.onToDateClick()
         }
     }
@@ -457,5 +451,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private fun setEditTextIsFocus(editText: TextInputEditText, isFocus: Boolean){
         editText.isFocusableInTouchMode = isFocus
         editText.isFocusable = isFocus
+        if (isFocus) {
+            editText.requestFocus()
+        }
     }
 }
