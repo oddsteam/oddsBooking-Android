@@ -299,12 +299,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
 
     override fun onNameAutoFormat(name: String) {
-        //TODO: move name formatter to presenter or util
-        val nameFormatter = name.lowercase().trim().split("\\s+".toRegex()).toMutableList()
-        for (index in nameFormatter.indices) {
-            nameFormatter[index] = nameFormatter[index].replaceFirstChar { it.uppercaseChar() }
-        }
-        binding.nameFormEditText.setText(nameFormatter.joinToString(" "))
+        binding.nameFormEditText.setText(presenter.getNameFormatter(name))
     }
 
     override fun enablePreviewButton() {
