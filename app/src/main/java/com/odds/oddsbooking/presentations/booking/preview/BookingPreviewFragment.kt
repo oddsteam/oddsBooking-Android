@@ -100,17 +100,17 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
     }
 
     override fun backToBookingFormPage() {
-//        findNavController().popBackStack()
-        findNavController().apply {
-            Log.d("toDate_Preview", bookingData.toDate)
-            navigate(
-                R.id.bookingFormFragment,
-                bundleOf(
-                    BookingFormActivity.EXTRA_BOOKING to bookingData
-                )
-
-            )
-        }
+        findNavController().popBackStack()
+//        findNavController().apply {
+//            Log.d("toDate_Preview", bookingData.toDate)
+//            navigate(
+//                R.id.bookingFormFragment,
+//                bundleOf(
+//                    BookingFormActivity.EXTRA_BOOKING to bookingData
+//                )
+//
+//            )
+//        }
     }
 
 

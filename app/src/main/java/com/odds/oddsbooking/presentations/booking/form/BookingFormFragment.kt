@@ -40,6 +40,11 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private var fromTimeTimeSlot : Array<String> = arrayOf<String>()
 
     //region Fragment Life Cycle
+    override fun onResume() {
+        super.onResume()
+        setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter.attachView(this)
@@ -60,7 +65,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         formValidate()
         dateTimePickerEnable()
         onFromDateClicked()
-        onFromTimeClicked()
         onPreviewButtonClick()
         onReturnBinding()
     }
@@ -283,7 +287,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 //            setToDateEnable(false, disable)
 //            setToTimeEnable(false, disable)
 
-//            fromDateFormEditText.text?.let { toDateFormEditText.text = it }
+            fromDateFormEditText.text?.let { toDateFormEditText.text = it }
 
 //            setTimeDropdown(timeSlot, fromTimeFormDropdown)
             setDropDownWithValueToEmpty(fromTimeFormDropdown)
@@ -478,11 +482,11 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
     }
 
-    private fun onFromTimeClicked(){
-        binding.fromTimeFormDropdown.setOnClickListener{
-            setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
-        }
-    }
+//    private fun onFromTimeClicked(){
+//        binding.fromTimeFormDropdown.setOnClickListener{
+//            setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
+//        }
+//    }
 
     private fun onReturnBinding() {
         arguments?.getParcelable<BookingData>(BookingFormActivity.EXTRA_BOOKING)
