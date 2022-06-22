@@ -37,12 +37,14 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private val disable = R.color.disable_color
     private val enable = android.R.color.transparent
 
-    private var fromTimeTimeSlot : Array<String> = arrayOf<String>()
+    private var fromTimeTimeSlot: Array<String> = arrayOf<String>()
+    private var toTimeTimeSlot: Array<String> = arrayOf<String>()
 
     //region Fragment Life Cycle
     override fun onResume() {
         super.onResume()
         setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
+        setTimeDropdown(toTimeTimeSlot, binding.toTimeFormDropDown)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,14 +78,13 @@ class BookingFormFragment : Fragment(), BookingFormView {
             ArrayAdapter(binding.roomFormDropdown.context, R.layout.dropdown_item, rooms)
         binding.roomFormDropdown.setAdapter(arrayAdapter)
     }
-    
+
     private fun showDatePickerDialog(
         editText: TextInputEditText,
         minDate: Long,
         maxDate: Long?,
-        calendarDate : CalendarDate
+        calendarDate: CalendarDate
     ) {
-//        val calendarDate = presenter.getCurrentCalendar(editText.text.toString())
         val listener = onDateSetListener(editText)
         val listenerDismiss = onDismissListener(editText)
         val listenerCancel = onCancelListener(editText)
@@ -106,6 +107,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
         dpd.show(childFragmentManager, "DatePickerDialog")
     }
 
+
+    //region on...Listener
     private fun onCancelListener(editText: TextInputEditText) =
         DialogInterface.OnCancelListener {
             presenter.onDatePickerCancel()
@@ -122,6 +125,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
             editText.setText(date)
             presenter.onDatePickerConfirm()
         }
+    //endregion
+
 
     //region formValidates
     private fun formValidate() {
@@ -201,7 +206,11 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             toDateFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateToDate(text.toString(), fromDateFormEditText.text.toString(), fromTimeFormDropdown.text.toString())
+                presenter.validateToDate(
+                    text.toString(),
+                    fromDateFormEditText.text.toString(),
+                    fromTimeFormDropdown.text.toString()
+                )
             }
 
             toTimeFormDropDown.doOnTextChanged { text, _, _, _ ->
@@ -210,6 +219,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
     }
 
+    //region validate Name
     override fun onValidateNameError(errMsg: String) {
         val container = binding.nameFormContainer
         container.isErrorEnabled = true
@@ -221,7 +231,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
         container.isErrorEnabled = false
         container.error = null
     }
+    //endregion
 
+    //region validate Email
     override fun onValidateEmailError(errMsg: String) {
         val container = binding.emailFormContainer
         container.isErrorEnabled = true
@@ -233,7 +245,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
         container.isErrorEnabled = false
         container.error = null
     }
+    //endregion
 
+    //region validate PhoneNumber
     override fun onValidatePhoneNumberError(errMsg: String) {
         val container = binding.phoneFormContainer
         container.isErrorEnabled = true
@@ -245,7 +259,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
         container.isErrorEnabled = false
         container.error = null
     }
+    //endregion
 
+    //region validate Room
     override fun onValidateRoomError(errMsg: String) {
         val container = binding.roomFormContainer
         container.isErrorEnabled = true
@@ -257,7 +273,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
         container.isErrorEnabled = false
         container.error = null
     }
+    //endregion
 
+    //region validate Reason
     override fun onValidateReasonError(errMsg: String) {
         val container = binding.reasonFormContainer
         container.isErrorEnabled = true
@@ -269,7 +287,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
         container.isErrorEnabled = false
         container.error = null
     }
+    //endregion
 
+    //region validate FromDate
     override fun onValidateFromDateError(errMsg: String) {
         val container = binding.fromDateFormContainer
         container.isErrorEnabled = true
@@ -289,12 +309,14 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
             fromDateFormEditText.text?.let { toDateFormEditText.text = it }
 
-//            setTimeDropdown(timeSlot, fromTimeFormDropdown)
+            setTimeDropdown(timeSlot, fromTimeFormDropdown)
             setDropDownWithValueToEmpty(fromTimeFormDropdown)
             setDropDownWithValueToEmpty(toTimeFormDropDown)
         }
     }
+    //endregion
 
+    //region validate FromTime
     override fun onValidateFromTimeError(errMsg: String) {
         val container = binding.fromTimeFormContainer
         container.isErrorEnabled = true
@@ -305,6 +327,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
         with(binding) {
             removeErrorContainer(fromTimeFormContainer)
 
+            toTimeTimeSlot = timeSlot
+
             setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
 
 //            setToDateEnable(true, enable)
@@ -313,7 +337,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
             setDropDownWithValueToEmpty(toTimeFormDropDown)
         }
     }
+    //endregion
 
+    //region validate ToDate
     override fun onValidateToDateError(errMsg: String) {
         val container = binding.toDateFormContainer
         container.isErrorEnabled = true
@@ -325,13 +351,16 @@ class BookingFormFragment : Fragment(), BookingFormView {
             removeErrorContainer(toDateFormContainer)
 
 //            setToTimeEnable(true, enable)
+            toTimeTimeSlot = timeSlot
 
             setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
 
             setDropDownWithValueToEmpty(toTimeFormDropDown)
         }
     }
+    //endregion
 
+    //region validate ToTime
     override fun onValidateToTimeError(errMsg: String) {
         val container = binding.toTimeFormContainer
         container.isErrorEnabled = true
@@ -343,18 +372,20 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
     //endregion
 
+    //endregion
+
     //region setEnable/Disable
-    private fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int){
+    private fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int) {
         binding.fromTimeFormDropdown.isEnabled = isEnable
         binding.fromTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
 
-    private fun setToDateEnable(isEnable: Boolean, backgroundColor: Int){
+    private fun setToDateEnable(isEnable: Boolean, backgroundColor: Int) {
         binding.toDateFormContainer.isEnabled = isEnable
         binding.toDateFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
 
-    private fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int){
+    private fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int) {
         binding.toTimeFormDropDown.isEnabled = isEnable
         binding.toTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
     }
@@ -397,7 +428,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
             editText.setText("")
         }
     }
-
 
 
     override fun onDatePickerDialogFormDate(fromDate: DateInTimePicker) {
@@ -482,12 +512,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
     }
 
-//    private fun onFromTimeClicked(){
-//        binding.fromTimeFormDropdown.setOnClickListener{
-//            setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
-//        }
-//    }
-
     private fun onReturnBinding() {
         arguments?.getParcelable<BookingData>(BookingFormActivity.EXTRA_BOOKING)
             ?.let { bookingData = it }
@@ -503,12 +527,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 toDateFormEditText.setText(bookingData.toDate)
                 toTimeFormDropDown.setText(bookingData.toTime, false)
             }
-            setTimeDropdown(fromTimeTimeSlot, fromTimeFormDropdown)
-
         }
     }
 
-    private fun setEditTextIsFocus(editText: TextInputEditText, isFocus: Boolean){
+    private fun setEditTextIsFocus(editText: TextInputEditText, isFocus: Boolean) {
         editText.isFocusableInTouchMode = isFocus
         editText.isFocusable = isFocus
         if (isFocus) {
