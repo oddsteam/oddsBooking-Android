@@ -7,6 +7,7 @@ interface BookingFormView : IDatePicker{
     fun onNameAutoFormat(name: String)
     fun enablePreviewButton()
     fun disablePreviewButton()
+    //region onValidates
     fun onValidateNameError(errMsg: String)
     fun onValidateNameSuccess()
     fun onValidateEmailError(errMsg: String)
@@ -25,8 +26,12 @@ interface BookingFormView : IDatePicker{
     fun onValidateToDateSuccess(timeSlot: Array<String>)
     fun onValidateToTimeError(errMsg: String)
     fun onValidateToTimeSuccess()
+    //endregion
     fun onDatePickerDialogFormDate(fromDate: DateInTimePicker)
     fun onDatePickerDialogToDate(toDate: DateInTimePicker)
+
+    fun setFromTimeDropdown()
+    fun setToTimeDropDown()
 }
 
 interface IDatePicker{
@@ -38,5 +43,4 @@ interface IDatePicker{
     fun setDisableToDate()
     fun setEnableToTime()
     fun setDisableToTime()
-
 }

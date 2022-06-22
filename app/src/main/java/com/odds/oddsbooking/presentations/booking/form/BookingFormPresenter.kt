@@ -14,6 +14,7 @@ class BookingFormPresenter {
     private lateinit var view: BookingFormView
     private var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
 
+    //region formVarsErrorFlag
     private var fullNameErrorFlag = true
     private var emailErrorFlag = true
     private var phoneNumberErrorFlag = true
@@ -23,12 +24,14 @@ class BookingFormPresenter {
     private var fromTimeErrorFlag = true
     private var toDateErrorFlag = true
     private var toTimeErrorFlag = true
+    //endregion
 
     private var dateInTimePickerDialog = DateInTimePicker(
         type = DateInTimePickerType.FROM_DATE,
         System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
         null
-    );
+    )
+
 //    private var fromDateDialog =
 //        DateInTimePicker(
 //            type = DateInTimePickerType.FROM_DATE,
@@ -38,13 +41,13 @@ class BookingFormPresenter {
 //    private var toDateDialog =
 //        DateInTimePicker(type = DateInTimePickerType.TO_DATE, 0, 0)
 
-    private var calendar = Calendar.getInstance()
-    private var calendarDate = CalendarDate(
-        calendar,
-        calendar.get(Calendar.YEAR),
-        calendar.get(Calendar.MONTH),
-        calendar.get(Calendar.DAY_OF_MONTH)
-    )
+//    private var calendar = Calendar.getInstance()
+//    private var calendarDate = CalendarDate(
+//        calendar,
+//        calendar.get(Calendar.YEAR),
+//        calendar.get(Calendar.MONTH),
+//        calendar.get(Calendar.DAY_OF_MONTH)
+//    )
 
     private var fromDate = ""
 
@@ -52,6 +55,7 @@ class BookingFormPresenter {
         this.view = view
     }
 
+    //region validates
     fun validateFullName(fullName: String) {
         fullNameErrorFlag = when {
             fullName.isEmpty() -> {
@@ -159,40 +163,6 @@ class BookingFormPresenter {
                 fromDateErrorFlag = false
             }
         }
-    }
-
-    fun onFromDateClick() {
-        dateInTimePickerDialog = DateInTimePicker(
-            DateInTimePickerType.FROM_DATE,
-            System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
-            null
-        )
-        view.onDatePickerDialogFormDate(dateInTimePickerDialog)
-    }
-
-    fun onToDateClick() {
-        val date = formatter.parse(fromDate)
-        //on week end
-        if (checkDay(fromDate) == "Saturday") {
-            val minDate: Long = date.time
-            val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
-            dateInTimePickerDialog =
-                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
-        } else if (checkDay(fromDate) == "Sunday") {
-            val minDate: Long = date.time
-            val maxDate: Long = date.time
-            dateInTimePickerDialog =
-                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
-        }
-        //on week day
-        else {
-            val minDate: Long = date.time
-            val maxDate: Long = date.time
-            dateInTimePickerDialog =
-                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
-        }
-        //reset when click in toDate datePicker
-        view.onDatePickerDialogToDate(dateInTimePickerDialog)
     }
 
     fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {
@@ -320,6 +290,43 @@ class BookingFormPresenter {
             }
         }
     }
+    //endregion
+
+    //region onDatePickersClick
+    fun onFromDateClick() {
+        dateInTimePickerDialog = DateInTimePicker(
+            DateInTimePickerType.FROM_DATE,
+            System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
+            null
+        )
+        view.onDatePickerDialogFormDate(dateInTimePickerDialog)
+    }
+
+    fun onToDateClick() {
+        val date = formatter.parse(fromDate)
+        //on week end
+        if (checkDay(fromDate) == "Saturday") {
+            val minDate: Long = date.time
+            val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
+            dateInTimePickerDialog =
+                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
+        } else if (checkDay(fromDate) == "Sunday") {
+            val minDate: Long = date.time
+            val maxDate: Long = date.time
+            dateInTimePickerDialog =
+                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
+        }
+        //on week day
+        else {
+            val minDate: Long = date.time
+            val maxDate: Long = date.time
+            dateInTimePickerDialog =
+                DateInTimePicker(type = DateInTimePickerType.TO_DATE, minDate, maxDate)
+        }
+        //reset when click in toDate datePicker
+        view.onDatePickerDialogToDate(dateInTimePickerDialog)
+    }
+    //endregion
 
     fun autoFormatName(name: String) {
         view.onNameAutoFormat(name)
@@ -369,7 +376,6 @@ class BookingFormPresenter {
         return nameFormatter.joinToString(" ")
     }
 
-
     fun getDateFormatter(year: Int, month: Int, day: Int): String {
         return String.format("%d/%02d/%02d", year, month + 1, day)
     }
@@ -390,7 +396,12 @@ class BookingFormPresenter {
 //
 //        return calendarDate
 //    }
+    fun setTimesDropDown(){
+        view.setFromTimeDropdown()
+        view.setToTimeDropDown()
+    }
 
+    //region onDatePickers...
     fun onDatePickerCancel() {
         if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
             view.setDisableFromDateEditText()
@@ -415,4 +426,5 @@ class BookingFormPresenter {
             view.setDisableToDateEditText()
         }
     }
+    //endregion
 }

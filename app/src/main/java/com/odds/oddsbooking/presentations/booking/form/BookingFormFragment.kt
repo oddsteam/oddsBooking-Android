@@ -43,8 +43,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //region Fragment Life Cycle
     override fun onResume() {
         super.onResume()
-        setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
-        setTimeDropdown(toTimeTimeSlot, binding.toTimeFormDropDown)
+//        setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
+//        setTimeDropdown(toTimeTimeSlot, binding.toTimeFormDropDown)
+        presenter.setTimesDropDown()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -448,6 +449,14 @@ class BookingFormFragment : Fragment(), BookingFormView {
             toDate.maxDate,
             toDate.getCurrentCalendar(binding.toDateFormEditText.text.toString())
         )
+    }
+
+    override fun setFromTimeDropdown() {
+        setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
+    }
+
+    override fun setToTimeDropDown() {
+        setTimeDropdown(toTimeTimeSlot, binding.toTimeFormDropDown)
     }
 
     private fun removeErrorContainer(inputLayout: TextInputLayout) {
