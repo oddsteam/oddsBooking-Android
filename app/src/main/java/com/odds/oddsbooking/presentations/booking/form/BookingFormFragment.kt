@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
 import com.odds.oddsbooking.models.BookingData
+import com.odds.oddsbooking.models.CalendarDate
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 
@@ -70,9 +71,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private fun showDatePickerDialog(
         editText: TextInputEditText,
         minDate: Long,
-        maxDate: Long?
+        maxDate: Long?,
+        calendarDate : CalendarDate
     ) {
-        val calendarDate = presenter.getCurrentCalendar(editText.text.toString())
+//        val calendarDate = presenter.getCurrentCalendar(editText.text.toString())
         val listener = onDateSetListener(editText)
         val listenerDismiss = onDismissListener(editText)
         val listenerCancel = onCancelListener(editText)
@@ -91,7 +93,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             dpd.maxDate = calendarDate.calendar
         }
         dpd.setTitle("Select ${editText.hint}")
-        dpd.accentColor = R.color.purple_color
+        dpd.accentColor = resources.getColor(R.color.purple_color)
         dpd.show(childFragmentManager, "DatePickerDialog")
     }
 
@@ -183,7 +185,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         with(binding) {
             removeErrorContainer(fromDateFormContainer)
             onToDateClicked()
-            //TODO: create set... into interface and call in presenter
 //            setFromTimeEnable(true, enable)
 //            setToDateEnable(false, disable)
 //            setToTimeEnable(false, disable)
@@ -296,12 +297,13 @@ class BookingFormFragment : Fragment(), BookingFormView {
         removeErrorContainer(binding.toTimeFormContainer)
     }
 
-    override fun onDatePickerDialogFormDate(dateInTimePicker: DateInTimePicker) {
+    override fun onDatePickerDialogFormDate(fromDate: DateInTimePicker) {
         setEditTextIsFocus(binding.fromDateFormEditText, true)
         showDatePickerDialog(
             binding.fromDateFormEditText,
-            dateInTimePicker.minDate,
-            dateInTimePicker.maxDate
+            fromDate.minDate,
+            fromDate.maxDate,
+            fromDate.getCurrentCalendar(binding.toDateFormEditText.text.toString())
         )
     }
 
@@ -310,7 +312,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
         showDatePickerDialog(
             binding.toDateFormEditText,
             toDate.minDate,
-            toDate.maxDate
+            toDate.maxDate,
+            toDate.getCurrentCalendar(binding.toDateFormEditText.text.toString())
         )
     }
 

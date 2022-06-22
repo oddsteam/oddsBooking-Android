@@ -373,22 +373,22 @@ class BookingFormPresenter {
         return String.format("%d/%02d/%02d", year, month + 1, day)
     }
     //TODO: รวมเข้าไปใน DateIntimePicker (model)
-    fun getCurrentCalendar(timePicked: String): CalendarDate {
-        calendarDate = if (timePicked.isNotEmpty()) {
-            val dates = timePicked.split("/")
-            val years = dates[0].toInt()
-            val months = dates[1].toInt() - 1
-            val days = dates[2].toInt()
-            CalendarDate(calendar, years, months, days)
-        } else {
-            val years = calendar.get(Calendar.YEAR)
-            val months = calendar.get(Calendar.MONTH)
-            val days = calendar.get(Calendar.DAY_OF_MONTH)
-            CalendarDate(calendar, years, months, days)
-        }
-
-        return calendarDate
-    }
+//    fun getCurrentCalendar(timePicked: String): CalendarDate {
+//        calendarDate = if (timePicked.isNotEmpty()) {
+//            val dates = timePicked.split("/")
+//            val years = dates[0].toInt()
+//            val months = dates[1].toInt() - 1
+//            val days = dates[2].toInt()
+//            CalendarDate(calendar, years, months, days)
+//        } else {
+//            val years = calendar.get(Calendar.YEAR)
+//            val months = calendar.get(Calendar.MONTH)
+//            val days = calendar.get(Calendar.DAY_OF_MONTH)
+//            CalendarDate(calendar, years, months, days)
+//        }
+//
+//        return calendarDate
+//    }
 
     fun onDatePickerCancel() {
         if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
