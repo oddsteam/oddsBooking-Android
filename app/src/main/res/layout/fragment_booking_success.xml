@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentations.booking.success.BookingSuccessFragment">
+    tools:context=".presentations.booking.success.BookingSuccessFragment"
+    >
 
     <LinearLayout
         android:id="@+id/bookingSuccessLayout"
@@ -22,13 +23,14 @@
         <ImageView
             android:layout_width="180dp"
             android:layout_height="180dp"
-            android:src="@drawable/ic_success" />
+            android:src="@drawable/ic_success"
+            android:contentDescription="@string/success_icon_des" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Thank you!\nPlease check your email"
+            android:text="@string/thanks_string"
             android:textAlignment="center"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -39,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/purple_color"
-            android:text="BOOKING AGAIN"
+            android:text="@string/booking_again_string"
             android:textAllCaps="true"
             android:textColor="@color/white_color"
             android:textSize="24sp"

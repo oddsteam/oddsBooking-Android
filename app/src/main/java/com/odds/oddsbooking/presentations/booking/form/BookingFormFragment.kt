@@ -91,6 +91,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             dpd.maxDate = calendarDate.calendar
         }
         dpd.setTitle("Select ${editText.hint}")
+        dpd.accentColor = R.color.purple_color
         dpd.show(childFragmentManager, "DatePickerDialog")
     }
 

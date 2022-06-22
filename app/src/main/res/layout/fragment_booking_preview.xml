@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".presentations.booking.preview.BookingPreviewFragment"
-    >
+    tools:context=".presentations.booking.preview.BookingPreviewFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/oddsTitleBookingPreview"
@@ -38,7 +36,7 @@
                 android:id="@+id/textTitleBookingPreview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bookings"
+                android:text="@string/bookings_string"
                 android:textColor="@color/black_color"
                 android:textSize="38sp"
                 android:textStyle="bold" />
@@ -207,19 +205,17 @@
                 android:text="@string/return_string"
                 android:textAllCaps="true"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/confirmButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/green_color"
-                android:text="@string/confirm_string"
+                android:text="@string/submit_string"
                 android:textAllCaps="true"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -229,16 +225,16 @@
             android:layout_height="match_parent"
             android:background="@color/gray_outline"
             android:gravity="center"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <ProgressBar
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/purple_color" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
