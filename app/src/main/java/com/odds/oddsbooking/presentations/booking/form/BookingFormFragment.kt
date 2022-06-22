@@ -57,11 +57,15 @@ class BookingFormFragment : Fragment(), BookingFormView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setDisableFromTime()
+        setDisableToTime()
 
         loadRoomDropdown()
         formValueValidate()
@@ -376,6 +380,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private fun setFromTimeEnable(isEnable: Boolean, backgroundColor: Int) {
         binding.fromTimeFormDropdown.isEnabled = isEnable
         binding.fromTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
+        binding.fromTimeFormContainer.isEnabled = isEnable
     }
 
     private fun setToDateEnable(isEnable: Boolean, backgroundColor: Int) {
@@ -386,6 +391,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private fun setToTimeEnable(isEnable: Boolean, backgroundColor: Int) {
         binding.toTimeFormDropDown.isEnabled = isEnable
         binding.toTimeFormContainer.setBoxBackgroundColorResource(backgroundColor)
+        binding.toTimeFormContainer.isEnabled = isEnable
     }
 
     override fun setDisableFromDateEditText() {
