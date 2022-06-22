@@ -369,6 +369,7 @@ class BookingFormPresenter {
         return nameFormatter.joinToString(" ")
     }
 
+
     fun getDateFormatter(year: Int, month: Int, day: Int): String {
         return String.format("%d/%02d/%02d", year, month + 1, day)
     }
