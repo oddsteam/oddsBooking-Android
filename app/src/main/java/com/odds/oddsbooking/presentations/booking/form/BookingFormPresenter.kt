@@ -419,11 +419,14 @@ class BookingFormPresenter {
         }
     }
 
-    fun onDatePickerConfirm() {
+    fun onDatePickerConfirm(year:Int, month:Int, day:Int) {
+        val date = getDateFormatter(year, month, day)
         if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
             view.setDisableFromDateEditText()
+            view.setTextFromDate(date)
         }else{
             view.setDisableToDateEditText()
+            view.setTextToDate(date)
         }
     }
     //endregion

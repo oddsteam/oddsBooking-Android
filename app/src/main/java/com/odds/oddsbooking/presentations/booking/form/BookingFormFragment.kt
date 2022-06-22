@@ -81,14 +81,13 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
     private fun showDatePickerDialog(
-        editText: TextInputEditText,
         minDate: Long,
         maxDate: Long?,
         calendarDate: CalendarDate
     ) {
-        val listener = onDateSetListener(editText)
-        val listenerDismiss = onDismissListener(editText)
-        val listenerCancel = onCancelListener(editText)
+        val listener = onDateSetListener()
+        val listenerDismiss = onDismissListener()
+        val listenerCancel = onCancelListener()
         val dpd = DatePickerDialog.newInstance(
             listener,
             calendarDate.years,
@@ -103,28 +102,26 @@ class BookingFormFragment : Fragment(), BookingFormView {
             calendarDate.calendar.timeInMillis = maxDate
             dpd.maxDate = calendarDate.calendar
         }
-        dpd.setTitle("Select ${editText.hint}")
+        dpd.setTitle("Select date")
         dpd.accentColor = resources.getColor(R.color.purple_color)
         dpd.show(childFragmentManager, "DatePickerDialog")
     }
 
 
     //region on...Listener
-    private fun onCancelListener(editText: TextInputEditText) =
+    private fun onCancelListener() =
         DialogInterface.OnCancelListener {
             presenter.onDatePickerCancel()
         }
 
-    private fun onDismissListener(editText: TextInputEditText) =
+    private fun onDismissListener() =
         DialogInterface.OnDismissListener {
             presenter.onDatePickerDismiss()
         }
 
-    private fun onDateSetListener(editText: TextInputEditText) = //confirm
+    private fun onDateSetListener() = //confirm
         DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            val date = presenter.getDateFormatter(year, month, day)
-            editText.setText(date)
-            presenter.onDatePickerConfirm()
+            presenter.onDatePickerConfirm(year, month, day)
         }
     //endregion
 
@@ -422,6 +419,15 @@ class BookingFormFragment : Fragment(), BookingFormView {
     override fun setDisableToTime() {
         setToTimeEnable(false, disable)
     }
+
+    override fun setTextFromDate(date: String) {
+        binding.fromDateFormEditText.setText(date)
+    }
+
+    override fun setTextToDate(date: String) {
+        binding.toDateFormEditText.setText(date)
+
+    }
     //endregion
 
     private fun setDropDownWithValueToEmpty(editText: AutoCompleteTextView) {
@@ -434,7 +440,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
     override fun onDatePickerDialogFormDate(fromDate: DateInTimePicker) {
         setEditTextIsFocus(binding.fromDateFormEditText, true)
         showDatePickerDialog(
-            binding.fromDateFormEditText,
             fromDate.minDate,
             fromDate.maxDate,
             fromDate.getCurrentCalendar(binding.toDateFormEditText.text.toString())
@@ -444,7 +449,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
     override fun onDatePickerDialogToDate(toDate: DateInTimePicker) {
         setEditTextIsFocus(binding.toDateFormEditText, true)
         showDatePickerDialog(
-            binding.toDateFormEditText,
             toDate.minDate,
             toDate.maxDate,
             toDate.getCurrentCalendar(binding.toDateFormEditText.text.toString())

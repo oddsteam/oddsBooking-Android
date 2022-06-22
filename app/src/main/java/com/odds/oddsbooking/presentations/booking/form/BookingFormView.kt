@@ -43,4 +43,6 @@ interface IDatePicker{
     fun setDisableToDate()
     fun setEnableToTime()
     fun setDisableToTime()
+    fun setTextFromDate(date: String)
+    fun setTextToDate(date: String)
 }
