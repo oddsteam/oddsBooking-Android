@@ -228,10 +228,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //endregion
 
     //region validate Email
-    override fun onValidateEmailError(errMsg: String) {
+    override fun onValidateEmailError(errMsg: Int) {
         val container = binding.emailFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidateEmailSuccess() {
@@ -242,10 +242,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //endregion
 
     //region validate PhoneNumber
-    override fun onValidatePhoneNumberError(errMsg: String) {
+    override fun onValidatePhoneNumberError(errMsg: Int) {
         val container = binding.phoneFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidatePhoneNumberSuccess() {
@@ -256,10 +256,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //endregion
 
     //region validate Room
-    override fun onValidateRoomError(errMsg: String) {
+    override fun onValidateRoomError(errMsg: Int) {
         val container = binding.roomFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidateRoomSuccess() {
@@ -270,10 +270,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //endregion
 
     //region validate Reason
-    override fun onValidateReasonError(errMsg: String) {
+    override fun onValidateReasonError(errMsg: Int) {
         val container = binding.reasonFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidateReasonSuccess() {
@@ -284,10 +284,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //endregion
 
     //region validate FromDate
-    override fun onValidateFromDateError(errMsg: String) {
+    override fun onValidateFromDateError(errMsg: Int) {
         val container = binding.fromDateFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidateFromDateSuccess(timeSlot: Array<String>) {
@@ -300,10 +300,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //endregion
 
     //region validate FromTime
-    override fun onValidateFromTimeError(errMsg: String) {
+    override fun onValidateFromTimeError(errMsg: Int) {
         val container = binding.fromTimeFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidateFromTimeSuccess(timeSlot: Array<String>) {
@@ -314,10 +314,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //endregion
 
     //region validate ToDate
-    override fun onValidateToDateError(errMsg: String) {
+    override fun onValidateToDateError(errMsg: Int) {
         val container = binding.toDateFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidateToDateSuccess(timeSlot: Array<String>) {
@@ -328,10 +328,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //endregion
 
     //region validate ToTime
-    override fun onValidateToTimeError(errMsg: String) {
+    override fun onValidateToTimeError(errMsg: Int) {
         val container = binding.toTimeFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidateToTimeSuccess() {

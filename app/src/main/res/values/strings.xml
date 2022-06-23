@@ -27,5 +27,14 @@
     <string name="thanks_string">Thank you!\nPlease check your email</string>
     <string name="booking_again_string">BOOKING AGAIN</string>
     <string name="success_icon_des">Success icon</string>
-    <string name="full_name_err_msg">fullName can\'t be empty</string>
+    <string name="full_name_empty_err">Full name can\'t be empty</string>
+    <string name="email_empty_err">Email can\'t be empty</string>
+    <string name="phone_number_empty_err">Phone number can\'t be empty</string>
+    <string name="room_empty_err">Please select room</string>
+    <string name="reason_empty_err">Reason can\'t be empty</string>
+    <string name="from_date_empty_err">From date can\'t be empty</string>
+    <string name="to_date_empty_err">To date can\'t be empty</string>
+    <string name="time_empty_err">time can\'t be empty</string>
+    <string name="email_format_err">Email format error</string>
+    <string name="phone_number_format_err">Phone number format error</string>
 </resources>

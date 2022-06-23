@@ -11,8 +11,6 @@ import java.util.*
 
 
 class BookingFormPresenter {
-    //TODO: Move errorMsg to @String
-
     private lateinit var view: BookingFormView
     private var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
     private var bookingData: BookingData = BookingData()
@@ -49,7 +47,7 @@ class BookingFormPresenter {
     fun validateFullName(fullName: String) {
         fullNameErrorFlag = when {
             fullName.isEmpty() -> {
-                view.onValidateNameError(R.string.full_name_err_msg)
+                view.onValidateNameError(R.string.full_name_empty_err)
                 true
             }
             else -> {
@@ -64,11 +62,11 @@ class BookingFormPresenter {
     fun validateEmail(email: String) {
         emailErrorFlag = when {
             email.isEmpty() -> {
-                view.onValidateEmailError("Email can't be empty")
+                view.onValidateEmailError(R.string.email_empty_err)
                 true
             }
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                view.onValidateEmailError("Format email error")
+                view.onValidateEmailError(R.string.email_format_err)
                 true
             }
             else -> {
@@ -81,11 +79,11 @@ class BookingFormPresenter {
     fun validatePhoneNumber(phoneNumber: String) {
         phoneNumberErrorFlag = when {
             phoneNumber.isEmpty() -> {
-                view.onValidatePhoneNumberError("Phone number can't be empty")
+                view.onValidatePhoneNumberError(R.string.phone_number_empty_err)
                 true
             }
             !Regex("^0[9,8,6,2][0-9]{8}\$").matches(phoneNumber) -> {
-                view.onValidatePhoneNumberError("Format phone number error")
+                view.onValidatePhoneNumberError(R.string.phone_number_format_err)
                 true
             }
             else -> {
@@ -98,7 +96,7 @@ class BookingFormPresenter {
     fun validateRoom(room: String) {
         roomErrorFlag = when {
             room.isEmpty() -> {
-                view.onValidateRoomError("Please enter room")
+                view.onValidateRoomError(R.string.room_empty_err)
                 true
             }
             else -> {
@@ -111,7 +109,7 @@ class BookingFormPresenter {
     fun validateReason(reason: String) {
         reasonErrorFlag = when {
             reason.isEmpty() -> {
-                view.onValidateReasonError("Reason can't be empty")
+                view.onValidateReasonError(R.string.reason_empty_err)
                 true
             }
             else -> {
@@ -125,7 +123,7 @@ class BookingFormPresenter {
         this.fromDate = fromDate
         when {
             fromDate.isEmpty() -> {
-                view.onValidateFromDateError("From date can't be empty")
+                view.onValidateFromDateError(R.string.from_date_empty_err)
                 fromDateErrorFlag = true
             }
             else -> {
@@ -157,7 +155,7 @@ class BookingFormPresenter {
     fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {
         when {
             fromTime.isEmpty() -> {
-                view.onValidateFromTimeError("Time can't be empty")
+                view.onValidateFromTimeError(R.string.time_empty_err)
                 fromDateErrorFlag = true
             }
             else -> {
@@ -205,7 +203,7 @@ class BookingFormPresenter {
     fun validateToDate(toDate: String, fromDate: String, fromTime: String) {
         when {
             toDate.isEmpty() -> {
-                view.onValidateToDateError("To date can't be empty")
+                view.onValidateToDateError(R.string.to_date_empty_err)
                 toDateErrorFlag = true
             }
             fromTime.isEmpty() -> {
@@ -255,8 +253,7 @@ class BookingFormPresenter {
     fun validateToTime(toTime: String) {
         toTimeErrorFlag = when {
             toTime.isEmpty() -> {
-                view.onValidateToTimeError("Time can't be empty")
-
+                view.onValidateToTimeError(R.string.time_empty_err)
                 true
             }
             else -> {
@@ -304,19 +301,34 @@ class BookingFormPresenter {
             val minDate: Long = date.time
             val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday
             dateInTimePickerDialog =
-                DateInTimePicker(datePickerType = DateInTimePickerType.TO_DATE, minDate, maxDate, toDate)
+                DateInTimePicker(
+                    datePickerType = DateInTimePickerType.TO_DATE,
+                    minDate,
+                    maxDate,
+                    toDate
+                )
         } else if (checkDay(fromDate) == "Sunday") {
             val minDate: Long = date.time
             val maxDate: Long = date.time
             dateInTimePickerDialog =
-                DateInTimePicker(datePickerType = DateInTimePickerType.TO_DATE, minDate, maxDate, toDate)
+                DateInTimePicker(
+                    datePickerType = DateInTimePickerType.TO_DATE,
+                    minDate,
+                    maxDate,
+                    toDate
+                )
         }
         //on week day
         else {
             val minDate: Long = date.time
             val maxDate: Long = date.time
             dateInTimePickerDialog =
-                DateInTimePicker(datePickerType = DateInTimePickerType.TO_DATE, minDate, maxDate, toDate)
+                DateInTimePicker(
+                    datePickerType = DateInTimePickerType.TO_DATE,
+                    minDate,
+                    maxDate,
+                    toDate
+                )
         }
         //reset when click in toDate datePicker
         view.onDatePickerDialogToDate(dateInTimePickerDialog)
