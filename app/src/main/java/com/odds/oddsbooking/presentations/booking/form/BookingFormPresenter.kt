@@ -2,15 +2,15 @@ package com.odds.oddsbooking.presentations.booking.form
 
 import android.util.Log
 import android.util.Patterns
-import com.odds.oddsbooking.models.CalendarDate
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.models.DateInTimePickerType
 import java.text.SimpleDateFormat
-
 import java.util.*
 
 
 class BookingFormPresenter {
+    //TODO: Move errorMsg to @String
+
     private lateinit var view: BookingFormView
     private var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
 
@@ -31,23 +31,6 @@ class BookingFormPresenter {
         System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
         null
     )
-
-//    private var fromDateDialog =
-//        DateInTimePicker(
-//            type = DateInTimePickerType.FROM_DATE,
-//            System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
-//            null
-//        )
-//    private var toDateDialog =
-//        DateInTimePicker(type = DateInTimePickerType.TO_DATE, 0, 0)
-
-//    private var calendar = Calendar.getInstance()
-//    private var calendarDate = CalendarDate(
-//        calendar,
-//        calendar.get(Calendar.YEAR),
-//        calendar.get(Calendar.MONTH),
-//        calendar.get(Calendar.DAY_OF_MONTH)
-//    )
 
     private var fromDate = ""
 
@@ -137,29 +120,26 @@ class BookingFormPresenter {
                 fromDateErrorFlag = true
             }
             else -> {
-//                //on week end
+                var toTimeTimeSlot: Array<String> = arrayOf<String>()
+                //on week end
                 if (checkDay(fromDate) == "Saturday") {
-
+                    toTimeTimeSlot = getTimeSlot("09:00", "20:00")
                     view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
-
-                    view.setEnableFromTime()
-                    view.setDisableToDate()
-                    view.setDisableToTime()
                 } else if (checkDay(fromDate) == "Sunday") {
+                    toTimeTimeSlot = getTimeSlot("09:00", "20:00")
                     view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
-
-                    view.setEnableFromTime()
-                    view.setDisableToDate()
-                    view.setDisableToTime()
                 }
                 //on week day
                 else {
+                    toTimeTimeSlot = getTimeSlot("18:00", "22:00")
                     view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"))
-
-                    view.setEnableFromTime()
-                    view.setDisableToDate()
-                    view.setDisableToTime()
                 }
+//                TODO: setDropdown
+                view.clearValueFromTimeDropdown()
+                view.clearValueToTimeDropdown()
+                view.setEnableFromTime()
+                view.setDisableToDate()
+                view.setDisableToTime()
                 fromDateErrorFlag = false
             }
         }
@@ -181,14 +161,11 @@ class BookingFormPresenter {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
                         view.onValidateFromTimeSuccess(getTimeSlot(toTime, "21:00"))
-                        view.setEnableToDate()
-                        view.setEnableToTime()
+
                     }
                     //on weekday
                     else {
                         view.onValidateFromTimeSuccess(getTimeSlot(toTime, "23:00"))
-                        view.setEnableToDate()
-                        view.setEnableToTime()
                     }
                 }
                 //other day
@@ -197,16 +174,15 @@ class BookingFormPresenter {
                     //on weekend
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
                         view.onValidateFromTimeSuccess(getTimeSlot("09:30", "21:00"))
-                        view.setEnableToDate()
-                        view.setEnableToTime()
                     }
                     //on weekday
                     else {
                         view.onValidateFromTimeSuccess(getTimeSlot("18:30", "23:00"))
-                        view.setEnableToDate()
-                        view.setEnableToTime()
                     }
                 }
+                view.clearValueToTimeDropdown()
+                view.setEnableToDate()
+                view.setEnableToTime()
                 fromTimeErrorFlag = false
             }
         }
@@ -231,12 +207,11 @@ class BookingFormPresenter {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
                         view.onValidateToDateSuccess(getTimeSlot(toTime, "21:00"))
-                        view.setEnableToTime()
+
                     }
                     //on weekday
                     else {
                         view.onValidateToDateSuccess(getTimeSlot(toTime, "23:00"))
-                        view.setEnableToTime()
                     }
                 }
                 //other day
@@ -245,14 +220,14 @@ class BookingFormPresenter {
                     //on weekend
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
                         view.onValidateToDateSuccess(getTimeSlot("09:30", "21:00"))
-                        view.setEnableToTime()
                     }
                     //on weekday
                     else {
                         view.onValidateToDateSuccess(getTimeSlot("18:30", "23:00"))
-                        view.setEnableToTime()
                     }
                 }
+                view.clearValueToTimeDropdown()
+                view.setEnableToTime()
                 toDateErrorFlag = false
             }
         }
@@ -376,55 +351,39 @@ class BookingFormPresenter {
         return nameFormatter.joinToString(" ")
     }
 
-    fun getDateFormatter(year: Int, month: Int, day: Int): String {
+    private fun getDateFormatter(year: Int, month: Int, day: Int): String {
         return String.format("%d/%02d/%02d", year, month + 1, day)
     }
-    //TODO: รวมเข้าไปใน DateIntimePicker (model)
-//    fun getCurrentCalendar(timePicked: String): CalendarDate {
-//        calendarDate = if (timePicked.isNotEmpty()) {
-//            val dates = timePicked.split("/")
-//            val years = dates[0].toInt()
-//            val months = dates[1].toInt() - 1
-//            val days = dates[2].toInt()
-//            CalendarDate(calendar, years, months, days)
-//        } else {
-//            val years = calendar.get(Calendar.YEAR)
-//            val months = calendar.get(Calendar.MONTH)
-//            val days = calendar.get(Calendar.DAY_OF_MONTH)
-//            CalendarDate(calendar, years, months, days)
-//        }
-//
-//        return calendarDate
-//    }
-    fun setTimesDropDown(){
+
+    fun setTimesDropDown() {
         view.setFromTimeDropdown()
         view.setToTimeDropDown()
     }
 
     //region onDatePickers...
     fun onDatePickerCancel() {
-        if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
+        if (dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE) {
             view.setDisableFromDateEditText()
-        }else{
+        } else {
             view.setDisableToDateEditText()
         }
 
     }
 
     fun onDatePickerDismiss() {
-        if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
+        if (dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE) {
             view.setDisableFromDateEditText()
-        }else{
+        } else {
             view.setDisableToDateEditText()
         }
     }
 
-    fun onDatePickerConfirm(year:Int, month:Int, day:Int) {
+    fun onDatePickerConfirm(year: Int, month: Int, day: Int) {
         val date = getDateFormatter(year, month, day)
-        if(dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE){
+        if (dateInTimePickerDialog.type == DateInTimePickerType.FROM_DATE) {
             view.setDisableFromDateEditText()
             view.setTextFromDate(date)
-        }else{
+        } else {
             view.setDisableToDateEditText()
             view.setTextToDate(date)
         }

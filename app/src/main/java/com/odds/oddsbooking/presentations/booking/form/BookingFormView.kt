@@ -32,6 +32,8 @@ interface BookingFormView : IDatePicker{
 
     fun setFromTimeDropdown()
     fun setToTimeDropDown()
+    fun clearValueFromTimeDropdown()
+    fun clearValueToTimeDropdown()
 }
 
 interface IDatePicker{

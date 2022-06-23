@@ -2,7 +2,6 @@ package com.odds.oddsbooking.presentations.booking.form
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,6 @@ import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.CalendarDate
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
-
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 
 
@@ -43,8 +41,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //region Fragment Life Cycle
     override fun onResume() {
         super.onResume()
-//        setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
-//        setTimeDropdown(toTimeTimeSlot, binding.toTimeFormDropDown)
         presenter.setTimesDropDown()
     }
 
@@ -72,6 +68,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         formValidate()
         dateTimePickerEnable()
         onFromDateClicked()
+        onToDateClicked()
         onPreviewButtonClick()
         onReturnBinding()
     }
@@ -299,21 +296,15 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
     override fun onValidateFromDateSuccess(timeSlot: Array<String>) {
-
         with(binding) {
             removeErrorContainer(fromDateFormContainer)
-            onToDateClicked()
-
-            fromTimeTimeSlot = timeSlot
-//            setFromTimeEnable(true, enable)
-//            setToDateEnable(false, disable)
-//            setToTimeEnable(false, disable)
 
             fromDateFormEditText.text?.let { toDateFormEditText.text = it }
 
+            //Todo: move to other interface
+            fromTimeTimeSlot = timeSlot
             setTimeDropdown(timeSlot, fromTimeFormDropdown)
-            setDropDownWithValueToEmpty(fromTimeFormDropdown)
-            setDropDownWithValueToEmpty(toTimeFormDropDown)
+
         }
     }
     //endregion
@@ -329,14 +320,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
         with(binding) {
             removeErrorContainer(fromTimeFormContainer)
 
+            //Todo: move to other interface
             toTimeTimeSlot = timeSlot
-
             setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
-
-//            setToDateEnable(true, enable)
-//            setToTimeEnable(true, enable)
-
-            setDropDownWithValueToEmpty(toTimeFormDropDown)
         }
     }
     //endregion
@@ -352,12 +338,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
         with(binding) {
             removeErrorContainer(toDateFormContainer)
 
-//            setToTimeEnable(true, enable)
+            //Todo: move to other interface
             toTimeTimeSlot = timeSlot
-
             setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
-
-            setDropDownWithValueToEmpty(toTimeFormDropDown)
         }
     }
     //endregion
@@ -434,6 +417,15 @@ class BookingFormFragment : Fragment(), BookingFormView {
         binding.toDateFormEditText.setText(date)
 
     }
+
+    override fun clearValueFromTimeDropdown() {
+        setDropDownWithValueToEmpty(binding.fromTimeFormDropdown)
+
+    }
+
+    override fun clearValueToTimeDropdown() {
+        setDropDownWithValueToEmpty(binding.toTimeFormDropDown)
+    }
     //endregion
 
     private fun setDropDownWithValueToEmpty(editText: AutoCompleteTextView) {
@@ -460,6 +452,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             toDate.getCurrentCalendar(binding.toDateFormEditText.text.toString())
         )
     }
+
 
     override fun setFromTimeDropdown() {
         setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
