@@ -2,7 +2,7 @@ package com.odds.oddsbooking.services.booking
 
 import com.google.gson.annotations.SerializedName
 
-data class BookingResponse(
+data class BookingDetailResponse(
     @SerializedName("id")
     val id: String,
     @SerializedName("fullName")
@@ -21,4 +21,11 @@ data class BookingResponse(
     val endDate: String,
     @SerializedName("status")
     val status: Boolean,
+)
+
+data class BookingRes(
+    @SerializedName("status")
+    val status: Number,
+    @SerializedName("data")
+    val data : BookingDetailResponse,
 )

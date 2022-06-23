@@ -11,5 +11,5 @@ interface BookingAPI {
     @Headers("Content-Type: application/json")
     suspend fun createBooking(
         @Body booking: Booking
-    ) : Response<BookingResponse>
+    ) : Response<BookingRes>
 }

@@ -19,6 +19,7 @@ class BookingPreviewPresenter constructor(private val api: BookingAPI) {
         scope.launch {
             try {
                 val response = api.createBooking(booking)
+                Log.d("res",response.body().toString());
                 if (response.isSuccessful) {
                     view.goToSuccessPage()
                 }
