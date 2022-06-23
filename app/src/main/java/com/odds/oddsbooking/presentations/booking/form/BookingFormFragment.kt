@@ -27,21 +27,17 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private val binding by lazy { FragmentBookingFormBinding.inflate(layoutInflater) }
 
-    private val presenter by lazy {
-        BookingFormPresenter()
-    }
+    private val presenter by lazy { BookingFormPresenter() }
 
     private var bookingData: BookingData = BookingData()
     private val disable = R.color.disable_color
     private val enable = android.R.color.transparent
 
-    private var fromTimeTimeSlot: Array<String> = arrayOf<String>()
-    private var toTimeTimeSlot: Array<String> = arrayOf<String>()
-
     //region Fragment Life Cycle
     override fun onResume() {
         super.onResume()
-        presenter.setTimesDropDown()
+        presenter.setFromTimesDropDown()
+        presenter.setToTimesDropDown()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -302,8 +298,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
             fromDateFormEditText.text?.let { toDateFormEditText.text = it }
 
             //Todo: move to other interface
-            fromTimeTimeSlot = timeSlot
-            setTimeDropdown(timeSlot, fromTimeFormDropdown)
+//            fromTimeTimeSlot = timeSlot
+//            setTimeDropdown(timeSlot, fromTimeFormDropdown)
 
         }
     }
@@ -321,8 +317,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
             removeErrorContainer(fromTimeFormContainer)
 
             //Todo: move to other interface
-            toTimeTimeSlot = timeSlot
-            setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
+//            toTimeTimeSlot = timeSlot
+//            setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
         }
     }
     //endregion
@@ -339,8 +335,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
             removeErrorContainer(toDateFormContainer)
 
             //Todo: move to other interface
-            toTimeTimeSlot = timeSlot
-            setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
+//            toTimeTimeSlot = timeSlot
+//            setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
         }
     }
     //endregion
@@ -454,12 +450,12 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
 
-    override fun setFromTimeDropdown() {
-        setTimeDropdown(fromTimeTimeSlot, binding.fromTimeFormDropdown)
+    override fun setFromTimeDropdown(timeSlot: Array<String>) {
+        setTimeDropdown(timeSlot, binding.fromTimeFormDropdown)
     }
 
-    override fun setToTimeDropDown() {
-        setTimeDropdown(toTimeTimeSlot, binding.toTimeFormDropDown)
+    override fun setToTimeDropDown(timeSlot: Array<String>) {
+        setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
     }
 
     private fun removeErrorContainer(inputLayout: TextInputLayout) {

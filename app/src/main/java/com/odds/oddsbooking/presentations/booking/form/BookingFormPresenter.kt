@@ -34,6 +34,9 @@ class BookingFormPresenter {
 
     private var fromDate = ""
 
+    private var fromTimeTimeSlot: Array<String> = arrayOf<String>()
+    private var toTimeTimeSlot: Array<String> = arrayOf<String>()
+
     fun attachView(view: BookingFormView) {
         this.view = view
     }
@@ -120,21 +123,21 @@ class BookingFormPresenter {
                 fromDateErrorFlag = true
             }
             else -> {
-                var toTimeTimeSlot: Array<String> = arrayOf<String>()
                 //on week end
                 if (checkDay(fromDate) == "Saturday") {
-                    toTimeTimeSlot = getTimeSlot("09:00", "20:00")
+                    fromTimeTimeSlot = getTimeSlot("09:00", "20:00")
                     view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
                 } else if (checkDay(fromDate) == "Sunday") {
-                    toTimeTimeSlot = getTimeSlot("09:00", "20:00")
+                    fromTimeTimeSlot = getTimeSlot("09:00", "20:00")
                     view.onValidateFromDateSuccess(getTimeSlot("09:00", "20:00"))
                 }
                 //on week day
                 else {
-                    toTimeTimeSlot = getTimeSlot("18:00", "22:00")
+                    fromTimeTimeSlot = getTimeSlot("18:00", "22:00")
                     view.onValidateFromDateSuccess(getTimeSlot("18:00", "22:00"))
                 }
 //                TODO: setDropdown
+                view.setFromTimeDropdown(fromTimeTimeSlot)
                 view.clearValueFromTimeDropdown()
                 view.clearValueToTimeDropdown()
                 view.setEnableFromTime()
@@ -160,11 +163,13 @@ class BookingFormPresenter {
                 if (fromDate == toDate) {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
+                        toTimeTimeSlot = getTimeSlot(toTime, "21:00")
                         view.onValidateFromTimeSuccess(getTimeSlot(toTime, "21:00"))
 
                     }
                     //on weekday
                     else {
+                        toTimeTimeSlot = getTimeSlot(toTime, "23:00")
                         view.onValidateFromTimeSuccess(getTimeSlot(toTime, "23:00"))
                     }
                 }
@@ -173,13 +178,16 @@ class BookingFormPresenter {
                     val dayOfWeek = checkDay(fromDate)
                     //on weekend
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
+                        toTimeTimeSlot = getTimeSlot("09:30", "21:00")
                         view.onValidateFromTimeSuccess(getTimeSlot("09:30", "21:00"))
                     }
                     //on weekday
                     else {
+                        toTimeTimeSlot = getTimeSlot("18:30", "23:00")
                         view.onValidateFromTimeSuccess(getTimeSlot("18:30", "23:00"))
                     }
                 }
+                view.setToTimeDropDown(toTimeTimeSlot)
                 view.clearValueToTimeDropdown()
                 view.setEnableToDate()
                 view.setEnableToTime()
@@ -206,11 +214,13 @@ class BookingFormPresenter {
                 if (fromDate == toDate) {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
+                        toTimeTimeSlot = getTimeSlot(toTime, "21:00")
                         view.onValidateToDateSuccess(getTimeSlot(toTime, "21:00"))
 
                     }
                     //on weekday
                     else {
+                        toTimeTimeSlot = getTimeSlot(toTime, "23:00")
                         view.onValidateToDateSuccess(getTimeSlot(toTime, "23:00"))
                     }
                 }
@@ -219,13 +229,16 @@ class BookingFormPresenter {
                     val dayOfWeek = checkDay(fromDate)
                     //on weekend
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
+                        toTimeTimeSlot = getTimeSlot("09:30", "21:00")
                         view.onValidateToDateSuccess(getTimeSlot("09:30", "21:00"))
                     }
                     //on weekday
                     else {
+                        toTimeTimeSlot = getTimeSlot("18:30", "23:00")
                         view.onValidateToDateSuccess(getTimeSlot("18:30", "23:00"))
                     }
                 }
+                view.setToTimeDropDown(toTimeTimeSlot)
                 view.clearValueToTimeDropdown()
                 view.setEnableToTime()
                 toDateErrorFlag = false
@@ -355,9 +368,13 @@ class BookingFormPresenter {
         return String.format("%d/%02d/%02d", year, month + 1, day)
     }
 
-    fun setTimesDropDown() {
-        view.setFromTimeDropdown()
-        view.setToTimeDropDown()
+    fun setFromTimesDropDown() {
+        view.setFromTimeDropdown(fromTimeTimeSlot)
+
+    }
+
+    fun setToTimesDropDown() {
+        view.setToTimeDropDown(toTimeTimeSlot)
     }
 
     //region onDatePickers...

@@ -1,12 +1,12 @@
 package com.odds.oddsbooking.presentations.booking.form
 
-import com.google.android.material.textfield.TextInputEditText
 import com.odds.oddsbooking.models.DateInTimePicker
 
-interface BookingFormView : IDatePicker{
+interface BookingFormView : IDatePicker {
     fun onNameAutoFormat(name: String)
     fun enablePreviewButton()
     fun disablePreviewButton()
+
     //region onValidates
     fun onValidateNameError(errMsg: String)
     fun onValidateNameSuccess()
@@ -26,17 +26,18 @@ interface BookingFormView : IDatePicker{
     fun onValidateToDateSuccess(timeSlot: Array<String>)
     fun onValidateToTimeError(errMsg: String)
     fun onValidateToTimeSuccess()
+
     //endregion
     fun onDatePickerDialogFormDate(fromDate: DateInTimePicker)
     fun onDatePickerDialogToDate(toDate: DateInTimePicker)
 
-    fun setFromTimeDropdown()
-    fun setToTimeDropDown()
+    fun setFromTimeDropdown(timeSlot: Array<String>)
+    fun setToTimeDropDown(timeSlot: Array<String>)
     fun clearValueFromTimeDropdown()
     fun clearValueToTimeDropdown()
 }
 
-interface IDatePicker{
+interface IDatePicker {
     fun setDisableFromDateEditText()
     fun setDisableToDateEditText()
     fun setEnableFromTime()
