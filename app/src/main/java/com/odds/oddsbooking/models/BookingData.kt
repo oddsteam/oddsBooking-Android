@@ -83,7 +83,15 @@ data class BookingData(
     }
 
     fun validateBookingData(): Boolean {
-        return validateFullName() && validateEmail() && validatePhoneNumber() && validateRoom() && validateReason() && validateFromDate() && validateFromTime() && validateToDate() && validateToTime()
+        return validateFullName()
+                && validateEmail()
+                && validatePhoneNumber()
+                && validateRoom()
+                && validateReason()
+                && validateFromDate()
+                && validateFromTime()
+                && validateToDate()
+                && validateToTime()
     }
 
 }

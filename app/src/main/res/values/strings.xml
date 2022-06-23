@@ -27,4 +27,5 @@
     <string name="thanks_string">Thank you!\nPlease check your email</string>
     <string name="booking_again_string">BOOKING AGAIN</string>
     <string name="success_icon_des">Success icon</string>
+    <string name="full_name_err_msg">fullName can\'t be empty</string>
 </resources>

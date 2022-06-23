@@ -1,5 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.form
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
@@ -78,32 +80,27 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
     private fun showDatePickerDialog(
-        minDate: Long,
-        maxDate: Long?,
-        calendarDate: CalendarDate
+        dateInTimePicker: DateInTimePicker
     ) {
         val listener = onDateSetListener()
         val listenerDismiss = onDismissListener()
         val listenerCancel = onCancelListener()
         val dpd = DatePickerDialog.newInstance(
             listener,
-            calendarDate.years,
-            calendarDate.months,
-            calendarDate.days
+            dateInTimePicker.currentCalendar.years,
+            dateInTimePicker.currentCalendar.months,
+            dateInTimePicker.currentCalendar.days
         )
         dpd.setOnDismissListener(listenerDismiss)
         dpd.setOnCancelListener(listenerCancel)
-        calendarDate.calendar.timeInMillis = minDate
-        dpd.minDate = calendarDate.calendar
-        if (maxDate != null) {
-            calendarDate.calendar.timeInMillis = maxDate
-            dpd.maxDate = calendarDate.calendar
+        dpd.minDate = dateInTimePicker.minDateCalendar
+        if (dateInTimePicker.maxDate != null) {
+            dpd.maxDate = dateInTimePicker.maxDateCalendar
         }
         dpd.setTitle("Select date")
-        dpd.accentColor = resources.getColor(R.color.purple_color)
+        dpd.accentColor = ContextCompat.getColor(requireContext(), R.color.purple_color)
         dpd.show(childFragmentManager, "DatePickerDialog")
     }
-
 
     //region on...Listener
     private fun onCancelListener() =
@@ -122,13 +119,15 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
     //endregion
 
-
     //region formValidates
     private fun formValidate() {
+        //TODO: in .doOnTextChange move to doAfterTextChange
         with(binding) {
             nameFormEditText.doAfterTextChanged { text ->
+                presenter.validateFullName(text.toString())
+                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
+                //TODO: move bookingData into Presenter
                 bookingData.fullName = text.toString()
-                presenter.validateForm()
             }
             emailFormEditText.doAfterTextChanged { text ->
                 bookingData.email = text.toString()
@@ -168,8 +167,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private fun formValueValidate() {
         with(binding) {
             nameFormEditText.doOnTextChanged { text, _, _, _ ->
-                presenter.validateFullName(text.toString())
-                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
+//                presenter.validateFullName(text.toString())
+//                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
             }
 
             emailFormEditText.doOnTextChanged { text, _, _, _ ->
@@ -215,10 +214,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
     //region validate Name
-    override fun onValidateNameError(errMsg: String) {
+    override fun onValidateNameError(errMsg: Int) {
         val container = binding.nameFormContainer
         container.isErrorEnabled = true
-        container.error = errMsg
+        container.error = getString(errMsg)
     }
 
     override fun onValidateNameSuccess() {
@@ -296,11 +295,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
             removeErrorContainer(fromDateFormContainer)
 
             fromDateFormEditText.text?.let { toDateFormEditText.text = it }
-
-            //Todo: move to other interface
-//            fromTimeTimeSlot = timeSlot
-//            setTimeDropdown(timeSlot, fromTimeFormDropdown)
-
         }
     }
     //endregion
@@ -315,10 +309,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
     override fun onValidateFromTimeSuccess(timeSlot: Array<String>) {
         with(binding) {
             removeErrorContainer(fromTimeFormContainer)
-
-            //Todo: move to other interface
-//            toTimeTimeSlot = timeSlot
-//            setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
         }
     }
     //endregion
@@ -333,10 +323,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
     override fun onValidateToDateSuccess(timeSlot: Array<String>) {
         with(binding) {
             removeErrorContainer(toDateFormContainer)
-
-            //Todo: move to other interface
-//            toTimeTimeSlot = timeSlot
-//            setTimeDropdown(timeSlot, binding.toTimeFormDropDown)
         }
     }
     //endregion
@@ -434,18 +420,14 @@ class BookingFormFragment : Fragment(), BookingFormView {
     override fun onDatePickerDialogFormDate(fromDate: DateInTimePicker) {
         setEditTextIsFocus(binding.fromDateFormEditText, true)
         showDatePickerDialog(
-            fromDate.minDate,
-            fromDate.maxDate,
-            fromDate.getCurrentCalendar(binding.toDateFormEditText.text.toString())
+            fromDate
         )
     }
 
     override fun onDatePickerDialogToDate(toDate: DateInTimePicker) {
         setEditTextIsFocus(binding.toDateFormEditText, true)
         showDatePickerDialog(
-            toDate.minDate,
-            toDate.maxDate,
-            toDate.getCurrentCalendar(binding.toDateFormEditText.text.toString())
+            toDate
         )
     }
 
@@ -510,21 +492,26 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onFromDateClicked() {
         binding.fromDateFormEditText.setOnClickListener {
-            presenter.onFromDateClick()
+            presenter.onFromDateClick(binding.fromDateFormEditText.text.toString())
         }
     }
 
     private fun onToDateClicked() {
         binding.toDateFormEditText.setOnClickListener {
-            presenter.onToDateClick()
+            presenter.onToDateClick(binding.toDateFormEditText.text.toString())
         }
     }
 
     private fun onReturnBinding() {
+
         arguments?.getParcelable<BookingData>(BookingFormActivity.EXTRA_BOOKING)
             ?.let { bookingData = it }
         with(binding) {
+            //valiadate ของ argument ใน presenter ( != null)
+            //valiadate ของเดิม
             if (bookingData.validateBookingData()) {
+                //TODO: create fun in interface View to setTexts
+                //TODO: presenter call fun
                 nameFormEditText.setText(bookingData.fullName)
                 emailFormEditText.setText(bookingData.email)
                 phoneFormEditText.setText(bookingData.phoneNumber)
@@ -536,6 +523,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 toTimeFormDropDown.setText(bookingData.toTime, false)
             }
         }
+        arguments?.remove(BookingFormActivity.EXTRA_BOOKING)
     }
 
     private fun setEditTextIsFocus(editText: TextInputEditText, isFocus: Boolean) {

@@ -8,7 +8,7 @@ interface BookingFormView : IDatePicker {
     fun disablePreviewButton()
 
     //region onValidates
-    fun onValidateNameError(errMsg: String)
+    fun onValidateNameError(errMsg: Int)
     fun onValidateNameSuccess()
     fun onValidateEmailError(errMsg: String)
     fun onValidateEmailSuccess()
