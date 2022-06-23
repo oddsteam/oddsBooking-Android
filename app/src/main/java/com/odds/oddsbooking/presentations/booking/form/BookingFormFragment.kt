@@ -62,7 +62,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         setDisableToTime()
 
         loadRoomDropdown()
-        formValueValidate()
         formValidate()
         dateTimePickerEnable()
         onFromDateClicked()
@@ -121,7 +120,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     //region formValidates
     private fun formValidate() {
-        //TODO: in .doOnTextChange move to doAfterTextChange
         with(binding) {
             nameFormEditText.doAfterTextChanged { text ->
                 presenter.validateFullName(text.toString())
@@ -129,86 +127,61 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 //TODO: move bookingData into Presenter
                 bookingData.fullName = text.toString()
             }
+
             emailFormEditText.doAfterTextChanged { text ->
-                bookingData.email = text.toString()
-                presenter.validateForm()
-            }
-            phoneFormEditText.doAfterTextChanged { text ->
-                bookingData.phoneNumber = text.toString()
-                presenter.validateForm()
-            }
-            roomFormDropdown.doAfterTextChanged { text ->
-                bookingData.room = text.toString()
-                presenter.validateForm()
-            }
-            reasonFormEditText.doAfterTextChanged { text ->
-                bookingData.reason = text.toString()
-                presenter.validateForm()
-            }
-            fromDateFormEditText.doAfterTextChanged { text ->
-                bookingData.fromDate = text.toString()
-                presenter.validateForm()
-            }
-            fromTimeFormDropdown.doAfterTextChanged { text ->
-                bookingData.fromTime = text.toString()
-                presenter.validateForm()
-            }
-            toDateFormEditText.doAfterTextChanged { text ->
-                bookingData.toDate = text.toString()
-                presenter.validateForm()
-            }
-            toTimeFormDropDown.doAfterTextChanged { text ->
-                bookingData.toTime = text.toString()
-                presenter.validateForm()
-            }
-        }
-    }
-
-    private fun formValueValidate() {
-        with(binding) {
-            nameFormEditText.doOnTextChanged { text, _, _, _ ->
-//                presenter.validateFullName(text.toString())
-//                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
-            }
-
-            emailFormEditText.doOnTextChanged { text, _, _, _ ->
                 presenter.validateEmail(text.toString())
+
+                bookingData.email = text.toString()
             }
 
-            phoneFormEditText.doOnTextChanged { text, _, _, _ ->
+            phoneFormEditText.doAfterTextChanged { text ->
                 presenter.validatePhoneNumber(text.toString())
+
+                bookingData.phoneNumber = text.toString()
             }
 
-            roomFormDropdown.doOnTextChanged { text, _, _, _ ->
+            roomFormDropdown.doAfterTextChanged { text ->
                 presenter.validateRoom(text.toString())
+
+                bookingData.room = text.toString()
             }
 
-            reasonFormEditText.doOnTextChanged { text, _, _, _ ->
+            reasonFormEditText.doAfterTextChanged { text ->
                 presenter.validateReason(text.toString())
+
+                bookingData.reason = text.toString()
             }
 
-            fromDateFormEditText.doOnTextChanged { text, _, _, _ ->
+            fromDateFormEditText.doAfterTextChanged { text ->
                 presenter.validateFromDate(text.toString())
+
+                bookingData.fromDate = text.toString()
             }
 
-            fromTimeFormDropdown.doOnTextChanged { text, _, _, _ ->
+            fromTimeFormDropdown.doAfterTextChanged { text ->
                 presenter.validateFromTime(
                     text.toString(),
                     fromDateFormEditText.text.toString(),
                     toDateFormEditText.text.toString(),
                 )
+
+                bookingData.fromTime = text.toString()
             }
 
-            toDateFormEditText.doOnTextChanged { text, _, _, _ ->
+            toDateFormEditText.doAfterTextChanged { text ->
                 presenter.validateToDate(
                     text.toString(),
                     fromDateFormEditText.text.toString(),
                     fromTimeFormDropdown.text.toString()
                 )
+
+                bookingData.toDate = text.toString()
             }
 
-            toTimeFormDropDown.doOnTextChanged { text, _, _, _ ->
+            toTimeFormDropDown.doAfterTextChanged { text ->
                 presenter.validateToTime(text.toString())
+
+                bookingData.toTime = text.toString()
             }
         }
     }

@@ -74,6 +74,7 @@ class BookingFormPresenter {
                 false
             }
         }
+        validateForm()
     }
 
     fun validatePhoneNumber(phoneNumber: String) {
@@ -91,6 +92,7 @@ class BookingFormPresenter {
                 false
             }
         }
+        validateForm()
     }
 
     fun validateRoom(room: String) {
@@ -104,6 +106,7 @@ class BookingFormPresenter {
                 false
             }
         }
+        validateForm()
     }
 
     fun validateReason(reason: String) {
@@ -117,6 +120,7 @@ class BookingFormPresenter {
                 false
             }
         }
+        validateForm()
     }
 
     fun validateFromDate(fromDate: String) {
@@ -150,6 +154,7 @@ class BookingFormPresenter {
                 fromDateErrorFlag = false
             }
         }
+        validateForm()
     }
 
     fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {
@@ -198,6 +203,7 @@ class BookingFormPresenter {
                 fromTimeErrorFlag = false
             }
         }
+        validateForm()
     }
 
     fun validateToDate(toDate: String, fromDate: String, fromTime: String) {
@@ -248,6 +254,7 @@ class BookingFormPresenter {
                 toDateErrorFlag = false
             }
         }
+        validateForm()
     }
 
     fun validateToTime(toTime: String) {
@@ -261,9 +268,10 @@ class BookingFormPresenter {
                 false
             }
         }
+        validateForm()
     }
 
-    fun validateForm() {
+    private fun validateForm() {
         when {
             !fullNameErrorFlag
                     && !emailErrorFlag
