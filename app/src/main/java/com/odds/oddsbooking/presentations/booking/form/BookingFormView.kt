@@ -1,5 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.form
 
+import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
 
 interface BookingFormView : IDatePicker {
@@ -35,6 +36,8 @@ interface BookingFormView : IDatePicker {
     fun setToTimeDropDown(timeSlot: Array<String>)
     fun clearValueFromTimeDropdown()
     fun clearValueToTimeDropdown()
+
+    fun onNavigateToPreview(bookingData: BookingData)
 }
 
 interface IDatePicker {

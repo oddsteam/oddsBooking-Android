@@ -1,6 +1,5 @@
 package com.odds.oddsbooking.presentations.booking.form
 
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
@@ -19,7 +17,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.databinding.FragmentBookingFormBinding
 import com.odds.oddsbooking.models.BookingData
-import com.odds.oddsbooking.models.CalendarDate
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -31,7 +28,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private val presenter by lazy { BookingFormPresenter() }
 
-    private var bookingData: BookingData = BookingData()
     private val disable = R.color.disable_color
     private val enable = android.R.color.transparent
 
@@ -67,7 +63,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         onFromDateClicked()
         onToDateClicked()
         onPreviewButtonClick()
-        onReturnBinding()
     }
     //endregion
 
@@ -124,38 +119,26 @@ class BookingFormFragment : Fragment(), BookingFormView {
             nameFormEditText.doAfterTextChanged { text ->
                 presenter.validateFullName(text.toString())
                 nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
-                //TODO: move bookingData into Presenter
-                bookingData.fullName = text.toString()
             }
 
             emailFormEditText.doAfterTextChanged { text ->
                 presenter.validateEmail(text.toString())
-
-                bookingData.email = text.toString()
             }
 
             phoneFormEditText.doAfterTextChanged { text ->
                 presenter.validatePhoneNumber(text.toString())
-
-                bookingData.phoneNumber = text.toString()
             }
 
             roomFormDropdown.doAfterTextChanged { text ->
                 presenter.validateRoom(text.toString())
-
-                bookingData.room = text.toString()
             }
 
             reasonFormEditText.doAfterTextChanged { text ->
                 presenter.validateReason(text.toString())
-
-                bookingData.reason = text.toString()
             }
 
             fromDateFormEditText.doAfterTextChanged { text ->
                 presenter.validateFromDate(text.toString())
-
-                bookingData.fromDate = text.toString()
             }
 
             fromTimeFormDropdown.doAfterTextChanged { text ->
@@ -164,8 +147,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
                     fromDateFormEditText.text.toString(),
                     toDateFormEditText.text.toString(),
                 )
-
-                bookingData.fromTime = text.toString()
             }
 
             toDateFormEditText.doAfterTextChanged { text ->
@@ -174,14 +155,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
                     fromDateFormEditText.text.toString(),
                     fromTimeFormDropdown.text.toString()
                 )
-
-                bookingData.toDate = text.toString()
             }
 
             toTimeFormDropDown.doAfterTextChanged { text ->
                 presenter.validateToTime(text.toString())
-
-                bookingData.toTime = text.toString()
             }
         }
     }
@@ -452,14 +429,18 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onPreviewButtonClick() {
         binding.previewButton.setOnClickListener {
-            findNavController().apply {
-                navigate(
-                    R.id.bookingPreviewFragment,
-                    bundleOf(
-                        BookingFormActivity.EXTRA_BOOKING to bookingData
-                    )
+            presenter.onPreviewButtonClicked()
+        }
+    }
+
+    override fun onNavigateToPreview(bookingData: BookingData) {
+        findNavController().apply {
+            navigate(
+                R.id.bookingPreviewFragment,
+                bundleOf(
+                    BookingFormActivity.EXTRA_BOOKING to bookingData
                 )
-            }
+            )
         }
     }
 
@@ -473,30 +454,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         binding.toDateFormEditText.setOnClickListener {
             presenter.onToDateClick(binding.toDateFormEditText.text.toString())
         }
-    }
-
-    private fun onReturnBinding() {
-
-        arguments?.getParcelable<BookingData>(BookingFormActivity.EXTRA_BOOKING)
-            ?.let { bookingData = it }
-        with(binding) {
-            //valiadate ของ argument ใน presenter ( != null)
-            //valiadate ของเดิม
-            if (bookingData.validateBookingData()) {
-                //TODO: create fun in interface View to setTexts
-                //TODO: presenter call fun
-                nameFormEditText.setText(bookingData.fullName)
-                emailFormEditText.setText(bookingData.email)
-                phoneFormEditText.setText(bookingData.phoneNumber)
-                roomFormDropdown.setText(bookingData.room, false)
-                reasonFormEditText.setText(bookingData.reason)
-                fromDateFormEditText.setText(bookingData.fromDate)
-                fromTimeFormDropdown.setText(bookingData.fromTime, false)
-                toDateFormEditText.setText(bookingData.toDate)
-                toTimeFormDropDown.setText(bookingData.toTime, false)
-            }
-        }
-        arguments?.remove(BookingFormActivity.EXTRA_BOOKING)
     }
 
     private fun setEditTextIsFocus(editText: TextInputEditText, isFocus: Boolean) {

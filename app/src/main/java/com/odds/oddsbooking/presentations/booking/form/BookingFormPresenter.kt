@@ -52,7 +52,7 @@ class BookingFormPresenter {
             }
             else -> {
                 view.onValidateNameSuccess()
-
+                bookingData.fullName = fullName
                 false
             }
         }
@@ -71,6 +71,7 @@ class BookingFormPresenter {
             }
             else -> {
                 view.onValidateEmailSuccess()
+                bookingData.email = email
                 false
             }
         }
@@ -89,6 +90,7 @@ class BookingFormPresenter {
             }
             else -> {
                 view.onValidatePhoneNumberSuccess()
+                bookingData.phoneNumber = phoneNumber
                 false
             }
         }
@@ -103,6 +105,7 @@ class BookingFormPresenter {
             }
             else -> {
                 view.onValidateRoomSuccess()
+                bookingData.room = room
                 false
             }
         }
@@ -117,6 +120,7 @@ class BookingFormPresenter {
             }
             else -> {
                 view.onValidateReasonSuccess()
+                bookingData.reason = reason
                 false
             }
         }
@@ -152,6 +156,7 @@ class BookingFormPresenter {
                 view.setDisableToDate()
                 view.setDisableToTime()
                 fromDateErrorFlag = false
+                bookingData.fromDate = fromDate
             }
         }
         validateForm()
@@ -201,6 +206,7 @@ class BookingFormPresenter {
                 view.setEnableToDate()
                 view.setEnableToTime()
                 fromTimeErrorFlag = false
+                bookingData.fromTime = fromTime
             }
         }
         validateForm()
@@ -213,6 +219,7 @@ class BookingFormPresenter {
                 toDateErrorFlag = true
             }
             fromTime.isEmpty() -> {
+                bookingData.toDate = toDate
                 toDateErrorFlag = false
             }
             else -> {
@@ -251,6 +258,7 @@ class BookingFormPresenter {
                 view.setToTimeDropDown(toTimeTimeSlot)
                 view.clearValueToTimeDropdown()
                 view.setEnableToTime()
+                bookingData.toDate = toDate
                 toDateErrorFlag = false
             }
         }
@@ -265,6 +273,7 @@ class BookingFormPresenter {
             }
             else -> {
                 view.onValidateToTimeSuccess()
+                bookingData.toTime = toTime
                 false
             }
         }
@@ -433,4 +442,8 @@ class BookingFormPresenter {
         }
     }
     //endregion
+
+    fun onPreviewButtonClicked() {
+      view.onNavigateToPreview(bookingData)
+    }
 }
