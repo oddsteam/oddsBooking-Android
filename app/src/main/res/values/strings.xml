@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Odds Booking</string>
     <string-array name="rooms">
-        <item>All Star</item>
+        <item>All Stars</item>
         <item>Neon</item>
     </string-array>
     <string-array name="from_time">
-        <item>All Star</item>
+        <item>All Stars</item>
         <item>Neon</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
@@ -24,7 +24,7 @@
     <string name="confirm_string">CONFIRM</string>
     <string name="odds_logo_des">ODDS color logo</string>
     <string name="rooms_booking">Rooms Booking</string>
-    <string name="demo_version">Demo V0.1.1</string>
+    <string name="demo_version">Demo V0.6.5</string>
     <string name="bookings">Bookings</string>
     <string name="room">Room*</string>
     <string name="textview">TextView</string>
