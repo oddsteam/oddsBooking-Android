@@ -358,7 +358,7 @@ class BookingFormPresenter {
 
     private fun checkDay(value: String): String {
         val date = formatter.parse(value)!!
-        Log.d("date", SimpleDateFormat("EEEE", Locale.US).format(date))
+//        Log.d("date", SimpleDateFormat("EEEE", Locale.US).format(date))
         // return day of week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
         return SimpleDateFormat("EEEE", Locale.US).format(date)
     }
@@ -388,7 +388,7 @@ class BookingFormPresenter {
                 }
             }
         }
-        Log.d("TimeSlot", timeSlot.toString())
+//        Log.d("TimeSlot", timeSlot.toString())
         return timeSlot
     }
 
