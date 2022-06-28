@@ -236,7 +236,50 @@ class BookingFormPresenterTest {
         Assert.assertEquals(expectSetDisableToTime, view.spySetDisableToTime)
     }
 
+    @Test
+    fun `when toDate is select should call onValidateToDateSuccess & DisablePreviewButton`(){
+        //Arrange
+        val presenter = BookingFormPresenter()
+        val view = SpyBookingFormView()
+        presenter.attachView(view)
+        //Act
+        presenter.validateToDate("2022/07/12", "2022/07/12", "18:00")
+        //Assert
+        val exceptFormError = 0
+        val expectFormSuccess = 1
+        val expectDisablePreviewButton = 1
+        val expectSetToDateDropDown = 1
+        val expectEnableToTime = 1
+        Assert.assertEquals(exceptFormError, view.spyFormError)
+        Assert.assertEquals(expectFormSuccess, view.spyFormSuccess)
+        Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
+        Assert.assertEquals(expectSetToDateDropDown, view.spySetToTimeDropDown)
+        Assert.assertEquals(expectEnableToTime, view.spySetEnableToTime)
+    }
+
+        @Test
+        fun `when toDate is select should call onValidateToDateError & DisablePreviewButton`(){
+            val presenter = BookingFormPresenter()
+            val view = SpyBookingFormView()
+            presenter.attachView(view)
+            //Act
+            presenter.validateToDate("", "", "")
+            //Assert
+            val exceptFormError = 1
+            val expectFormSuccess = 0
+            val expectDisablePreviewButton = 1
+            val expectSetToDateDropDown = 0
+            val expectEnableToTime = 0
+            Assert.assertEquals(exceptFormError, view.spyFormError)
+            Assert.assertEquals(expectFormSuccess, view.spyFormSuccess)
+            Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
+            Assert.assertEquals(expectSetToDateDropDown, view.spySetToTimeDropDown)
+            Assert.assertEquals(expectEnableToTime, view.spySetEnableToTime)
+        }
+
     class SpyBookingFormView : BookingFormView {
+        var spySetEnableToTime = 0
+        var spySetToTimeDropDown = 0
         var spyDisablePreviewButton = 0
         var spyEnablePreviewButton = 0
         var spyFormError = 0
@@ -317,11 +360,11 @@ class BookingFormPresenterTest {
         }
 
         override fun onValidateToDateError(errMsg: Int) {
-            TODO("Not yet implemented")
+            spyFormError++
         }
 
         override fun onValidateToDateSuccess(timeSlot: Array<String>) {
-            TODO("Not yet implemented")
+            spyFormSuccess++
         }
 
         override fun onValidateToTimeError(errMsg: Int) {
@@ -345,7 +388,7 @@ class BookingFormPresenterTest {
         }
 
         override fun setToTimeDropDown(timeSlot: Array<String>) {
-            TODO("Not yet implemented")
+            spySetToTimeDropDown++
         }
 
         override fun clearValueFromTimeDropdown() {
@@ -385,7 +428,7 @@ class BookingFormPresenterTest {
         }
 
         override fun setEnableToTime() {
-            TODO("Not yet implemented")
+            spySetEnableToTime++
         }
 
         override fun setDisableToTime() {
