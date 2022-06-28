@@ -92,6 +92,41 @@ class BookingFormPresenterTest {
         Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
     }
 
+    @Test
+    fun `when select room correct should call onValidateRoomSuccess & DisablePreviewButton`() {
+        // Arrange
+        val presenter = BookingFormPresenter()
+        val view = SpyBookingFormView()
+        presenter.attachView(view)
+        // Act
+        presenter.validateRoom("Neon")
+        // Assert
+        val exceptFormError = 0
+        val expectFormSuccess = 1
+        val expectDisablePreviewButton = 1
+        Assert.assertEquals(exceptFormError, view.spyFormError)
+        Assert.assertEquals(expectFormSuccess, view.spyFormSuccess)
+        Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
+    }
+
+    @Test
+    fun `when select room incorrect should call onValidateRoomSuccess & DisablePreviewButton`() {
+        // Arrange
+        val presenter = BookingFormPresenter()
+        val view = SpyBookingFormView()
+        presenter.attachView(view)
+        // Act
+        presenter.validateRoom("")
+        // Assert
+        val exceptFormError = 1
+        val expectFormSuccess = 0
+        val expectDisablePreviewButton = 1
+        Assert.assertEquals(exceptFormError, view.spyFormError)
+        Assert.assertEquals(expectFormSuccess, view.spyFormSuccess)
+        Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
+    }
+
+
 
     class SpyBookingFormView : BookingFormView {
         var spyDisablePreviewButton = 0
