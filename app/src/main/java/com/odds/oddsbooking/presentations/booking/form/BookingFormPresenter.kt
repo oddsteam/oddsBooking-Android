@@ -406,7 +406,6 @@ class BookingFormPresenter {
 
     fun setFromTimesDropDown() {
         view.setFromTimeDropdown(fromTimeTimeSlot)
-
     }
 
     fun setToTimesDropDown() {
