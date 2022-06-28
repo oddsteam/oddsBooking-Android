@@ -321,6 +321,17 @@ class BookingFormPresenterTest {
         Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
     }
 
+    //TODO: validateForm
+    //TODO: onFromDateClick
+    //TODO: onToDateClick
+    //TODO: autoFormatName
+    //TODO: setFromTimesDropDown
+    //TODO: setToTimesDropDown
+    //TODO: onDatePickerCancel
+    //TODO: onDatePickerDismiss
+    //TODO: onDatePickerConfirm
+    //TODO: onPreviewButtonClicked
+
 
     class SpyBookingFormView : BookingFormView {
         var spyDisablePreviewButton = 0
