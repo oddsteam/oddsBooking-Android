@@ -41,6 +41,24 @@ class BookingFormPresenterTest {
         Assert.assertEquals(expectFormSuccess, view.spyFormSuccess)
         Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
     }
+
+//    @Test
+//    fun `when input email correct should call onValidateEmailSuccess & DisablePreviewButton`() {
+//        // Arrange
+//        val presenter = BookingFormPresenter()
+//        val view = SpyBookingFormView()
+//        presenter.attachView(view)
+//        // Act
+//        presenter.validateEmail("mola@odds.team")
+//        // Assert
+//        val exceptFormError = 0
+//        val expectFormSuccess = 1
+//        val expectDisablePreviewButton = 1
+//        Assert.assertEquals(exceptFormError, view.spyFormError)
+//        Assert.assertEquals(expectFormSuccess, view.spyFormSuccess)
+//        Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
+//    }
+
     @Test
     fun `when input phoneNumber correct should call onValidatePhoneNumberSuccess & DisablePreviewButton`() {
         // Arrange
@@ -59,7 +77,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when input phoneNumber incorrect should call onValidatePhoneNumberSuccess & DisablePreviewButton`() {
+    fun `when input phoneNumber incorrect should call onValidatePhoneNumberError & DisablePreviewButton`() {
         // Arrange
         val presenter = BookingFormPresenter()
         val view = SpyBookingFormView()
@@ -110,7 +128,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when select room incorrect should call onValidateRoomSuccess & DisablePreviewButton`() {
+    fun `when select room incorrect should call onValidateRoomError & DisablePreviewButton`() {
         // Arrange
         val presenter = BookingFormPresenter()
         val view = SpyBookingFormView()
@@ -126,7 +144,39 @@ class BookingFormPresenterTest {
         Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
     }
 
+    @Test
+    fun `when input reason correct should call onValidateReasonSuccess & DisablePreviewButton`() {
+        // Arrange
+        val presenter = BookingFormPresenter()
+        val view = SpyBookingFormView()
+        presenter.attachView(view)
+        // Act
+        presenter.validateReason("Study")
+        // Assert
+        val exceptFormError = 0
+        val expectFormSuccess = 1
+        val expectDisablePreviewButton = 1
+        Assert.assertEquals(exceptFormError, view.spyFormError)
+        Assert.assertEquals(expectFormSuccess, view.spyFormSuccess)
+        Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
+    }
 
+    @Test
+    fun `when reason is empty should call onValidateReasonError & DisablePreviewButton`() {
+        // Arrange
+        val presenter = BookingFormPresenter()
+        val view = SpyBookingFormView()
+        presenter.attachView(view)
+        // Act
+        presenter.validateReason("")
+        // Assert
+        val exceptFormError = 1
+        val expectFormSuccess = 0
+        val expectDisablePreviewButton = 1
+        Assert.assertEquals(exceptFormError, view.spyFormError)
+        Assert.assertEquals(expectFormSuccess, view.spyFormSuccess)
+        Assert.assertEquals(expectDisablePreviewButton, view.spyDisablePreviewButton)
+    }
 
     class SpyBookingFormView : BookingFormView {
         var spyDisablePreviewButton = 0
@@ -183,7 +233,7 @@ class BookingFormPresenterTest {
         }
 
         override fun onValidateReasonSuccess() {
-            TODO("Not yet implemented")
+            spyFormSuccess++
         }
 
         override fun onValidateFromDateError(errMsg: Int) {
