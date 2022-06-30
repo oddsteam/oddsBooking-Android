@@ -163,13 +163,15 @@ class BookingFormPresenterTest {
 
     @Test
     fun `when formDate is select should call onValidateSuccess & DisablePreviewButton`() {
-        // Arrange
+
+        // Arrange Given -> ให้ว่า....
         val presenter = BookingFormPresenter()
         val view = SpyBookingFormView()
         presenter.attachView(view)
-        // Act
-        presenter.validateFromDate("2022/07/12")
-        // Assert
+        val fromDate = "2022/07/12"
+        // Act When -> เมื่อ... (จาก Given)
+        presenter.validateFromDate(fromDate)
+        // Assert Then -> จะเกิดอะไรขึ้น
         val exceptFormError = 0
         val expectFormSuccess = 1
         val expectDisablePreviewButton = 1
