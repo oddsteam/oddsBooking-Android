@@ -5,15 +5,28 @@ import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.presentations.booking.form.BookingFormPresenter
 import com.odds.oddsbooking.presentations.booking.form.BookingFormView
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class BookingFormPresenterTest {
+
+    @Before
+    fun setup(){
+        val view = SpyBookingFormView()
+
+        val presenter = BookingFormPresenter()
+
+        presenter.attachView(view)
+    }
+
+
     @Test
     fun `when input fullName correct should call onValidateNameSuccess & DisablePreviewButton`() {
         // Arrange
-        val presenter = BookingFormPresenter()
-        val view = SpyBookingFormView()
-        presenter.attachView(view)
+
         // Act
 //        presenter.validateFullName("test")
         // Assert
