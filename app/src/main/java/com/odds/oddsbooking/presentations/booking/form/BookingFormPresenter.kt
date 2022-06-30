@@ -1,6 +1,5 @@
 package com.odds.oddsbooking.presentations.booking.form
 
-import android.util.Log
 import android.util.Patterns
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.models.BookingData
@@ -353,7 +352,7 @@ class BookingFormPresenter {
     //endregion
 
     fun autoFormatName(name: String) {
-        view.onNameAutoFormat(name)
+        view.onNameAutoFormat(getNameFormatter(name))
     }
 
     private fun checkDay(value: String): String {
@@ -392,7 +391,7 @@ class BookingFormPresenter {
         return timeSlot
     }
 
-    fun getNameFormatter(name: String): String {
+    private fun getNameFormatter(name: String): String {
         val nameFormatter = name.lowercase().trim().split("\\s+".toRegex()).toMutableList()
         for (index in nameFormatter.indices) {
             nameFormatter[index] = nameFormatter[index].replaceFirstChar { it.uppercaseChar() }
