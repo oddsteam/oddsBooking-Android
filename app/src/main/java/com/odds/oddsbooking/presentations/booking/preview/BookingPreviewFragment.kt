@@ -1,8 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +12,6 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
-import com.odds.oddsbooking.models.Booking
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingPreviewBinding
 import com.odds.oddsbooking.services.booking.BookingAPIFactory
@@ -29,7 +26,6 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
             )
         )
     }
-    private lateinit var bookingData: BookingData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,19 +36,21 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val bookingInfo = bind()
-        Log.d("BookingPreviewFragment", "bookingInfo: $bookingInfo")
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.getBookingInfo(arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!)
         binding.confirmButton.setOnClickListener {
-            presenter.createBooking(bookingInfo)
+            presenter.createBooking()
         }
         binding.backToBookingFormButton.setOnClickListener {
             presenter.backToBookingFormPage()
         }
-        return binding.root
     }
 
-    private fun bind(): Booking {
-        bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!
+    override fun setAllEditTextFromBookingData(bookingData: BookingData) {
         val fromDate = "${bookingData.fromDate} ${bookingData.fromTime}"
         val toDate = "${bookingData.toDate} ${bookingData.toTime}"
         with(binding) {
@@ -64,22 +62,8 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
             fromDateTimePreviewEditText.setText(fromDate)
             toDateTimePreviewEditText.setText(toDate)
         }
-        return Booking(
-            bookingData.fullName,
-            bookingData.email,
-            bookingData.phoneNumber,
-            bookingData.room,
-            bookingData.reason,
-            "${dateTimeGeneralFormat(bookingData.fromDate)}T${bookingData.fromTime}",
-            "${dateTimeGeneralFormat(bookingData.toDate)}T${bookingData.toTime}",
-            false
-        )
     }
 
-    private fun dateTimeGeneralFormat(dateTime: String): String {
-        val (year, month, day) = dateTime.split("/").toTypedArray()
-        return "${year}-${month}-${day}"
-    }
 
     override fun showProgressBar() {
         binding.layoutProgressBar.isVisible = true
@@ -87,7 +71,7 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
         binding.backToBookingFormButton.isEnabled = false
     }
 
-    override fun goToSuccessPage() {
+    override fun goToSuccessPage(bookingData: BookingData) {
         binding.layoutProgressBar.isGone = true
         findNavController().apply {
             navigate(
@@ -101,16 +85,6 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
 
     override fun backToBookingFormPage() {
         findNavController().popBackStack()
-//        findNavController().apply {
-//            Log.d("toDate_Preview", bookingData.toDate)
-//            navigate(
-//                R.id.bookingFormFragment,
-//                bundleOf(
-//                    BookingFormActivity.EXTRA_BOOKING to bookingData
-//                )
-//
-//            )
-//        }
     }
 
 

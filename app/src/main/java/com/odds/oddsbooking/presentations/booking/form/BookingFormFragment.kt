@@ -397,7 +397,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
 
     override fun onNameAutoFormat(name: String) {
-        binding.nameFormEditText.setText(presenter.getNameFormatter(name))
+        binding.nameFormEditText.setText(name)
     }
 
     override fun enablePreviewButton() {
