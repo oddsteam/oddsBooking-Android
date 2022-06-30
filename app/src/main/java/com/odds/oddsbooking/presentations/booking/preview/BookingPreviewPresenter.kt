@@ -39,9 +39,7 @@ class BookingPreviewPresenter constructor(private val api: BookingAPI) {
 
 
     fun backToBookingFormPage() {
-        scope.launch {
             view.backToBookingFormPage()
-        }
     }
 
     fun getBookingInfo(bookingInfo: BookingData) {
