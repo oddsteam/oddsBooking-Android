@@ -266,4 +266,28 @@ class BookingFormPresenterTest {
         Mockito.verify(view, times(0)).setEnableToTime()
         Mockito.verify(view, times(0)).clearValueToTimeDropdown()
     }
+
+    @Test
+    fun `when select toTime correct should call onValidateToTimeSuccess & DisablePreviewButton`() {
+        //Given
+        val toTime = "17:00"
+        //When
+        presenter.validateToTime(toTime)
+        //Then
+        Mockito.verify(view, times(1)).onValidateToTimeSuccess()
+        Mockito.verify(view, times(0)).onValidateToTimeError(R.string.time_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+    }
+
+    @Test
+    fun `when do not select toTime incorrect should call onValidateToTimeError & DisablePreviewButton`() {
+        //Given
+        val toTime = ""
+        //When
+        presenter.validateToTime(toTime)
+        //Then
+        Mockito.verify(view, times(0)).onValidateToTimeSuccess()
+        Mockito.verify(view, times(1)).onValidateToTimeError(R.string.time_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+    }
 }
