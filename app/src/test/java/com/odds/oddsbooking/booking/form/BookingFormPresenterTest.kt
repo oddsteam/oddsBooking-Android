@@ -164,4 +164,42 @@ class BookingFormPresenterTest {
         Mockito.verify(view, times(0)).onValidateReasonError(R.string.reason_empty_err)
         Mockito.verify(view, times(1)).disablePreviewButton()
     }
+
+    @Test
+    fun `when select fromDate correct should call onValidateFromDateSuccess & DisablePreviewButton`() {
+        //Given
+        val fromDate = "2022/07/22"
+        val timeSlot = arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        //When
+        presenter.validateFromDate(fromDate)
+        //Then
+        Mockito.verify(view, times(1)).onValidateFromDateSuccess(timeSlot)
+        Mockito.verify(view, times(0)).onValidateFromDateError(R.string.from_date_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+        Mockito.verify(view, times(1)).setEnableFromTime()
+        Mockito.verify(view, times(1)).setFromTimeDropdown(timeSlot)
+        Mockito.verify(view, times(1)).clearValueFromTimeDropdown()
+        Mockito.verify(view, times(1)).clearValueToTimeDropdown()
+        Mockito.verify(view, times(1)).setDisableToDate()
+        Mockito.verify(view, times(1)).setDisableToTime()
+    }
+
+    @Test
+    fun `when do not select fromDate incorrect should call onValidateFromDateError & DisablePreviewButton`() {
+        //Given
+        val fromDate = ""
+        val timeSlot = arrayOf("")
+        //When
+        presenter.validateFromDate(fromDate)
+        //Then
+        Mockito.verify(view, times(0)).onValidateFromDateSuccess(timeSlot)
+        Mockito.verify(view, times(1)).onValidateFromDateError(R.string.from_date_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+        Mockito.verify(view, times(0)).setEnableFromTime()
+        Mockito.verify(view, times(0)).setFromTimeDropdown(timeSlot)
+        Mockito.verify(view, times(0)).clearValueFromTimeDropdown()
+        Mockito.verify(view, times(0)).clearValueToTimeDropdown()
+        Mockito.verify(view, times(0)).setDisableToDate()
+        Mockito.verify(view, times(0)).setDisableToTime()
+    }
 }
