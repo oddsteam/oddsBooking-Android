@@ -47,8 +47,11 @@ class BookingFormPresenterTest {
 
     @Test
     fun `when input email correct should call onValidateEmailSuccess & DisablePreviewButton`(){
+        //Given
         val email = "molamola@gmail.com"
+        //When
         presenter.validateEmail(email)
+        //Then
         Mockito.verify(view, times(1)).onValidateEmailSuccess()
         Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_empty_err)
         Mockito.verify(view, times(1)).disablePreviewButton()
@@ -68,8 +71,11 @@ class BookingFormPresenterTest {
 
     @Test
     fun `when input email incorrect should call onValidateEmailError & DisablePreviewButton`() {
+        //Given
         val email = "email"
+        //When
         presenter.validateEmail(email)
+        //Then
         Mockito.verify(view, times(0)).onValidateEmailSuccess()
         Mockito.verify(view, times(1)).onValidateEmailError(R.string.email_format_err)
         Mockito.verify(view, times(1)).disablePreviewButton()
@@ -132,6 +138,30 @@ class BookingFormPresenterTest {
         //Then
         Mockito.verify(view, times(1)).onValidateRoomSuccess()
         Mockito.verify(view, times(0)).onValidateRoomError(R.string.room_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+    }
+
+    @Test
+    fun `when do not input Reason empty should call onValidateReasonError & DisablePreviewButton`() {
+        //Given
+        val reason = ""
+        //When
+        presenter.validateReason(reason)
+        //Then
+        Mockito.verify(view, times(0)).onValidateReasonSuccess()
+        Mockito.verify(view, times(1)).onValidateReasonError(R.string.reason_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+    }
+
+    @Test
+    fun `when input Reason correct should call onValidateReasonSuccess & DisablePreviewButton`() {
+        //Given
+        val reason = "study"
+        //When
+        presenter.validateReason(reason)
+        //Then
+        Mockito.verify(view, times(1)).onValidateReasonSuccess()
+        Mockito.verify(view, times(0)).onValidateReasonError(R.string.reason_empty_err)
         Mockito.verify(view, times(1)).disablePreviewButton()
     }
 }
