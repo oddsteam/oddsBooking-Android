@@ -236,4 +236,34 @@ class BookingFormPresenterTest {
         Mockito.verify(view, times(0)).setEnableToDate()
         Mockito.verify(view, times(0)).setEnableToTime()
     }
+
+    @Test
+    fun `when select toDate correct should call onValidateToDateSuccess & DisablePreviewButton`() {
+        //Given
+        val fromDate = "2022/07/22"
+        val toDate = "2022/07/22"
+        val timeSlot = arrayOf("14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00")
+        //When
+        presenter.validateToDate(fromDate, toDate, "13:00")
+        //Then
+        Mockito.verify(view, times(1)).onValidateToDateSuccess(timeSlot)
+        Mockito.verify(view, times(0)).onValidateToDateError(R.string.to_date_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+        Mockito.verify(view, times(1)).setEnableToTime()
+        Mockito.verify(view, times(1)).clearValueToTimeDropdown()
+    }
+
+    @Test
+    fun `when do not select toDate incorrect should call onValidateToDateError & DisablePreviewButton`() {
+        //Given
+        val timeSlot = arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        //When
+        presenter.validateToDate("","2022/07/22", "13:00")
+        //Then
+        Mockito.verify(view, times(0)).onValidateToDateSuccess(timeSlot)
+        Mockito.verify(view, times(1)).onValidateToDateError(R.string.to_date_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+        Mockito.verify(view, times(0)).setEnableToTime()
+        Mockito.verify(view, times(0)).clearValueToTimeDropdown()
+    }
 }
