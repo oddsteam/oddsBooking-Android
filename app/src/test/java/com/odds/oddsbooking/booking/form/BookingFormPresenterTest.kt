@@ -46,6 +46,15 @@ class BookingFormPresenterTest {
     }
 
     @Test
+    fun `when input email correct should call onValidateEmailSuccess & DisablePreviewButton`(){
+        val email = "molamola@gmail.com"
+        presenter.validateEmail(email)
+        Mockito.verify(view, times(1)).onValidateEmailSuccess()
+        Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_empty_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+    }
+
+    @Test
     fun `when input email empty should call onValidateEmailError & DisablePreviewButton`() {
         //Given
         val email = ""
@@ -57,7 +66,14 @@ class BookingFormPresenterTest {
         Mockito.verify(view, times(1)).disablePreviewButton()
     }
 
-    //TODO: Email incorrect, correct
+    @Test
+    fun `when input email incorrect should call onValidateEmailError & DisablePreviewButton`() {
+        val email = "email"
+        presenter.validateEmail(email)
+        Mockito.verify(view, times(0)).onValidateEmailSuccess()
+        Mockito.verify(view, times(1)).onValidateEmailError(R.string.email_format_err)
+        Mockito.verify(view, times(1)).disablePreviewButton()
+    }
 
     @Test
     fun `when input phoneNumber empty should call onValidatePhoneNumberError & DisablePreviewButton`() {

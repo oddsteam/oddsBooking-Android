@@ -50,16 +50,4 @@ class BookingSuccessFragment : Fragment() {
             startActivity(this)
         }
     }
-
-
-    companion object {
-        @JvmStatic
-        fun newInstance(bookingData: BookingData): BookingSuccessFragment {
-            return BookingSuccessFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(BookingFormActivity.EXTRA_BOOKING, bookingData)
-                }
-            }
-        }
-    }
 }

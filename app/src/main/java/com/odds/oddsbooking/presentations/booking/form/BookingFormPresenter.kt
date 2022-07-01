@@ -1,6 +1,7 @@
 package com.odds.oddsbooking.presentations.booking.form
 
 import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
@@ -64,7 +65,7 @@ class BookingFormPresenter {
                 view.onValidateEmailError(R.string.email_empty_err)
                 true
             }
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+            !PatternsCompat.EMAIL_ADDRESS.matcher(email).matches() -> {
                 view.onValidateEmailError(R.string.email_format_err)
                 true
             }
