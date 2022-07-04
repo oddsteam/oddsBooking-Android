@@ -5,6 +5,14 @@ plugins {
     id 'com.google.firebase.appdistribution'
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+def keystoreProperties = new Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdk 31
     buildToolsVersion '32.0.0'
@@ -28,19 +36,30 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
             firebaseAppDistribution {
                 appId="1:435114910085:android:9fd5fc533d9661c9c824ec"
                 serviceCredentialsFile = "/var/jenkins_home/jobs/odd-booking-android/branches/dev/workspace/serviceaccount.json"
-                //serviceCredentialsFile = "/Users/Jerry/odds/oddsBooking-Android/serviceaccount.json"
+//                serviceCredentialsFile = "/Users/Jerry/odds/oddsBooking-Android/serviceaccount.json"
                 artifactType="APK"
                 groups="odds-mola"
             }
+            signingConfig signingConfigs.release
 //            minifyEnabled false
 //            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
