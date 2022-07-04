@@ -142,7 +142,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when do not input Reason empty should call onValidateReasonError & DisablePreviewButton`() {
+    fun `when do not input reason empty should call onValidateReasonError & DisablePreviewButton`() {
         //Given
         val reason = ""
         //When
@@ -154,7 +154,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when input Reason correct should call onValidateReasonSuccess & DisablePreviewButton`() {
+    fun `when input reason correct should call onValidateReasonSuccess & DisablePreviewButton`() {
         //Given
         val reason = "study"
         //When
@@ -289,5 +289,109 @@ class BookingFormPresenterTest {
         Mockito.verify(view, times(0)).onValidateToTimeSuccess()
         Mockito.verify(view, times(1)).onValidateToTimeError(R.string.time_empty_err)
         Mockito.verify(view, times(1)).disablePreviewButton()
+    }
+
+    @Test
+    fun `when input all data complete correct should call onValidateSuccess & EnablePreviewButton`() {
+        //Given
+        val name = "Mola Mola"
+        val email = "mola@odds.team"
+        val phoneNumber = "0987654321"
+        val room = "Neon"
+        val reason = "study"
+        val fromDate = "2022/07/22"
+        val fromTime = "13:00"
+        val toDate = "2022/07/22"
+        val toTime = "17:00"
+        val timeSlot = arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        val timeSlotCan = arrayOf("14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00")
+
+
+        //When
+        presenter.validateFullName(name)
+        presenter.validateEmail(email)
+        presenter.validatePhoneNumber(phoneNumber)
+        presenter.validateRoom(room)
+        presenter.validateReason(reason)
+        presenter.validateFromDate(fromDate)
+        presenter.validateFromTime(fromTime,fromDate,toDate)
+        presenter.validateToDate(fromDate, toDate, fromTime)
+        presenter.validateToTime(toTime)
+        //Then
+        Mockito.verify(view, times(1)).onValidateNameSuccess()
+        Mockito.verify(view, times(1)).onValidateEmailSuccess()
+        Mockito.verify(view, times(1)).onValidatePhoneNumberSuccess()
+        Mockito.verify(view, times(1)).onValidateRoomSuccess()
+        Mockito.verify(view, times(1)).onValidateReasonSuccess()
+        Mockito.verify(view, times(1)).onValidateFromDateSuccess(timeSlot)
+        Mockito.verify(view, times(1)).onValidateFromTimeSuccess(timeSlotCan)
+        Mockito.verify(view, times(1)).onValidateToDateSuccess(timeSlotCan)
+        Mockito.verify(view, times(1)).onValidateToTimeSuccess()
+
+        Mockito.verify(view, times(0)).onValidateNameError(R.string.full_name_empty_err)
+        Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_empty_err)
+        Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_format_err)
+        Mockito.verify(view, times(0)).onValidatePhoneNumberError(R.string.phone_number_empty_err)
+        Mockito.verify(view, times(0)).onValidatePhoneNumberError(R.string.phone_number_format_err)
+        Mockito.verify(view, times(0)).onValidateRoomError(R.string.room_empty_err)
+        Mockito.verify(view, times(0)).onValidateReasonError(R.string.reason_empty_err)
+        Mockito.verify(view, times(0)).onValidateFromDateError(R.string.from_date_empty_err)
+        Mockito.verify(view, times(0)).onValidateFromTimeError(R.string.time_empty_err)
+        Mockito.verify(view, times(0)).onValidateToDateError(R.string.to_date_empty_err)
+        Mockito.verify(view, times(0)).onValidateToTimeError(R.string.time_empty_err)
+
+        Mockito.verify(view, times(1)).enablePreviewButton()
+    }
+
+    @Test
+    fun `when input all data incomplete incorrect should call onValidateError & enablePreviewButton`() {
+        //Given
+        val name = ""
+        val email = "molaodds.team"
+        val phoneNumber = "09876543"
+        val room = ""
+        val reason = "study"
+        val fromDate = "2022/07/22"
+        val fromTime = "13:00"
+        val toDate = "2022/07/22"
+        val toTime = "17:00"
+        val timeSlot = arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        val timeSlotCan = arrayOf("14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00")
+
+
+        //When
+        presenter.validateFullName(name)
+        presenter.validateEmail(email)
+        presenter.validatePhoneNumber(phoneNumber)
+        presenter.validateRoom(room)
+        presenter.validateReason(reason)
+        presenter.validateFromDate(fromDate)
+        presenter.validateFromTime(fromTime,fromDate,toDate)
+        presenter.validateToDate(fromDate, toDate, fromTime)
+        presenter.validateToTime(toTime)
+        //Then
+        Mockito.verify(view, times(0)).onValidateNameSuccess()
+        Mockito.verify(view, times(0)).onValidateEmailSuccess()
+        Mockito.verify(view, times(0)).onValidatePhoneNumberSuccess()
+        Mockito.verify(view, times(0)).onValidateRoomSuccess()
+        Mockito.verify(view, times(1)).onValidateReasonSuccess()
+        Mockito.verify(view, times(1)).onValidateFromDateSuccess(timeSlot)
+        Mockito.verify(view, times(1)).onValidateFromTimeSuccess(timeSlotCan)
+        Mockito.verify(view, times(1)).onValidateToDateSuccess(timeSlotCan)
+        Mockito.verify(view, times(1)).onValidateToTimeSuccess()
+
+        Mockito.verify(view, times(1)).onValidateNameError(R.string.full_name_empty_err)
+        Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_empty_err)
+        Mockito.verify(view, times(1)).onValidateEmailError(R.string.email_format_err)
+        Mockito.verify(view, times(0)).onValidatePhoneNumberError(R.string.phone_number_empty_err)
+        Mockito.verify(view, times(1)).onValidatePhoneNumberError(R.string.phone_number_format_err)
+        Mockito.verify(view, times(1)).onValidateRoomError(R.string.room_empty_err)
+        Mockito.verify(view, times(0)).onValidateReasonError(R.string.reason_empty_err)
+        Mockito.verify(view, times(0)).onValidateFromDateError(R.string.from_date_empty_err)
+        Mockito.verify(view, times(0)).onValidateFromTimeError(R.string.time_empty_err)
+        Mockito.verify(view, times(0)).onValidateToDateError(R.string.to_date_empty_err)
+        Mockito.verify(view, times(0)).onValidateToTimeError(R.string.time_empty_err)
+
+        Mockito.verify(view, times(0)).enablePreviewButton()
     }
 }
