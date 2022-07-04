@@ -7,17 +7,20 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.never
+import org.mockito.kotlin.times
 
 @RunWith(MockitoJUnitRunner::class)
 class BookingFormPresenterTest {
+
     @Mock
     lateinit var view: BookingFormView
     private var presenter: BookingFormPresenter = BookingFormPresenter()
+
     @Before
-    fun setup(){
+    fun setup() {
         presenter.attachView(view)
     }
 
@@ -28,9 +31,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validateFullName(name)
         //Then
-        Mockito.verify(view, times(1)).onValidateNameSuccess()
-        Mockito.verify(view, times(0)).onValidateNameError(R.string.full_name_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view).onValidateNameSuccess()
+        verify(view, never()).onValidateNameError(R.string.full_name_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -40,21 +43,21 @@ class BookingFormPresenterTest {
         //When
         presenter.validateFullName(name)
         //Then
-        Mockito.verify(view, times(0)).onValidateNameSuccess()
-        Mockito.verify(view, times(1)).onValidateNameError(R.string.full_name_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view, never()).onValidateNameSuccess()
+        verify(view).onValidateNameError(R.string.full_name_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
-    fun `when input email correct should call onValidateEmailSuccess & DisablePreviewButton`(){
+    fun `when input email correct should call onValidateEmailSuccess & DisablePreviewButton`() {
         //Given
         val email = "molamola@gmail.com"
         //When
         presenter.validateEmail(email)
         //Then
-        Mockito.verify(view, times(1)).onValidateEmailSuccess()
-        Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view).onValidateEmailSuccess()
+        verify(view, never()).onValidateEmailError(R.string.email_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -64,9 +67,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validateEmail(email)
         //Then
-        Mockito.verify(view, times(0)).onValidateEmailSuccess()
-        Mockito.verify(view, times(1)).onValidateEmailError(R.string.email_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view, never()).onValidateEmailSuccess()
+        verify(view).onValidateEmailError(R.string.email_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -76,9 +79,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validateEmail(email)
         //Then
-        Mockito.verify(view, times(0)).onValidateEmailSuccess()
-        Mockito.verify(view, times(1)).onValidateEmailError(R.string.email_format_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view, never()).onValidateEmailSuccess()
+        verify(view).onValidateEmailError(R.string.email_format_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -88,9 +91,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validatePhoneNumber(phoneNumber)
         //Then
-        Mockito.verify(view, times(0)).onValidatePhoneNumberSuccess()
-        Mockito.verify(view, times(1)).onValidatePhoneNumberError(R.string.phone_number_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view, never()).onValidatePhoneNumberSuccess()
+        verify(view).onValidatePhoneNumberError(R.string.phone_number_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -100,9 +103,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validatePhoneNumber(phoneNumber)
         //Then
-        Mockito.verify(view, times(0)).onValidatePhoneNumberSuccess()
-        Mockito.verify(view, times(1)).onValidatePhoneNumberError(R.string.phone_number_format_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view, never()).onValidatePhoneNumberSuccess()
+        verify(view).onValidatePhoneNumberError(R.string.phone_number_format_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -112,9 +115,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validatePhoneNumber(phoneNumber)
         //Then
-        Mockito.verify(view, times(1)).onValidatePhoneNumberSuccess()
-        Mockito.verify(view, times(0)).onValidatePhoneNumberError(R.string.phone_number_format_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view).onValidatePhoneNumberSuccess()
+        verify(view, never()).onValidatePhoneNumberError(R.string.phone_number_format_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -124,9 +127,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validateRoom(room)
         //Then
-        Mockito.verify(view, times(0)).onValidateRoomSuccess()
-        Mockito.verify(view, times(1)).onValidateRoomError(R.string.room_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view, never()).onValidateRoomSuccess()
+        verify(view).onValidateRoomError(R.string.room_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -136,9 +139,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validateRoom(room)
         //Then
-        Mockito.verify(view, times(1)).onValidateRoomSuccess()
-        Mockito.verify(view, times(0)).onValidateRoomError(R.string.room_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view).onValidateRoomSuccess()
+        verify(view, never()).onValidateRoomError(R.string.room_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -148,9 +151,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validateReason(reason)
         //Then
-        Mockito.verify(view, times(0)).onValidateReasonSuccess()
-        Mockito.verify(view, times(1)).onValidateReasonError(R.string.reason_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view, never()).onValidateReasonSuccess()
+        verify(view).onValidateReasonError(R.string.reason_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -160,28 +163,29 @@ class BookingFormPresenterTest {
         //When
         presenter.validateReason(reason)
         //Then
-        Mockito.verify(view, times(1)).onValidateReasonSuccess()
-        Mockito.verify(view, times(0)).onValidateReasonError(R.string.reason_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view).onValidateReasonSuccess()
+        verify(view, never()).onValidateReasonError(R.string.reason_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
     fun `when select fromDate correct should call onValidateFromDateSuccess & DisablePreviewButton`() {
         //Given
         val fromDate = "2022/07/22"
-        val timeSlot = arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        val timeSlot =
+            arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
         //When
         presenter.validateFromDate(fromDate)
         //Then
-        Mockito.verify(view, times(1)).onValidateFromDateSuccess(timeSlot)
-        Mockito.verify(view, times(0)).onValidateFromDateError(R.string.from_date_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
-        Mockito.verify(view, times(1)).setEnableFromTime()
-        Mockito.verify(view, times(1)).setFromTimeDropdown(timeSlot)
-        Mockito.verify(view, times(1)).clearValueFromTimeDropdown()
-        Mockito.verify(view, times(1)).clearValueToTimeDropdown()
-        Mockito.verify(view, times(1)).setDisableToDate()
-        Mockito.verify(view, times(1)).setDisableToTime()
+        verify(view).onValidateFromDateSuccess(timeSlot)
+        verify(view, never()).onValidateFromDateError(R.string.from_date_empty_err)
+        verify(view).disablePreviewButton()
+        verify(view).setEnableFromTime()
+        verify(view).setFromTimeDropdown(timeSlot)
+        verify(view).clearValueFromTimeDropdown()
+        verify(view).clearValueToTimeDropdown()
+        verify(view).setDisableToDate()
+        verify(view).setDisableToTime()
     }
 
     @Test
@@ -192,32 +196,52 @@ class BookingFormPresenterTest {
         //When
         presenter.validateFromDate(fromDate)
         //Then
-        Mockito.verify(view, times(0)).onValidateFromDateSuccess(timeSlot)
-        Mockito.verify(view, times(1)).onValidateFromDateError(R.string.from_date_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
-        Mockito.verify(view, times(0)).setEnableFromTime()
-        Mockito.verify(view, times(0)).setFromTimeDropdown(timeSlot)
-        Mockito.verify(view, times(0)).clearValueFromTimeDropdown()
-        Mockito.verify(view, times(0)).clearValueToTimeDropdown()
-        Mockito.verify(view, times(0)).setDisableToDate()
-        Mockito.verify(view, times(0)).setDisableToTime()
+        verify(view, never()).onValidateFromDateSuccess(timeSlot)
+        verify(view).onValidateFromDateError(R.string.from_date_empty_err)
+        verify(view).disablePreviewButton()
+        verify(view, never()).setEnableFromTime()
+        verify(view, never()).setFromTimeDropdown(timeSlot)
+        verify(view, never()).clearValueFromTimeDropdown()
+        verify(view, never()).clearValueToTimeDropdown()
+        verify(view, never()).setDisableToDate()
+        verify(view, never()).setDisableToTime()
     }
 
     @Test
     fun `when select fromTime correct should call onValidateFromTimeSuccess & DisablePreviewButton`() {
         //Given
         val fromTime = "13:00"
-        val timeSlot = arrayOf("14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00")
+        val timeSlot = arrayOf(
+            "14:00",
+            "14:30",
+            "15:00",
+            "15:30",
+            "16:00",
+            "16:30",
+            "17:00",
+            "17:30",
+            "18:00",
+            "18:30",
+            "19:00",
+            "19:30",
+            "20:00",
+            "20:30",
+            "21:00",
+            "21:30",
+            "22:00",
+            "22:30",
+            "23:00"
+        )
         //When
-        presenter.validateFromTime(fromTime,"2022/07/22","2022/07/22")
+        presenter.validateFromTime(fromTime, "2022/07/22", "2022/07/22")
         //Then
-        Mockito.verify(view, times(1)).onValidateFromTimeSuccess(timeSlot)
-        Mockito.verify(view, times(0)).onValidateFromTimeError(R.string.time_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
-        Mockito.verify(view, times(1)).setToTimeDropDown(timeSlot)
-        Mockito.verify(view, times(1)).clearValueToTimeDropdown()
-        Mockito.verify(view, times(1)).setEnableToDate()
-        Mockito.verify(view, times(1)).setEnableToTime()
+        verify(view).onValidateFromTimeSuccess(timeSlot)
+        verify(view, never()).onValidateFromTimeError(R.string.time_empty_err)
+        verify(view).disablePreviewButton()
+        verify(view).setToTimeDropDown(timeSlot)
+        verify(view).clearValueToTimeDropdown()
+        verify(view).setEnableToDate()
+        verify(view).setEnableToTime()
     }
 
     @Test
@@ -226,15 +250,15 @@ class BookingFormPresenterTest {
         val fromTime = ""
         val timeSlot = arrayOf("")
         //When
-        presenter.validateFromTime(fromTime,"2022/07/22","2022/07/22")
+        presenter.validateFromTime(fromTime, "2022/07/22", "2022/07/22")
         //Then
-        Mockito.verify(view, times(0)).onValidateFromTimeSuccess(timeSlot)
-        Mockito.verify(view, times(1)).onValidateFromTimeError(R.string.time_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
-        Mockito.verify(view, times(0)).setToTimeDropDown(timeSlot)
-        Mockito.verify(view, times(0)).clearValueToTimeDropdown()
-        Mockito.verify(view, times(0)).setEnableToDate()
-        Mockito.verify(view, times(0)).setEnableToTime()
+        verify(view, never()).onValidateFromTimeSuccess(timeSlot)
+        verify(view).onValidateFromTimeError(R.string.time_empty_err)
+        verify(view).disablePreviewButton()
+        verify(view, never()).setToTimeDropDown(timeSlot)
+        verify(view, never()).clearValueToTimeDropdown()
+        verify(view, never()).setEnableToDate()
+        verify(view, never()).setEnableToTime()
     }
 
     @Test
@@ -242,29 +266,50 @@ class BookingFormPresenterTest {
         //Given
         val fromDate = "2022/07/22"
         val toDate = "2022/07/22"
-        val timeSlot = arrayOf("14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00")
+        val timeSlot = arrayOf(
+            "14:00",
+            "14:30",
+            "15:00",
+            "15:30",
+            "16:00",
+            "16:30",
+            "17:00",
+            "17:30",
+            "18:00",
+            "18:30",
+            "19:00",
+            "19:30",
+            "20:00",
+            "20:30",
+            "21:00",
+            "21:30",
+            "22:00",
+            "22:30",
+            "23:00"
+        )
         //When
         presenter.validateToDate(fromDate, toDate, "13:00")
         //Then
-        Mockito.verify(view, times(1)).onValidateToDateSuccess(timeSlot)
-        Mockito.verify(view, times(0)).onValidateToDateError(R.string.to_date_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
-        Mockito.verify(view, times(1)).setEnableToTime()
-        Mockito.verify(view, times(1)).clearValueToTimeDropdown()
+        verify(view).onValidateToDateSuccess(timeSlot)
+        verify(view, never()).onValidateToDateError(R.string.to_date_empty_err)
+        verify(view).disablePreviewButton()
+        verify(view).setEnableToTime()
+        verify(view).clearValueToTimeDropdown()
     }
 
     @Test
     fun `when do not select toDate incorrect should call onValidateToDateError & DisablePreviewButton`() {
         //Given
-        val timeSlot = arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        val timeSlot =
+            arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
         //When
-        presenter.validateToDate("","2022/07/22", "13:00")
+        presenter.validateToDate("", "2022/07/22", "13:00")
         //Then
-        Mockito.verify(view, times(0)).onValidateToDateSuccess(timeSlot)
-        Mockito.verify(view, times(1)).onValidateToDateError(R.string.to_date_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
-        Mockito.verify(view, times(0)).setEnableToTime()
-        Mockito.verify(view, times(0)).clearValueToTimeDropdown()
+        verify(view, never()).onValidateToDateSuccess(timeSlot)
+        verify(view).onValidateToDateError(R.string.to_date_empty_err)
+        verify(view).disablePreviewButton()
+        verify(view, never()).setEnableToTime()
+        verify(view, never()).clearValueToTimeDropdown()
     }
 
     @Test
@@ -274,9 +319,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validateToTime(toTime)
         //Then
-        Mockito.verify(view, times(1)).onValidateToTimeSuccess()
-        Mockito.verify(view, times(0)).onValidateToTimeError(R.string.time_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view).onValidateToTimeSuccess()
+        verify(view, never()).onValidateToTimeError(R.string.time_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -286,9 +331,9 @@ class BookingFormPresenterTest {
         //When
         presenter.validateToTime(toTime)
         //Then
-        Mockito.verify(view, times(0)).onValidateToTimeSuccess()
-        Mockito.verify(view, times(1)).onValidateToTimeError(R.string.time_empty_err)
-        Mockito.verify(view, times(1)).disablePreviewButton()
+        verify(view, never()).onValidateToTimeSuccess()
+        verify(view).onValidateToTimeError(R.string.time_empty_err)
+        verify(view).disablePreviewButton()
     }
 
     @Test
@@ -303,8 +348,29 @@ class BookingFormPresenterTest {
         val fromTime = "13:00"
         val toDate = "2022/07/22"
         val toTime = "17:00"
-        val timeSlot = arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
-        val timeSlotCan = arrayOf("14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00")
+        val timeSlot =
+            arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        val timeSlotCan = arrayOf(
+            "14:00",
+            "14:30",
+            "15:00",
+            "15:30",
+            "16:00",
+            "16:30",
+            "17:00",
+            "17:30",
+            "18:00",
+            "18:30",
+            "19:00",
+            "19:30",
+            "20:00",
+            "20:30",
+            "21:00",
+            "21:30",
+            "22:00",
+            "22:30",
+            "23:00"
+        )
 
 
         //When
@@ -314,33 +380,33 @@ class BookingFormPresenterTest {
         presenter.validateRoom(room)
         presenter.validateReason(reason)
         presenter.validateFromDate(fromDate)
-        presenter.validateFromTime(fromTime,fromDate,toDate)
+        presenter.validateFromTime(fromTime, fromDate, toDate)
         presenter.validateToDate(fromDate, toDate, fromTime)
         presenter.validateToTime(toTime)
         //Then
-        Mockito.verify(view, times(1)).onValidateNameSuccess()
-        Mockito.verify(view, times(1)).onValidateEmailSuccess()
-        Mockito.verify(view, times(1)).onValidatePhoneNumberSuccess()
-        Mockito.verify(view, times(1)).onValidateRoomSuccess()
-        Mockito.verify(view, times(1)).onValidateReasonSuccess()
-        Mockito.verify(view, times(1)).onValidateFromDateSuccess(timeSlot)
-        Mockito.verify(view, times(1)).onValidateFromTimeSuccess(timeSlotCan)
-        Mockito.verify(view, times(1)).onValidateToDateSuccess(timeSlotCan)
-        Mockito.verify(view, times(1)).onValidateToTimeSuccess()
+        verify(view).onValidateNameSuccess()
+        verify(view).onValidateEmailSuccess()
+        verify(view).onValidatePhoneNumberSuccess()
+        verify(view).onValidateRoomSuccess()
+        verify(view).onValidateReasonSuccess()
+        verify(view).onValidateFromDateSuccess(timeSlot)
+        verify(view).onValidateFromTimeSuccess(timeSlotCan)
+        verify(view).onValidateToDateSuccess(timeSlotCan)
+        verify(view).onValidateToTimeSuccess()
 
-        Mockito.verify(view, times(0)).onValidateNameError(R.string.full_name_empty_err)
-        Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_empty_err)
-        Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_format_err)
-        Mockito.verify(view, times(0)).onValidatePhoneNumberError(R.string.phone_number_empty_err)
-        Mockito.verify(view, times(0)).onValidatePhoneNumberError(R.string.phone_number_format_err)
-        Mockito.verify(view, times(0)).onValidateRoomError(R.string.room_empty_err)
-        Mockito.verify(view, times(0)).onValidateReasonError(R.string.reason_empty_err)
-        Mockito.verify(view, times(0)).onValidateFromDateError(R.string.from_date_empty_err)
-        Mockito.verify(view, times(0)).onValidateFromTimeError(R.string.time_empty_err)
-        Mockito.verify(view, times(0)).onValidateToDateError(R.string.to_date_empty_err)
-        Mockito.verify(view, times(0)).onValidateToTimeError(R.string.time_empty_err)
+        verify(view, never()).onValidateNameError(R.string.full_name_empty_err)
+        verify(view, never()).onValidateEmailError(R.string.email_empty_err)
+        verify(view, never()).onValidateEmailError(R.string.email_format_err)
+        verify(view, never()).onValidatePhoneNumberError(R.string.phone_number_empty_err)
+        verify(view, never()).onValidatePhoneNumberError(R.string.phone_number_format_err)
+        verify(view, never()).onValidateRoomError(R.string.room_empty_err)
+        verify(view, never()).onValidateReasonError(R.string.reason_empty_err)
+        verify(view, never()).onValidateFromDateError(R.string.from_date_empty_err)
+        verify(view, never()).onValidateFromTimeError(R.string.time_empty_err)
+        verify(view, never()).onValidateToDateError(R.string.to_date_empty_err)
+        verify(view, never()).onValidateToTimeError(R.string.time_empty_err)
 
-        Mockito.verify(view, times(1)).enablePreviewButton()
+        verify(view).enablePreviewButton()
     }
 
     @Test
@@ -355,8 +421,29 @@ class BookingFormPresenterTest {
         val fromTime = "13:00"
         val toDate = "2022/07/22"
         val toTime = "17:00"
-        val timeSlot = arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
-        val timeSlotCan = arrayOf("14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00")
+        val timeSlot =
+            arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        val timeSlotCan = arrayOf(
+            "14:00",
+            "14:30",
+            "15:00",
+            "15:30",
+            "16:00",
+            "16:30",
+            "17:00",
+            "17:30",
+            "18:00",
+            "18:30",
+            "19:00",
+            "19:30",
+            "20:00",
+            "20:30",
+            "21:00",
+            "21:30",
+            "22:00",
+            "22:30",
+            "23:00"
+        )
 
 
         //When
@@ -366,32 +453,32 @@ class BookingFormPresenterTest {
         presenter.validateRoom(room)
         presenter.validateReason(reason)
         presenter.validateFromDate(fromDate)
-        presenter.validateFromTime(fromTime,fromDate,toDate)
+        presenter.validateFromTime(fromTime, fromDate, toDate)
         presenter.validateToDate(fromDate, toDate, fromTime)
         presenter.validateToTime(toTime)
         //Then
-        Mockito.verify(view, times(0)).onValidateNameSuccess()
-        Mockito.verify(view, times(0)).onValidateEmailSuccess()
-        Mockito.verify(view, times(0)).onValidatePhoneNumberSuccess()
-        Mockito.verify(view, times(0)).onValidateRoomSuccess()
-        Mockito.verify(view, times(1)).onValidateReasonSuccess()
-        Mockito.verify(view, times(1)).onValidateFromDateSuccess(timeSlot)
-        Mockito.verify(view, times(1)).onValidateFromTimeSuccess(timeSlotCan)
-        Mockito.verify(view, times(1)).onValidateToDateSuccess(timeSlotCan)
-        Mockito.verify(view, times(1)).onValidateToTimeSuccess()
+        verify(view, never()).onValidateNameSuccess()
+        verify(view, never()).onValidateEmailSuccess()
+        verify(view, never()).onValidatePhoneNumberSuccess()
+        verify(view, never()).onValidateRoomSuccess()
+        verify(view).onValidateReasonSuccess()
+        verify(view).onValidateFromDateSuccess(timeSlot)
+        verify(view).onValidateFromTimeSuccess(timeSlotCan)
+        verify(view).onValidateToDateSuccess(timeSlotCan)
+        verify(view).onValidateToTimeSuccess()
 
-        Mockito.verify(view, times(1)).onValidateNameError(R.string.full_name_empty_err)
-        Mockito.verify(view, times(0)).onValidateEmailError(R.string.email_empty_err)
-        Mockito.verify(view, times(1)).onValidateEmailError(R.string.email_format_err)
-        Mockito.verify(view, times(0)).onValidatePhoneNumberError(R.string.phone_number_empty_err)
-        Mockito.verify(view, times(1)).onValidatePhoneNumberError(R.string.phone_number_format_err)
-        Mockito.verify(view, times(1)).onValidateRoomError(R.string.room_empty_err)
-        Mockito.verify(view, times(0)).onValidateReasonError(R.string.reason_empty_err)
-        Mockito.verify(view, times(0)).onValidateFromDateError(R.string.from_date_empty_err)
-        Mockito.verify(view, times(0)).onValidateFromTimeError(R.string.time_empty_err)
-        Mockito.verify(view, times(0)).onValidateToDateError(R.string.to_date_empty_err)
-        Mockito.verify(view, times(0)).onValidateToTimeError(R.string.time_empty_err)
+        verify(view).onValidateNameError(R.string.full_name_empty_err)
+        verify(view, never()).onValidateEmailError(R.string.email_empty_err)
+        verify(view).onValidateEmailError(R.string.email_format_err)
+        verify(view, never()).onValidatePhoneNumberError(R.string.phone_number_empty_err)
+        verify(view).onValidatePhoneNumberError(R.string.phone_number_format_err)
+        verify(view).onValidateRoomError(R.string.room_empty_err)
+        verify(view, never()).onValidateReasonError(R.string.reason_empty_err)
+        verify(view, never()).onValidateFromDateError(R.string.from_date_empty_err)
+        verify(view, never()).onValidateFromTimeError(R.string.time_empty_err)
+        verify(view, never()).onValidateToDateError(R.string.to_date_empty_err)
+        verify(view, never()).onValidateToTimeError(R.string.time_empty_err)
 
-        Mockito.verify(view, times(0)).enablePreviewButton()
+        verify(view, never()).enablePreviewButton()
     }
 }
