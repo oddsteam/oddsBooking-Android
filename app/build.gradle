@@ -50,15 +50,9 @@ android {
             firebaseAppDistribution {
                 appId = "1:435114910085:android:9fd5fc533d9661c9c824ec"
                 serviceCredentialsFile = "/var/jenkins_home/jobs/odd-booking-android/branches/dev/workspace/serviceaccount.json"
-<<<<<<< Updated upstream
 //                serviceCredentialsFile = "/Users/Jerry/odds/oddsBooking-Android/serviceaccount.json"
                 artifactType="APK"
                 groups="odds-mola"
-=======
-                //serviceCredentialsFile = "/Users/Jerry/odds/oddsBooking-Android/serviceaccount.json"
-                artifactType = "APK"
-                groups = "odds-mola"
->>>>>>> Stashed changes
             }
             signingConfig signingConfigs.release
 //            minifyEnabled false
