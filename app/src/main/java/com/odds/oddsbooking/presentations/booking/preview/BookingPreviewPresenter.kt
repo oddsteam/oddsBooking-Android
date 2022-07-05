@@ -4,11 +4,14 @@ import android.util.Log
 import com.odds.oddsbooking.models.Booking
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.services.booking.BookingAPI
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class BookingPreviewPresenter constructor(private val api: BookingAPI) {
-    private val scope = MainScope()
+class BookingPreviewPresenter constructor(
+    private val dispatcher: CoroutineDispatcher,
+    private val api: BookingAPI
+    )
+{
+    private val scope = CoroutineScope(Job() + dispatcher)
     private lateinit var view: BookingPreviewView
     private  var bookingData: BookingData = BookingData(
         "","","","","","","","",""
@@ -26,12 +29,12 @@ class BookingPreviewPresenter constructor(private val api: BookingAPI) {
         scope.launch {
             try {
                 val response = api.createBooking(bookingInfo)
-                Log.d("res", response.body().toString());
+//                Log.d("res", response.body().toString());
                 if (response.isSuccessful) {
                     view.goToSuccessPage(bookingData)
                 } else view.showToastMessage("${response.errorBody()?.string()}")
             } catch (e: Exception) {
-                Log.d("res", "error : /$e")
+//                Log.d("res", "error : /$e")
                 view.showToastMessage("error : /$e")
             }
         }

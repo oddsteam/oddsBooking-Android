@@ -15,12 +15,14 @@ import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingPreviewBinding
 import com.odds.oddsbooking.services.booking.BookingAPIFactory
+import kotlinx.coroutines.Dispatchers
 
 class BookingPreviewFragment : Fragment(), BookingPreviewView {
 
     private val binding by lazy { FragmentBookingPreviewBinding.inflate(layoutInflater) }
     private val presenter by lazy {
         BookingPreviewPresenter(
+            Dispatchers.Main,
             BookingAPIFactory.createBookingAPI(
                 requireContext()
             )
