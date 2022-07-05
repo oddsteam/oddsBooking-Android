@@ -363,7 +363,7 @@ class BookingFormPresenter {
         return SimpleDateFormat("EEEE", Locale.US).format(date)
     }
 
-    private fun getTimeSlot(startTime: String, endTime: String): Array<String> {
+    fun getTimeSlot(startTime: String, endTime: String): Array<String> {
         var timeSlot = arrayOf<String>()
         val startTimeArray = startTime.split(":")
         val endTimeArray = endTime.split(":")
