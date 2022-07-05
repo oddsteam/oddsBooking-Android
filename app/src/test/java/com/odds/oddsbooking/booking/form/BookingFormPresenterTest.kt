@@ -1,6 +1,7 @@
 package com.odds.oddsbooking.booking.form
 
 import com.odds.oddsbooking.R
+import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.models.DateInTimePickerType
 import com.odds.oddsbooking.presentations.booking.form.BookingFormPresenter
@@ -794,5 +795,13 @@ class BookingFormPresenterTest {
         verify(view, never()).setToTimeDropDown(timeSlot)
     }
 
-
+    @Test
+    fun`when click previewButton navigate to preview`(){
+        //Given
+        val bookingData = BookingData()
+        //When
+        presenter.onPreviewButtonClicked()
+        //Then
+        verify(view).onNavigateToPreview(bookingData)
+    }
 }
