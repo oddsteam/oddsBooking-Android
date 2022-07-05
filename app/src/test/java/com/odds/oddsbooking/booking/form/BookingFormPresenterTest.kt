@@ -482,27 +482,6 @@ class BookingFormPresenterTest {
         verify(view, never()).enablePreviewButton()
     }
 
-//    @Test
-//    fun `When start time min with zero 00`() {
-//        //Given
-//        val startTime = "9:00"
-//        val endTime = "11:00"
-//        //When
-//        presenter.getTimeSlot(startTime, endTime)
-//        //Then
-//
-//    }
-//
-//    @Test
-//    fun `When start time min with half 30`() {
-//        //Given
-//        val startTime = "9:30"
-//        val endTime = "11:30"
-//        //When
-//        presenter.getTimeSlot(startTime, endTime)
-//        //Then
-//    }
-
     @Test
     fun `when date is saturday`() {
         //Given
@@ -547,5 +526,30 @@ class BookingFormPresenterTest {
         presenter.validateFromDate(fromDate)
         //Then
         verify(view).onValidateFromDateSuccess(timeSlot)
+    }
+
+    @Test
+    fun `when booking is the same day on weekend`() {
+        //Given
+        val fromTime = "10:00"
+        val fromDate = "2022/07/23"
+        val toDate = "2022/07/23"
+        val timeSlot = arrayOf(
+            "11:00", "11:30",
+            "12:00", "12:30",
+            "13:00", "13:30",
+            "14:00", "14:30",
+            "15:00", "15:30",
+            "16:00", "16:30",
+            "17:00", "17:30",
+            "18:00", "18:30",
+            "19:00", "19:30",
+            "20:00", "20:30",
+            "21:00"
+        )
+        //When
+        presenter.validateFromTime(fromTime, fromDate, toDate)
+        //Then
+        verify(view).onValidateFromTimeSuccess(timeSlot)
     }
 }

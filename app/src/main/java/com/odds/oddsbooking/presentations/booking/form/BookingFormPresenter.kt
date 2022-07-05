@@ -170,17 +170,14 @@ class BookingFormPresenter {
             }
             else -> {
                 val fromTimeArray = fromTime.split(":")
-                val toTime =
-                    "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
-
+                val toTime = "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
                 //same day
                 if (fromDate == toDate) {
-                    //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
                         toTimeTimeSlot = getTimeSlot(toTime, "21:00")
                         view.onValidateFromTimeSuccess(getTimeSlot(toTime, "21:00"))
-
                     }
+
                     //on weekday
                     else {
                         toTimeTimeSlot = getTimeSlot(toTime, "23:00")
