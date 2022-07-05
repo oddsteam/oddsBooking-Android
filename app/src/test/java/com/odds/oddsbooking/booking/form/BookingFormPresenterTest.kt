@@ -685,4 +685,15 @@ class BookingFormPresenterTest {
         //Then
         verify(view).onDatePickerDialogFormDate(dateInTimePickerDialog)
     }
+
+    @Test
+    fun`when input name should call onNameAutoFormat`(){
+        //Given
+        val name = "molA mOla"
+        val nameFormatted = "Mola Mola"
+        //When
+        presenter.autoFormatName(name)
+        //Then
+        verify(view).onNameAutoFormat(nameFormatted)
+    }
 }
