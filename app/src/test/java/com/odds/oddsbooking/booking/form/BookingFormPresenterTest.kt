@@ -1,6 +1,8 @@
 package com.odds.oddsbooking.booking.form
 
 import com.odds.oddsbooking.R
+import com.odds.oddsbooking.models.DateInTimePicker
+import com.odds.oddsbooking.models.DateInTimePickerType
 import com.odds.oddsbooking.presentations.booking.form.BookingFormPresenter
 import com.odds.oddsbooking.presentations.booking.form.BookingFormView
 import org.junit.Assert
@@ -609,7 +611,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when startTime and endTime has same hrs and same date`(){
+    fun `when startTime and endTime has same hrs and same date`() {
         //Given
         val startTime = "10:00"
         val endTime = "10:30"
@@ -620,5 +622,22 @@ class BookingFormPresenterTest {
         val newTimeSlot = presenter.getTimeSlot(startTime, endTime)
         //Then
         Assert.assertArrayEquals(timeSlot, newTimeSlot)
+    }
+
+    @Test
+    fun `when click fromDate should call fun onFromDateClick & onDatePickerDialogFormDate`() {
+        //Given
+        val fromDate = "2022/07/19"
+        val dateInTimePickerDialog = DateInTimePicker(
+            DateInTimePickerType.FROM_DATE,
+            System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
+            null,
+            fromDate
+        )
+
+        //When
+        presenter.onFromDateClick(fromDate)
+        //Then
+        verify(view).onDatePickerDialogFormDate(dateInTimePickerDialog)
     }
 }
