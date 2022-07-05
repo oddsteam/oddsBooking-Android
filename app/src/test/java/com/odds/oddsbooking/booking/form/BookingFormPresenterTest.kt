@@ -483,7 +483,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when date is saturday`() {
+    fun `when input date is saturday should call onValidateFromDateSuccess`() {
         //Given
         val fromDate = "2022/07/23"
         val timeSlot = arrayOf(
@@ -507,7 +507,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when date is sunday`() {
+    fun `when input date is sunday should call onValidateFromDateSuccess`() {
         //Given
         val fromDate = "2022/07/24"
         val timeSlot = arrayOf(
@@ -531,7 +531,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when booking is the same day on weekend`() {
+    fun `when booking is the same day on weekend should call onValidateFromTimeSuccess`() {
         //Given
         val fromTime = "10:00"
         val fromDate = "2022/07/23"
@@ -556,7 +556,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when booking 2 days is saturday to sunday`() {
+    fun `when booking fromDate is saturday & toDate is sunday should call onValidateFromTimeSuccess`() {
         //Given
         val fromTime = "10:00"
         val fromDate = "2022/07/23"
@@ -583,7 +583,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when booking date is saturday in toDate`() {
+    fun `when booking date is saturday in toDate should call onValidateToDateSuccess`() {
         //Given
         val fromDate = "2022/07/23"
         val toDate = "2022/07/23"

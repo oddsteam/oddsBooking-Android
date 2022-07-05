@@ -51,7 +51,7 @@ class BookingPreviewPresenterTest {
     }
 
     @Test
-    fun `when getBooking should call setAllEditTextFromBookingData`(){
+    fun `when getBookingInfo should call setAllEditTextFromBookingData`(){
         //Given
         val bookingData = BookingData(
             "Sittidet Pawutinan",
