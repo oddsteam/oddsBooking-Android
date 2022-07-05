@@ -47,18 +47,6 @@ class BookingPreviewPresenter constructor(
 
     fun getBookingInfo(bookingInfo: BookingData) {
         bookingData = bookingInfo
-        //TODO : try to delete
-        this.bookingData = BookingData(
-            bookingData.fullName,
-            bookingData.email,
-            bookingData.phoneNumber,
-            bookingData.room,
-            bookingData.reason,
-            bookingData.fromDate,
-            bookingData.fromTime,
-            bookingData.toDate,
-            bookingData.toTime
-        )
         this.bookingInfo = Booking(
             bookingData.fullName,
             bookingData.email,

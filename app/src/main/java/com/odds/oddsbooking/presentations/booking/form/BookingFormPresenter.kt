@@ -1,6 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.form
 
-import android.util.Patterns
+import android.util.Log
 import androidx.core.util.PatternsCompat
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.models.BookingData
@@ -292,9 +292,9 @@ class BookingFormPresenter {
         view.onDatePickerDialogFormDate(dateInTimePickerDialog)
     }
 
-    fun onToDateClick(toDate: String) {
+    fun onToDateClick(toDate: String, fromDate: String) {
         val date = formatter.parse(fromDate)
-        //on week end
+
         if (checkDay(fromDate) == "Saturday") {
             val minDate: Long = date.time
             val maxDate: Long = date.time + (24 * 60 * 60 * 1000) // can booking Sunday

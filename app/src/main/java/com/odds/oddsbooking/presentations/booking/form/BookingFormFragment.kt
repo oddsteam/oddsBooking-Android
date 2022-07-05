@@ -452,7 +452,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onToDateClicked() {
         binding.toDateFormEditText.setOnClickListener {
-            presenter.onToDateClick(binding.toDateFormEditText.text.toString())
+            presenter.onToDateClick(
+                binding.toDateFormEditText.text.toString(),
+                binding.fromDateFormEditText.text.toString())
         }
     }
 

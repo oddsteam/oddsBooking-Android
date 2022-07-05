@@ -14,6 +14,8 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.never
+import java.text.SimpleDateFormat
+import java.util.*
 
 @RunWith(MockitoJUnitRunner::class)
 class BookingFormPresenterTest {
@@ -740,7 +742,7 @@ class BookingFormPresenterTest {
         presenter.onFromDateClick(fromDate)
         presenter.onDatePickerConfirm(2022, 6, 19)
         presenter.validateFromDate(fromDate)
-        presenter.onToDateClick(toDate)
+        presenter.onToDateClick(toDate, fromDate)
         presenter.onDatePickerCancel()
         //Then
         verify(view).setDisableToDateEditText()
@@ -755,7 +757,7 @@ class BookingFormPresenterTest {
         presenter.onFromDateClick(fromDate)
         presenter.onDatePickerConfirm(2022, 6, 19)
         presenter.validateFromDate(fromDate)
-        presenter.onToDateClick(toDate)
+        presenter.onToDateClick(toDate, fromDate)
         presenter.onDatePickerDismiss()
         //Then
         verify(view).setDisableToDateEditText()
@@ -770,7 +772,7 @@ class BookingFormPresenterTest {
         presenter.onFromDateClick(fromDate)
         presenter.onDatePickerConfirm(2022, 6, 19)
         presenter.validateFromDate(fromDate)
-        presenter.onToDateClick(toDate)
+        presenter.onToDateClick(toDate, fromDate)
         presenter.onDatePickerConfirm(2022, 6, 19)
         //Then
         verify(view).setDisableToDateEditText()
@@ -779,7 +781,7 @@ class BookingFormPresenterTest {
 
     //TODO make sure it correct wait P'Bas review
     @Test
-    fun`when setFromTimesDropDown`(){
+    fun `when setFromTimesDropDown`() {
         //Given
         val timeSlot = arrayOf(
             "9:30",
@@ -804,7 +806,7 @@ class BookingFormPresenterTest {
 
     //TODO make sure it correct wait P'Bas review
     @Test
-    fun`when setToTimesDropDown`(){
+    fun `when setToTimesDropDown`() {
         //Given
         val timeSlot = arrayOf(
             "9:30",
@@ -828,12 +830,36 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun`when click previewButton navigate to preview`(){
+    fun `when click previewButton navigate to preview`() {
         //Given
         val bookingData = BookingData()
         //When
         presenter.onPreviewButtonClicked()
         //Then
         verify(view).onNavigateToPreview(bookingData)
+    }
+
+    @Test
+    fun `when click toDate should call fun onFromDateClick & onDatePickerDialogFormDate`() {
+        //Given
+        val toDate = "2022/07/23"
+        val fromDate = "2022/07/23"
+        val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
+        val date = formatter.parse(fromDate)
+        val minTime: Long = date.time
+        val maxTime: Long = date.time + (24 * 60 * 60 * 1000)
+        val dateInTimePickerDialog =
+            DateInTimePicker(
+                datePickerType = DateInTimePickerType.TO_DATE,
+                minTime,
+                maxTime,
+                toDate
+            )
+
+        //When
+        presenter.onToDateClick(toDate, fromDate)
+
+        //Then
+        verify(view).onDatePickerDialogToDate(dateInTimePickerDialog)
     }
 }
