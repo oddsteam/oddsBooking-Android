@@ -687,7 +687,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun`when input name should call onNameAutoFormat`(){
+    fun `when input name should call onNameAutoFormat`() {
         //Given
         val name = "molA mOla"
         val nameFormatted = "Mola Mola"
@@ -725,7 +725,7 @@ class BookingFormPresenterTest {
         val fromDate = "2022/07/19"
         //When
         presenter.onFromDateClick(fromDate)
-        presenter.onDatePickerConfirm(2022,6,19)
+        presenter.onDatePickerConfirm(2022, 6, 19)
         //Then
         verify(view).setDisableFromDateEditText()
         verify(view).setTextFromDate("2022/07/19")
@@ -738,13 +738,45 @@ class BookingFormPresenterTest {
         val toDate = "2022/07/19"
         //When
         presenter.onFromDateClick(fromDate)
-        presenter.onDatePickerConfirm(2022,6,19)
+        presenter.onDatePickerConfirm(2022, 6, 19)
         presenter.validateFromDate(fromDate)
         presenter.onToDateClick(toDate)
         presenter.onDatePickerCancel()
         //Then
         verify(view).setDisableToDateEditText()
     }
+
+    @Test
+    fun `when Dismiss on TimePickerDialog after show DatePickerDialogToDate should call setDisableToDateEditText`() {
+        //Given
+        val fromDate = "2022/07/19"
+        val toDate = "2022/07/19"
+        //When
+        presenter.onFromDateClick(fromDate)
+        presenter.onDatePickerConfirm(2022, 6, 19)
+        presenter.validateFromDate(fromDate)
+        presenter.onToDateClick(toDate)
+        presenter.onDatePickerDismiss()
+        //Then
+        verify(view).setDisableToDateEditText()
+    }
+
+    @Test
+    fun `when Confirm on TimePickerDialog after show DatePickerDialogTomDate should call setDisableToDateEditText and setTextToDate`() {
+        //Given
+        val fromDate = "2022/07/19"
+        val toDate = "2022/07/19"
+        //When
+        presenter.onFromDateClick(fromDate)
+        presenter.onDatePickerConfirm(2022, 6, 19)
+        presenter.validateFromDate(fromDate)
+        presenter.onToDateClick(toDate)
+        presenter.onDatePickerConfirm(2022, 6, 19)
+        //Then
+        verify(view).setDisableToDateEditText()
+        verify(view).setTextToDate("2022/07/19")
+    }
+
     //TODO make sure it correct wait P'Bas review
     @Test
     fun`when setFromTimesDropDown`(){
