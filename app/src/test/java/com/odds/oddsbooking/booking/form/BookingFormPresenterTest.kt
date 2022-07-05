@@ -3,6 +3,7 @@ package com.odds.oddsbooking.booking.form
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.presentations.booking.form.BookingFormPresenter
 import com.odds.oddsbooking.presentations.booking.form.BookingFormView
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -605,5 +606,19 @@ class BookingFormPresenterTest {
         presenter.validateToDate(fromDate, toDate, fromTime)
         //Then
         verify(view).onValidateToDateSuccess(timeSlot)
+    }
+
+    @Test
+    fun `when startTime and endTime has same hrs and same date`(){
+        //Given
+        val startTime = "10:00"
+        val endTime = "10:30"
+        val timeSlot = arrayOf(
+            "10:00"
+        )
+        //When
+        val newTimeSlot = presenter.getTimeSlot(startTime, endTime)
+        //Then
+        Assert.assertEquals(timeSlot, newTimeSlot)
     }
 }
