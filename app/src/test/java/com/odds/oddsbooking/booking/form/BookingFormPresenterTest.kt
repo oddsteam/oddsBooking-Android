@@ -316,6 +316,24 @@ class BookingFormPresenterTest {
     }
 
     @Test
+    fun `when select toDate correct but fromTime's empty should call DisablePreviewButton only`() {
+        //Given
+        val fromDate = "2022/07/22"
+        val fromTime = ""
+        val toDate = "2022/07/22"
+        val timeSlot =
+            arrayOf("18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00")
+        //When
+        presenter.validateToDate(fromDate, toDate, fromTime)
+        //Then
+        verify(view, never()).onValidateToDateSuccess(timeSlot)
+        verify(view, never()).onValidateToDateError(R.string.to_date_empty_err)
+        verify(view).disablePreviewButton()
+        verify(view, never()).setEnableToTime()
+        verify(view, never()).clearValueToTimeDropdown()
+    }
+
+    @Test
     fun `when select toTime correct should call onValidateToTimeSuccess & DisablePreviewButton`() {
         //Given
         val toTime = "17:00"
@@ -586,12 +604,39 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when booking date is saturday in toDate should call onValidateToDateSuccess`() {
+    fun `when select Saturday in toDate which is the same day from fromDate should call onValidateToDateSuccess`() {
         //Given
         val fromDate = "2022/07/23"
         val toDate = "2022/07/23"
         val fromTime = "10:00"
         val timeSlot = arrayOf(
+            "11:00", "11:30",
+            "12:00", "12:30",
+            "13:00", "13:30",
+            "14:00", "14:30",
+            "15:00", "15:30",
+            "16:00", "16:30",
+            "17:00", "17:30",
+            "18:00", "18:30",
+            "19:00", "19:30",
+            "20:00", "20:30",
+            "21:00"
+        )
+        //When
+        presenter.validateToDate(fromDate, toDate, fromTime)
+        //Then
+        verify(view).onValidateToDateSuccess(timeSlot)
+    }
+
+    @Test
+    fun `when select Sunday in toDate which is the other day from fromDate should call onValidateToDateSuccess`() {
+        //Given
+        val fromDate = "2022/07/23"
+        val toDate = "2022/07/24"
+        val fromTime = "10:00"
+        val timeSlot = arrayOf(
+            "9:30",
+            "10:00", "10:30",
             "11:00", "11:30",
             "12:00", "12:30",
             "13:00", "13:30",

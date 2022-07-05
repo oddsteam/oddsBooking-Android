@@ -25,7 +25,7 @@ class SplashPresenterTest {
     }
 
     @Test
-    fun `onCreate Splash screen should nav to BookingForm`() {
+    fun `when open SplashScreen should call goToBookingForm`() {
         presenter.splashing()
         verify(view).goToBookingForm()
     }
