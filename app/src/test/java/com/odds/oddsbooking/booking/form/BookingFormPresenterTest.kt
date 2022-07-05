@@ -13,7 +13,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.never
-import org.mockito.kotlin.times
 
 @RunWith(MockitoJUnitRunner::class)
 class BookingFormPresenterTest {
@@ -695,5 +694,54 @@ class BookingFormPresenterTest {
         presenter.autoFormatName(name)
         //Then
         verify(view).onNameAutoFormat(nameFormatted)
+    }
+
+    @Test
+    fun `when Cancel on TimePickerDialog after show DatePickerDialogFormDate should call setDisableFromDateEditText`() {
+        //Given
+        val fromDate = "2022/07/19"
+        //When
+        presenter.onFromDateClick(fromDate)
+        presenter.onDatePickerCancel()
+        //Then
+        verify(view).setDisableFromDateEditText()
+    }
+
+    @Test
+    fun `when Dismiss on TimePickerDialog after show DatePickerDialogFormDate should call setDisableFromDateEditText`() {
+        //Given
+        val fromDate = "2022/07/19"
+        //When
+        presenter.onFromDateClick(fromDate)
+        presenter.onDatePickerDismiss()
+        //Then
+        verify(view).setDisableFromDateEditText()
+    }
+
+    @Test
+    fun `when Confirm on TimePickerDialog after show DatePickerDialogFormDate should call setDisableFromDateEditText and setTextFromDate`() {
+        //Given
+        val fromDate = "2022/07/19"
+        //When
+        presenter.onFromDateClick(fromDate)
+        presenter.onDatePickerConfirm(2022,6,19)
+        //Then
+        verify(view).setDisableFromDateEditText()
+        verify(view).setTextFromDate("2022/07/19")
+    }
+
+    @Test
+    fun `when Cancel on TimePickerDialog after show DatePickerDialogToDate should call setDisableToDateEditText`() {
+        //Given
+        val fromDate = "2022/07/19"
+        val toDate = "2022/07/19"
+        //When
+        presenter.onFromDateClick(fromDate)
+        presenter.onDatePickerConfirm(2022,6,19)
+        presenter.validateFromDate(fromDate)
+        presenter.onToDateClick(toDate)
+        presenter.onDatePickerCancel()
+        //Then
+        verify(view).setDisableToDateEditText()
     }
 }
