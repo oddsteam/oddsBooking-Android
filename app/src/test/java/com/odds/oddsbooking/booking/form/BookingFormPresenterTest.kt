@@ -619,6 +619,6 @@ class BookingFormPresenterTest {
         //When
         val newTimeSlot = presenter.getTimeSlot(startTime, endTime)
         //Then
-        Assert.assertEquals(timeSlot, newTimeSlot)
+        Assert.assertArrayEquals(timeSlot, newTimeSlot)
     }
 }

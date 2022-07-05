@@ -1,43 +1,33 @@
 package com.odds.oddsbooking.booking.preview
 
-import android.content.Context
 import com.odds.oddsbooking.models.Booking
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.presentations.booking.preview.BookingPreviewPresenter
 import com.odds.oddsbooking.presentations.booking.preview.BookingPreviewView
-import com.odds.oddsbooking.services.booking.BookingAPIFactory
+import com.odds.oddsbooking.services.booking.BookingAPI
 import com.odds.oddsbooking.services.booking.BookingDetailResponse
-import com.odds.oddsbooking.services.booking.BookingRes
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.odds.oddsbooking.services.booking.BookingResponse
+import kotlinx.coroutines.test.runTest
+import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.verify
-import org.mockito.stubbing.OngoingStubbing
+import org.mockito.kotlin.*
 import retrofit2.Response
 
-@RunWith(MockitoJUnitRunner::class)
 class BookingPreviewPresenterTest {
-    @Mock
-    private var context: Context = mock(Context::class.java)
-    @Mock
-    private var api = BookingAPIFactory.createBookingAPI(context)
-
-    lateinit var view: BookingPreviewView
-    private var presenter = BookingPreviewPresenter(
-        Dispatchers.Unconfined,
-        api
-    )
+    private val api: BookingAPI = mock()
+    private val view: BookingPreviewView = mock()
+    private lateinit var presenter: BookingPreviewPresenter
 
     @Before
     fun setUp() {
-        view = mock(BookingPreviewView::class.java)
+        presenter = BookingPreviewPresenter(
+            kotlinx.coroutines.Dispatchers.Unconfined,
+            api
+        )
         presenter.attachView(view)
     }
 
@@ -51,7 +41,7 @@ class BookingPreviewPresenterTest {
     }
 
     @Test
-    fun `when getBookingInfo should call setAllEditTextFromBookingData`(){
+    fun `when getBookingInfo should call setAllEditTextFromBookingData`() {
         //Given
         val bookingData = BookingData(
             "Sittidet Pawutinan",
@@ -71,7 +61,7 @@ class BookingPreviewPresenterTest {
     }
 
     @Test
-    fun `when createBooking should call showProgressBar()`(){
+    fun `when createBooking should call showProgressBar()`() {
         //Given
         //When
         presenter.createBooking()
@@ -80,7 +70,8 @@ class BookingPreviewPresenterTest {
     }
 
     @Test
-    fun `when call createBooking , api should response`(){
+    fun `when call createBooking and response success, api should response`() = runTest {
+        //Given
         val bookingData = BookingData(
             "Sittidet Pawutinan",
             "sittidet@odds.team",
@@ -92,17 +83,7 @@ class BookingPreviewPresenterTest {
             "2022/07/05",
             "20:00"
         )
-        val booking = Booking(
-            "Sittidet Pawutinan",
-            "sittidet@odds.team",
-            "0889537322",
-            "Neon",
-            "Test Preview",
-            "2022-07-05T18:00",
-            "2022-07-05T20:00",
-            false
-        )
-        val bookingRes = BookingRes(
+        val bookingRes = BookingResponse(
             status = 200,
             data = BookingDetailResponse(
                 "1",
@@ -116,5 +97,48 @@ class BookingPreviewPresenterTest {
                 status = false
             )
         )
+        presenter.getBookingInfo(bookingData)
+
+        val response = Response.success(200, bookingRes)
+        whenever(api.createBooking(any())).doReturn(response)
+
+        //When
+        presenter.createBooking()
+
+        //Then
+        verify(view).goToSuccessPage(bookingData)
+    }
+
+    @Test
+    fun `when call createBooking and response error , api should response`() = runTest {
+        //Given
+        val responseBody =  "error body".toResponseBody()
+        val response = Response.error<BookingResponse>(401, responseBody)
+        whenever(api.createBooking(any())).doReturn(response)
+
+        //When
+        presenter.createBooking()
+
+        //Then
+        verify(view).showToastMessage("error body")
+    }
+
+    @Test
+    fun `when call createBooking and handshake not passed , api should response`() = runTest {
+        //Given
+        whenever(api.createBooking(any())).then{
+            //refine words
+            throw Exception("error")
+        }
+        //When
+        presenter.createBooking()
+
+        //Then
+        verify(view).showToastMessage("error : /java.lang.Exception: error")
+    }
+
+    @Test
+    fun test() {
+        TODO("Not yet implemented")
     }
 }

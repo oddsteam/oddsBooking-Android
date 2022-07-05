@@ -1,7 +1,6 @@
 package com.odds.oddsbooking.services.booking
 
 import com.odds.oddsbooking.models.Booking
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -11,6 +10,6 @@ interface BookingAPI {
     @POST("/v1/booking")
     @Headers("Content-Type: application/json")
     suspend fun createBooking(
-        @Body booking: Booking
-    ) : Response<BookingRes>
+        @Body bookingRequest: Booking
+    ) : Response<BookingResponse>
 }

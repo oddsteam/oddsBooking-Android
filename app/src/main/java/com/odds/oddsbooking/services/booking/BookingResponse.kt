@@ -23,7 +23,7 @@ data class BookingDetailResponse(
     val status: Boolean,
 )
 
-data class BookingRes(
+data class BookingResponse(
     @SerializedName("status")
     val status: Number,
     @SerializedName("data")
