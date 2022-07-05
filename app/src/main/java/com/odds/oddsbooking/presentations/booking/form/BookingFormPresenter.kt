@@ -214,14 +214,12 @@ class BookingFormPresenter {
                 val fromTimeArray = fromTime.split(":")
                 val toTime =
                     "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
-
                 //same day
                 if (fromDate == toDate) {
                     //on weekend
                     if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
                         toTimeTimeSlot = getTimeSlot(toTime, "21:00")
                         view.onValidateToDateSuccess(getTimeSlot(toTime, "21:00"))
-
                     }
                     //on weekday
                     else {
@@ -236,11 +234,6 @@ class BookingFormPresenter {
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
                         toTimeTimeSlot = getTimeSlot("09:30", "21:00")
                         view.onValidateToDateSuccess(getTimeSlot("09:30", "21:00"))
-                    }
-                    //on weekday
-                    else {
-                        toTimeTimeSlot = getTimeSlot("18:30", "23:00")
-                        view.onValidateToDateSuccess(getTimeSlot("18:30", "23:00"))
                     }
                 }
                 view.setToTimeDropDown(toTimeTimeSlot)
