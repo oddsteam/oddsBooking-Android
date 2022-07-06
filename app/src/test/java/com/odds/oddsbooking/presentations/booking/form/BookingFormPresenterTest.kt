@@ -906,26 +906,4 @@ class BookingFormPresenterTest {
         //Then
         verify(view).onDatePickerDialogToDate(dateInTimePickerDialog)
     }
-
-    @Test
-    fun name() {
-        //Given
-        val toDate = "2022/07/20"
-        val fromDate = "07/20/2022"
-        val minTime: Long = 1658250000000
-        val maxTime: Long = 1658250000000
-        val dateInTimePickerDialog =
-            DateInTimePicker(
-                datePickerType = DateInTimePickerType.TO_DATE,
-                minTime,
-                maxTime,
-                toDate
-            )
-
-        //When
-        presenter.onToDateClick(toDate, fromDate)
-
-        //Then
-        verify(view).onDatePickerDialogToDate(dateInTimePickerDialog)
-    }
 }
