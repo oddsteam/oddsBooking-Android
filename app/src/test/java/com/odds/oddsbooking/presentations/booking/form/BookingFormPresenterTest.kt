@@ -846,12 +846,10 @@ class BookingFormPresenterTest {
         //Given
         val toDate = "2022/07/23" //Saturday
         val fromDate = "2022/07/23"
-
-        var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
-        val date = formatter.parse(fromDate)
-
-        val minTime: Long = date.time
-        val maxTime: Long = date.time + BookingFormPresenter.ONE_DAY
+//        1658509200000
+//        1658595600000
+        val minTime: Long = 1658509200000
+        val maxTime: Long = 1658595600000
         val dateInTimePickerDialog =
             DateInTimePicker(
                 datePickerType = DateInTimePickerType.TO_DATE,
@@ -872,12 +870,10 @@ class BookingFormPresenterTest {
         //Given
         val toDate = "2022/07/24"
         val fromDate = "2022/07/24"
-
-        var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
-        val date = formatter.parse(fromDate)
-
-        val minTime: Long = date.time
-        val maxTime: Long = date.time
+//        1658595600000
+//        1658595600000
+        val minTime: Long = 1658595600000
+        val maxTime: Long = 1658595600000
         val dateInTimePickerDialog =
             DateInTimePicker(
                 datePickerType = DateInTimePickerType.TO_DATE,
@@ -898,12 +894,11 @@ class BookingFormPresenterTest {
         //Given
         val toDate = "2022/07/20"
         val fromDate = "2022/07/20"
+//        1658250000000
+//        1658250000000
 
-        var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
-        val date = formatter.parse(fromDate)
-
-        val minTime: Long = date.time
-        val maxTime: Long = date.time
+        val minTime: Long = 1658250000000
+        val maxTime: Long = 1658250000000
         val dateInTimePickerDialog =
             DateInTimePicker(
                 datePickerType = DateInTimePickerType.TO_DATE,
