@@ -777,7 +777,6 @@ class BookingFormPresenterTest {
         verify(view).setTextToDate("2022/07/19")
     }
 
-    //TODO make sure it correct wait P'Bas review
     @Test
     fun `when setFromTimesDropDown`() {
         //Given
@@ -805,7 +804,6 @@ class BookingFormPresenterTest {
         verify(view).setFromTimeDropdown(timeSlot)
     }
 
-    //TODO make sure it correct wait P'Bas review
     @Test
     fun `when setToTimesDropDown`() {
         //Given

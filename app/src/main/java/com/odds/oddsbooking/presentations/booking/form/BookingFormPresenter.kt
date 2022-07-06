@@ -5,6 +5,10 @@ import com.odds.oddsbooking.R
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.models.DateInTimePickerType
+import com.odds.oddsbooking.utils.DateUtilities.Companion.checkDay
+import com.odds.oddsbooking.utils.DateUtilities.Companion.isSaturday
+import com.odds.oddsbooking.utils.DateUtilities.Companion.isSunday
+import com.odds.oddsbooking.utils.DateUtilities.Companion.isWeekend
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,7 +32,7 @@ class BookingFormPresenter {
 
     private var dateInTimePickerDialog = DateInTimePicker(
         datePickerType = DateInTimePickerType.FROM_DATE,
-        System.currentTimeMillis() + (14 * 24 * 60 * 60 * 1000),
+        System.currentTimeMillis() + TWO_WEEKS,
         null,
         ""
     )
@@ -134,20 +138,19 @@ class BookingFormPresenter {
                 fromDateErrorFlag = true
             }
             else -> {
-                //on week end
                 //TODO: refactor code more readable
-                if (isSaturday(fromDate)) {
-                    fromTimeTimeSlot = getTimeSlot("09:00", "20:00")
-                    view.onValidateFromDateSuccess(fromTimeTimeSlot)
-                } else if (checkDay(fromDate) == "Sunday") {
-                    fromTimeTimeSlot = getTimeSlot("09:00", "20:00")
-                    view.onValidateFromDateSuccess(fromTimeTimeSlot)
+                if (isWeekend(fromDate)) {
+//                    fromTimeTimeSlot = getTimeSlot("09:00", "20:00")
+                    setFromTimeTimeSlot("09:00", "20:00")
+//                    view.onValidateFromDateSuccess(fromTimeTimeSlot)
                 }
-                //on week day
                 else {
-                    fromTimeTimeSlot = getTimeSlot("18:00", "22:00")
-                    view.onValidateFromDateSuccess(fromTimeTimeSlot)
+//                    fromTimeTimeSlot = getTimeSlot("18:00", "22:00")
+                    setFromTimeTimeSlot("18:00", "22:00")
+//                    view.onValidateFromDateSuccess(fromTimeTimeSlot)
                 }
+
+                view.onValidateFromDateSuccess(fromTimeTimeSlot)
 
                 view.setFromTimeDropdown(fromTimeTimeSlot)
                 view.clearValueFromTimeDropdown()
@@ -173,19 +176,22 @@ class BookingFormPresenter {
                 val toTime = "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
 
                 if (fromDate == toDate) {
-                    if (checkDay(fromDate) == "Sunday" || isSaturday(fromDate)) {
-                        toTimeTimeSlot = getTimeSlot(toTime, "21:00")
+                    if (isWeekend(fromDate)) {
+//                        toTimeTimeSlot = getTimeSlot(toTime, "21:00")
+                        setToTimeTimeSlot(toTime, "21:00")
                         view.onValidateFromTimeSuccess(toTimeTimeSlot)
                     }
                     //on weekday
                     else {
-                        toTimeTimeSlot = getTimeSlot(toTime, "23:00")
+//                        toTimeTimeSlot = getTimeSlot(toTime, "23:00")
+                        setToTimeTimeSlot(toTime, "23:00")
                         view.onValidateFromTimeSuccess(toTimeTimeSlot)
                     }
                 } else {
                     val dayOfWeek = checkDay(fromDate)
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
-                        toTimeTimeSlot = getTimeSlot("09:30", "21:00")
+//                        toTimeTimeSlot = getTimeSlot("09:30", "21:00")
+                        setToTimeTimeSlot("09:30", "21:00")
                         view.onValidateFromTimeSuccess(toTimeTimeSlot)
                     }
                 }
@@ -217,14 +223,16 @@ class BookingFormPresenter {
                 //same day
                 if (fromDate == toDate) {
                     //on weekend
-                    if (checkDay(fromDate) == "Sunday" || checkDay(fromDate) == "Saturday") {
-                        toTimeTimeSlot = getTimeSlot(toTime, "21:00")
-                        view.onValidateToDateSuccess(getTimeSlot(toTime, "21:00"))
+                    if (isWeekend(fromDate)) {
+//                        toTimeTimeSlot = getTimeSlot(toTime, "21:00")
+                        setToTimeTimeSlot(toTime, "21:00")
+                        view.onValidateToDateSuccess(toTimeTimeSlot)
                     }
                     //on weekday
                     else {
-                        toTimeTimeSlot = getTimeSlot(toTime, "23:00")
-                        view.onValidateToDateSuccess(getTimeSlot(toTime, "23:00"))
+//                        toTimeTimeSlot = getTimeSlot(toTime, "23:00")
+                        setToTimeTimeSlot(toTime, "23:00")
+                        view.onValidateToDateSuccess(toTimeTimeSlot)
                     }
                 }
                 //other day
@@ -232,8 +240,9 @@ class BookingFormPresenter {
                     val dayOfWeek = checkDay(fromDate)
                     //on weekend
                     if (arrayListOf("Saturday", "Sunday").contains(dayOfWeek)) {
-                        toTimeTimeSlot = getTimeSlot("09:30", "21:00")
-                        view.onValidateToDateSuccess(getTimeSlot("09:30", "21:00"))
+//                        toTimeTimeSlot = getTimeSlot("09:30", "21:00")
+                        setToTimeTimeSlot("09:30", "21:00")
+                        view.onValidateToDateSuccess(toTimeTimeSlot)
                     }
                 }
                 view.setToTimeDropDown(toTimeTimeSlot)
@@ -285,7 +294,7 @@ class BookingFormPresenter {
     fun onFromDateClick(fromDate: String) {
         dateInTimePickerDialog = DateInTimePicker(
             DateInTimePickerType.FROM_DATE,
-            System.currentTimeMillis() + (14 * ONE_DAY),
+            System.currentTimeMillis() + TWO_WEEKS,
             null,
             fromDate
         )
@@ -338,43 +347,6 @@ class BookingFormPresenter {
         view.onNameAutoFormat(getNameFormatter(name))
     }
 
-    //TODO: move to DateUtil
-    private fun checkDay(value: String): String {
-        val date = formatter.parse(value)!!
-//        Log.d("date", SimpleDateFormat("EEEE", Locale.US).format(date))
-        // return day of week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
-        return SimpleDateFormat("EEEE", Locale.US).format(date)
-    }
-
-    fun getTimeSlot(startTime: String, endTime: String): Array<String> {
-        var timeSlot = arrayOf<String>()
-        val startTimeArray = startTime.split(":")
-        val endTimeArray = endTime.split(":")
-        val startHr = startTimeArray[0].toInt()
-        val startMin = startTimeArray[1].toInt()
-        val endHr = endTimeArray[0].toInt()
-        val endMin = endTimeArray[1].toInt()
-        if (startHr == endHr) {
-            if (startMin == 0) timeSlot += "$startHr:00"
-            if (startMin == 30) timeSlot += "$startHr:30"
-        } else {
-            for (i in startHr..endHr) {
-                if (i == startHr) {
-                    if (startMin == 0) timeSlot += "$i:00"
-                    timeSlot += "$i:30"
-                } else if (i != endHr) {
-                    timeSlot += "$i:00"
-                    timeSlot += "$i:30"
-                } else {
-                    timeSlot += "$i:00"
-                    if (endMin == 30) timeSlot += "$i:30"
-                }
-            }
-        }
-//        Log.d("TimeSlot", timeSlot.toString())
-        return timeSlot
-    }
-
     private fun getNameFormatter(name: String): String {
         val nameFormatter = name.lowercase().trim().split("\\s+".toRegex()).toMutableList()
         for (index in nameFormatter.indices) {
@@ -387,6 +359,7 @@ class BookingFormPresenter {
         return String.format("%d/%02d/%02d", year, month + 1, day)
     }
 
+    //region setTimesDropDown
     fun setFromTimesDropDown() {
         view.setFromTimeDropdown(fromTimeTimeSlot)
     }
@@ -394,6 +367,7 @@ class BookingFormPresenter {
     fun setToTimesDropDown() {
         view.setToTimeDropDown(toTimeTimeSlot)
     }
+    //endregion
 
     //region onDatePickers...
     fun onDatePickerCancel() {
@@ -425,29 +399,50 @@ class BookingFormPresenter {
     }
     //endregion
 
+    //region set/get TimeSlots
+    fun setFromTimeTimeSlot(startTime: String, endTime: String) {
+        fromTimeTimeSlot = getTimeSlot(startTime, endTime)
+    }
+
     fun setToTimeTimeSlot(startTime: String, endTime: String) {
         toTimeTimeSlot = getTimeSlot(startTime, endTime)
     }
 
-    fun setFromTimeTimeSlot(startTime: String, endTime: String) {
-        fromTimeTimeSlot = getTimeSlot(startTime, endTime)
+    fun getTimeSlot(startTime: String, endTime: String): Array<String> {
+        var timeSlot = arrayOf<String>()
+        val startTimeArray = startTime.split(":")
+        val endTimeArray = endTime.split(":")
+        val startHr = startTimeArray[0].toInt()
+        val startMin = startTimeArray[1].toInt()
+        val endHr = endTimeArray[0].toInt()
+        val endMin = endTimeArray[1].toInt()
+        if (startHr == endHr) {
+            if (startMin == 0) timeSlot += "$startHr:00"
+            if (startMin == 30) timeSlot += "$startHr:30"
+        } else {
+            for (i in startHr..endHr) {
+                if (i == startHr) {
+                    if (startMin == 0) timeSlot += "$i:00"
+                    timeSlot += "$i:30"
+                } else if (i != endHr) {
+                    timeSlot += "$i:00"
+                    timeSlot += "$i:30"
+                } else {
+                    timeSlot += "$i:00"
+                    if (endMin == 30) timeSlot += "$i:30"
+                }
+            }
+        }
+        return timeSlot
     }
+    //endregion
 
     fun onPreviewButtonClicked() {
         view.onNavigateToPreview(bookingData)
     }
 
-    private fun isSaturday(date: String): Boolean = checkDay(fromDate) == "Saturday"
-
-    private fun isSunday(date: String): Boolean {
-        return checkDay(fromDate) == "Sunday"
-    }
-
-    private fun isWeekend(date: String): Boolean {
-        return isSunday(date) || isSaturday(date)
-    }
-
     companion object {
         const val ONE_DAY = 24 * 60 * 60 * 1000
+        const val TWO_WEEKS = 14 * ONE_DAY
     }
 }
