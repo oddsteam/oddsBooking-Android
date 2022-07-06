@@ -237,11 +237,9 @@ class BookingFormPresenter {
             } else {
                 setToTimeTimeSlot(toTime, "23:00")
             }
-//            view.onValidateToDateSuccess(toTimeTimeSlot)
         } else {
             if (isWeekend(fromDate)) {
                 setToTimeTimeSlot("09:00", "21:00")
-//                view.onValidateToDateSuccess(toTimeTimeSlot)
             }
         }
     }
