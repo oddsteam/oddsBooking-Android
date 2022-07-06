@@ -305,39 +305,19 @@ class BookingFormPresenter {
         //TODO: handle invalid format
         val date = formatter.parse(fromDate)
 
+        val minDate: Long = date.time
+        var maxDate: Long = date.time
+
         if (isSaturday(fromDate)) {
-            val minDate: Long = date.time
-            val maxDate: Long = date.time + ONE_DAY
-            dateInTimePickerDialog =
-                DateInTimePicker(
-                    datePickerType = DateInTimePickerType.TO_DATE,
-                    minDate,
-                    maxDate,
-                    toDate
-                )
-        } else if (isSunday(fromDate)) {
-            val minDate: Long = date.time
-            val maxDate: Long = date.time
-            dateInTimePickerDialog =
-                DateInTimePicker(
-                    datePickerType = DateInTimePickerType.TO_DATE,
-                    minDate,
-                    maxDate,
-                    toDate
-                )
+            maxDate = date.time + ONE_DAY
         }
-        //on week day
-        else {
-            val minDate: Long = date.time
-            val maxDate: Long = date.time
-            dateInTimePickerDialog =
-                DateInTimePicker(
-                    datePickerType = DateInTimePickerType.TO_DATE,
-                    minDate,
-                    maxDate,
-                    toDate
-                )
-        }
+        dateInTimePickerDialog =
+            DateInTimePicker(
+                datePickerType = DateInTimePickerType.TO_DATE,
+                minDate,
+                maxDate,
+                toDate
+            )
         //reset when click in toDate datePicker
         view.onDatePickerDialogToDate(dateInTimePickerDialog)
     }
