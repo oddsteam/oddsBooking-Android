@@ -583,7 +583,7 @@ class BookingFormPresenterTest {
         val fromDate = "2022/07/23"
         val toDate = "2022/07/24"
         val timeSlot = arrayOf(
-            "9:30",
+            "9:00", "9:30",
             "10:00", "10:30",
             "11:00", "11:30",
             "12:00", "12:30",
@@ -635,7 +635,7 @@ class BookingFormPresenterTest {
         val toDate = "2022/07/24"
         val fromTime = "10:00"
         val timeSlot = arrayOf(
-            "9:30",
+            "9:00", "9:30",
             "10:00", "10:30",
             "11:00", "11:30",
             "12:00", "12:30",
