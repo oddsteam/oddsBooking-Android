@@ -1,19 +1,13 @@
-package com.odds.oddsbooking.booking.preview
+package com.odds.oddsbooking.presentations.booking.preview
 
-import com.odds.oddsbooking.models.Booking
 import com.odds.oddsbooking.models.BookingData
-import com.odds.oddsbooking.presentations.booking.preview.BookingPreviewPresenter
-import com.odds.oddsbooking.presentations.booking.preview.BookingPreviewView
 import com.odds.oddsbooking.services.booking.BookingAPI
 import com.odds.oddsbooking.services.booking.BookingDetailResponse
 import com.odds.oddsbooking.services.booking.BookingResponse
 import kotlinx.coroutines.test.runTest
-import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.*
 import retrofit2.Response
 
@@ -135,10 +129,5 @@ class BookingPreviewPresenterTest {
 
         //Then
         verify(view).showToastMessage("error : /java.lang.Exception: error")
-    }
-
-    @Test
-    fun test() {
-        TODO("Not yet implemented")
     }
 }

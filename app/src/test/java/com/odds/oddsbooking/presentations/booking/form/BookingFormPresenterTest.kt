@@ -1,11 +1,9 @@
-package com.odds.oddsbooking.booking.form
+package com.odds.oddsbooking.presentations.booking.form
 
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.models.DateInTimePickerType
-import com.odds.oddsbooking.presentations.booking.form.BookingFormPresenter
-import com.odds.oddsbooking.presentations.booking.form.BookingFormView
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -840,7 +838,7 @@ class BookingFormPresenterTest {
     }
 
     @Test
-    fun `when click toDate should call fun onFromDateClick & onDatePickerDialogFormDate`() {
+    fun `when click toDate if fromDate's Saturday should call fun onFromDateClick & onDatePickerDialogFormDate`() {
         //Given
         val toDate = "2022/07/23"
         val fromDate = "2022/07/23"
@@ -848,6 +846,54 @@ class BookingFormPresenterTest {
         val date = formatter.parse(fromDate)
         val minTime: Long = date.time
         val maxTime: Long = date.time + (24 * 60 * 60 * 1000)
+        val dateInTimePickerDialog =
+            DateInTimePicker(
+                datePickerType = DateInTimePickerType.TO_DATE,
+                minTime,
+                maxTime,
+                toDate
+            )
+
+        //When
+        presenter.onToDateClick(toDate, fromDate)
+
+        //Then
+        verify(view).onDatePickerDialogToDate(dateInTimePickerDialog)
+    }
+
+    @Test
+    fun `when click toDate if fromDate's Sunday should call fun onFromDateClick & onDatePickerDialogFormDate`() {
+        //Given
+        val toDate = "2022/07/24"
+        val fromDate = "2022/07/24"
+        val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
+        val date = formatter.parse(fromDate)
+        val minTime: Long = date.time
+        val maxTime: Long = date.time
+        val dateInTimePickerDialog =
+            DateInTimePicker(
+                datePickerType = DateInTimePickerType.TO_DATE,
+                minTime,
+                maxTime,
+                toDate
+            )
+
+        //When
+        presenter.onToDateClick(toDate, fromDate)
+
+        //Then
+        verify(view).onDatePickerDialogToDate(dateInTimePickerDialog)
+    }
+
+    @Test
+    fun `when click toDate if fromDate's weekday should call fun onFromDateClick & onDatePickerDialogFormDate`() {
+        //Given
+        val toDate = "2022/07/20"
+        val fromDate = "2022/07/20"
+        val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
+        val date = formatter.parse(fromDate)
+        val minTime: Long = date.time
+        val maxTime: Long = date.time
         val dateInTimePickerDialog =
             DateInTimePicker(
                 datePickerType = DateInTimePickerType.TO_DATE,
