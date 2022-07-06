@@ -423,6 +423,14 @@ class BookingFormPresenter {
     }
     //endregion
 
+    fun setToTimeTimeSlot(startTime: String, endTime: String){
+        toTimeTimeSlot = getTimeSlot(startTime, endTime);
+    }
+
+    fun setFromTimeTimeSlot(startTime: String, endTime: String){
+        fromTimeTimeSlot = getTimeSlot(startTime, endTime);
+    }
+
     fun onPreviewButtonClicked() {
         view.onNavigateToPreview(bookingData)
     }

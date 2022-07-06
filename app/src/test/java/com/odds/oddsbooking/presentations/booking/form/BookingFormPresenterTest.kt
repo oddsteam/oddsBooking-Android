@@ -796,10 +796,12 @@ class BookingFormPresenterTest {
             "20:00", "20:30",
             "21:00"
         )
+        presenter.setFromTimeTimeSlot("09:30", "21:00")
+
         //When
         presenter.setFromTimesDropDown()
         //Then
-        verify(view, never()).setFromTimeDropdown(timeSlot)
+        verify(view).setFromTimeDropdown(timeSlot)
     }
 
     //TODO make sure it correct wait P'Bas review
@@ -821,10 +823,13 @@ class BookingFormPresenterTest {
             "20:00", "20:30",
             "21:00"
         )
+        presenter.setToTimeTimeSlot("09:30", "21:00")
+
         //When
         presenter.setToTimesDropDown()
+
         //Then
-        verify(view, never()).setToTimeDropDown(timeSlot)
+        verify(view).setToTimeDropDown(timeSlot)
     }
 
     @Test
@@ -840,7 +845,7 @@ class BookingFormPresenterTest {
     @Test
     fun `when click toDate if fromDate's Saturday should call fun onFromDateClick & onDatePickerDialogFormDate`() {
         //Given
-        val toDate = "2022/07/23"
+        val toDate = "2022/07/23" //Saturday
         val fromDate = "2022/07/23"
         val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
         val date = formatter.parse(fromDate)
