@@ -846,8 +846,8 @@ class BookingFormPresenterTest {
         //Given
         val toDate = "2022/07/23" //Saturday
         val fromDate = "2022/07/23"
-        val minTime: Long = 1658509200000
-        val maxTime: Long = 1658595600000
+        val minTime: Long = 10
+        val maxTime: Long = 10
         val dateInTimePickerDialog =
             DateInTimePicker(
                 datePickerType = DateInTimePickerType.TO_DATE,
