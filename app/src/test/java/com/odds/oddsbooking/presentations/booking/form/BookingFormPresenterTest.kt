@@ -4,6 +4,7 @@ import com.odds.oddsbooking.R
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.models.DateInTimePickerType
+import com.odds.oddsbooking.utils.DateUtilities.getTimeSlot
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -664,7 +665,7 @@ class BookingFormPresenterTest {
             "10:00"
         )
         //When
-        val newTimeSlot = presenter.getTimeSlot(startTime, endTime)
+        val newTimeSlot = getTimeSlot(startTime, endTime)
         //Then
         Assert.assertArrayEquals(timeSlot, newTimeSlot)
     }
@@ -922,5 +923,10 @@ class BookingFormPresenterTest {
 
         //Then
         verify(view).onDatePickerDialogToDate(dateInTimePickerDialog)
+    }
+
+    @Test
+    fun `when something test haha`() {
+
     }
 }
