@@ -1,6 +1,5 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
-import android.util.Log
 import com.odds.oddsbooking.models.Booking
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.services.booking.BookingAPI

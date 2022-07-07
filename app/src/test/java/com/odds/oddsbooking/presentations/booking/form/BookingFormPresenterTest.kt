@@ -850,8 +850,12 @@ class BookingFormPresenterTest {
        var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
        val date = formatter.parse(fromDate)
 
-        val minTime: Long = date.time
-        val maxTime: Long = date.time + BookingFormPresenter.ONE_DAY
+        val minTime: Long = 1658509200000
+        val maxTime: Long = 1658595600000
+
+        print("minDateT : " + minTime + "\n")
+        print("maxDateT : " + maxTime + "\n")
+
         val dateInTimePickerDialog =
             DateInTimePicker(
                 datePickerType = DateInTimePickerType.TO_DATE,
@@ -859,6 +863,7 @@ class BookingFormPresenterTest {
                 maxTime,
                 toDate
             )
+
 
         //When
         presenter.onToDateClick(toDate, fromDate)

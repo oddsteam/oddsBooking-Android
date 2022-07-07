@@ -300,6 +300,8 @@ class BookingFormPresenter {
         if (isSaturday(fromDate)) {
             maxDate = date.time + ONE_DAY
         }
+        print("minDate : " + minDate + "\n")
+        print("maxDate : " + maxDate + "\n")
         dateInTimePickerDialog =
             DateInTimePicker(
                 datePickerType = DateInTimePickerType.TO_DATE,
