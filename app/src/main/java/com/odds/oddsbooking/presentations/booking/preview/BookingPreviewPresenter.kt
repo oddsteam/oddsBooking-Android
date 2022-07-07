@@ -3,21 +3,18 @@ package com.odds.oddsbooking.presentations.booking.preview
 import com.odds.oddsbooking.models.Booking
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.services.booking.BookingAPI
+import com.odds.oddsbooking.utils.DateUtilities.dateTimeGeneralFormat
 import kotlinx.coroutines.*
 
 class BookingPreviewPresenter constructor(
     private val dispatcher: CoroutineDispatcher,
     private val api: BookingAPI
-    )
-{
+) {
     private val scope = CoroutineScope(Job() + dispatcher)
     private lateinit var view: BookingPreviewView
-    private  var bookingData: BookingData = BookingData(
-        "","","","","","","","",""
-    )
-    private var bookingInfo: Booking = Booking(
-        "","","","","","","",false
-    )
+    private var bookingData: BookingData = BookingData()
+
+    private var bookingInfo: Booking = Booking()
 
     fun attachView(view: BookingPreviewView) {
         this.view = view
@@ -28,40 +25,34 @@ class BookingPreviewPresenter constructor(
         scope.launch {
             try {
                 val response = api.createBooking(bookingInfo)
-//                Log.d("res", response.body().toString());
                 if (response.isSuccessful) {
                     view.goToSuccessPage(bookingData)
                 } else view.showToastMessage("${response.errorBody()?.string()}")
             } catch (e: Exception) {
-//                Log.d("res", "error : /$e")
                 view.showToastMessage("error : /$e")
             }
         }
     }
 
-
     fun backToBookingFormPage() {
-            view.backToBookingFormPage()
+        view.backToBookingFormPage()
     }
 
-    fun getBookingInfo(bookingInfo: BookingData) {
-        bookingData = bookingInfo
-        this.bookingInfo = Booking(
-            bookingData.fullName,
-            bookingData.email,
-            bookingData.phoneNumber,
-            bookingData.room,
-            bookingData.reason,
-            "${dateTimeGeneralFormat(bookingData.fromDate)}T${bookingData.fromTime}",
-            "${dateTimeGeneralFormat(bookingData.toDate)}T${bookingData.toTime}",
-            false
-        )
+    fun getBookingInfo(bookingInfo: BookingData?) {
+        if(bookingInfo != null){
+            bookingData = bookingInfo
+            this.bookingInfo = Booking(
+                bookingData.fullName,
+                bookingData.email,
+                bookingData.phoneNumber,
+                bookingData.room,
+                bookingData.reason,
+                "${dateTimeGeneralFormat(bookingData.fromDate)}T${bookingData.fromTime}",
+                "${dateTimeGeneralFormat(bookingData.toDate)}T${bookingData.toTime}",
+                false
+            )
 
-        view.setAllEditTextFromBookingData(bookingData)
-    }
-
-    private fun dateTimeGeneralFormat(dateTime: String): String {
-        val (year, month, day) = dateTime.split("/").toTypedArray()
-        return "${year}-${month}-${day}"
+            view.setAllEditTextFromBookingData(bookingData)
+        }
     }
 }

@@ -850,8 +850,8 @@ class BookingFormPresenterTest {
        var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
        val date = formatter.parse(fromDate)
 
-        val minTime: Long = 1658509200000
-        val maxTime: Long = 1658595600000
+        val minTime: Long = date.time
+        val maxTime: Long = date.time
 
         print("minDateT : " + minTime + "\n")
         print("maxDateT : " + maxTime + "\n")

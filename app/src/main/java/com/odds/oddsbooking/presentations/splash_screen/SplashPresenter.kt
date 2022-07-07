@@ -2,6 +2,7 @@ package com.odds.oddsbooking.presentations.splash_screen
 
 import kotlinx.coroutines.*
 
+//TODO: edit splash screen
 class SplashPresenter constructor(
     private val dispatcher: CoroutineDispatcher,
     private val duration: Long
@@ -23,11 +24,4 @@ class SplashPresenter constructor(
             view.goToBookingForm()
         }
     }
-
-
-
-
-
-
-
 }

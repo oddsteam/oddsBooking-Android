@@ -5,9 +5,10 @@ import com.odds.oddsbooking.R
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.models.DateInTimePickerType
-import com.odds.oddsbooking.utils.DateUtilities.Companion.isSameDate
-import com.odds.oddsbooking.utils.DateUtilities.Companion.isSaturday
-import com.odds.oddsbooking.utils.DateUtilities.Companion.isWeekend
+import com.odds.oddsbooking.utils.DateUtilities.getDateFormatter
+import com.odds.oddsbooking.utils.DateUtilities.isSameDate
+import com.odds.oddsbooking.utils.DateUtilities.isSaturday
+import com.odds.oddsbooking.utils.DateUtilities.isWeekend
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -139,10 +140,10 @@ class BookingFormPresenter {
             else -> {
                 //TODO: refactor code more readable
                 if (isWeekend(fromDate)) {
-                    setFromTimeTimeSlot("09:00", "20:00")
+                    setFromTimeTimeSlot(startTime =  "09:00", endTime =  "20:00")
                 }
                 else {
-                    setFromTimeTimeSlot("18:00", "22:00")
+                    setFromTimeTimeSlot(startTime = "18:00", endTime = "22:00")
                 }
 
                 view.onValidateFromDateSuccess(fromTimeTimeSlot)
@@ -167,21 +168,19 @@ class BookingFormPresenter {
                 fromDateErrorFlag = true
             }
             else -> {
-                val fromTimeArray = fromTime.split(":")
-                val toTime = "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
-
                 if (isSameDate(fromDate, toDate)) {
+                    val fromTimeArray = fromTime.split(":")
+                    val startToTime = "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
+
                     if (isWeekend(fromDate)) {
-                        setToTimeTimeSlot(toTime, "21:00")
+                        setToTimeTimeSlot(startTime = startToTime, endTime =  "21:00")
                     }
                     else {
-                        setToTimeTimeSlot(toTime, "23:00")
+                        setToTimeTimeSlot(startTime = startToTime, endTime =  "23:00")
                     }
-//                    view.onValidateFromTimeSuccess(toTimeTimeSlot)
                 } else {
                     if (isWeekend(fromDate)) {
-                        setToTimeTimeSlot("09:00", "21:00")
-//                        view.onValidateFromTimeSuccess(toTimeTimeSlot)
+                        setToTimeTimeSlot(startTime = "09:00", endTime =  "21:00")
                     }
                 }
 
@@ -228,10 +227,10 @@ class BookingFormPresenter {
         fromDate: String,
         toDate: String
     ) {
-        val fromTimeArray = fromTime.split(":")
-        val toTime = "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
-
         if (isSameDate(fromDate, toDate)) {
+            val fromTimeArray = fromTime.split(":")
+            val toTime = "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
+
             if (isWeekend(fromDate)) {
                 setToTimeTimeSlot(toTime, "21:00")
             } else {
@@ -326,9 +325,9 @@ class BookingFormPresenter {
         return nameFormatter.joinToString(" ")
     }
 
-    private fun getDateFormatter(year: Int, month: Int, day: Int): String {
-        return String.format("%d/%02d/%02d", year, month + 1, day)
-    }
+//    private fun getDateFormatter(year: Int, month: Int, day: Int): String {
+//        return String.format("%d/%02d/%02d", year, month + 1, day)
+//    }
 
     //region setTimesDropDown
     fun setFromTimesDropDown() {
@@ -379,6 +378,7 @@ class BookingFormPresenter {
         toTimeTimeSlot = getTimeSlot(startTime, endTime)
     }
 
+    //TODO: move to DateUtils
     fun getTimeSlot(startTime: String, endTime: String): Array<String> {
         var timeSlot = arrayOf<String>()
         val startTimeArray = startTime.split(":")
@@ -391,6 +391,7 @@ class BookingFormPresenter {
             if (startMin == 0) timeSlot += "$startHr:00"
             if (startMin == 30) timeSlot += "$startHr:30"
         } else {
+            //TODO: write Test
             for (i in startHr..endHr) {
                 if (i == startHr) {
                     if (startMin == 0) timeSlot += "$i:00"

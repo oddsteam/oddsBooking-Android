@@ -16,14 +16,16 @@ class BookingSuccessFragment : Fragment() {
 
     private val binding by lazy { FragmentBookingSuccessBinding.inflate(layoutInflater) }
 
-    private lateinit var bookingData: BookingData
+    private var bookingData: BookingData? = BookingData()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        addCallbackOnBackPressedDispatcher()
-        bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!
+        addCallbackOnBackPressedDispatcher{
+            onReturnToForm()
+        }
+        bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)
 
         binding.bookingAgainButton.setOnClickListener {
             onReturnToForm()
@@ -35,10 +37,7 @@ class BookingSuccessFragment : Fragment() {
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    /* start new activity (destroy current activity and start root fragment) */
-                    onReturnToForm()
-                    /* activity pop to root (without clearing state) */
-//                    findNavController().popBackStack(R.id.bookingFormFragment, false)
+                    onBackPressed()
                 }
             }
         )

@@ -43,7 +43,7 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getBookingInfo(arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)!!)
+        presenter.getBookingInfo(arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING))
         binding.confirmButton.setOnClickListener {
             presenter.createBooking()
         }
@@ -66,7 +66,6 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
         }
     }
 
-
     override fun showProgressBar() {
         binding.layoutProgressBar.isVisible = true
         binding.confirmButton.isEnabled = false
@@ -88,7 +87,6 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
     override fun backToBookingFormPage() {
         findNavController().popBackStack()
     }
-
 
     override fun showToastMessage(errorMessage: String) {
         Toast.makeText(
