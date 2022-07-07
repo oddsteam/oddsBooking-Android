@@ -6,6 +6,7 @@ import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.models.DateInTimePickerType
 import com.odds.oddsbooking.utils.DateUtilities.getDateFormatter
+import com.odds.oddsbooking.utils.DateUtilities.getTimeSlot
 import com.odds.oddsbooking.utils.DateUtilities.isSameDate
 import com.odds.oddsbooking.utils.DateUtilities.isSaturday
 import com.odds.oddsbooking.utils.DateUtilities.isWeekend
@@ -376,36 +377,6 @@ class BookingFormPresenter {
 
     fun setToTimeTimeSlot(startTime: String, endTime: String) {
         toTimeTimeSlot = getTimeSlot(startTime, endTime)
-    }
-
-    //TODO: move to DateUtils
-    fun getTimeSlot(startTime: String, endTime: String): Array<String> {
-        var timeSlot = arrayOf<String>()
-        val startTimeArray = startTime.split(":")
-        val endTimeArray = endTime.split(":")
-        val startHr = startTimeArray[0].toInt()
-        val startMin = startTimeArray[1].toInt()
-        val endHr = endTimeArray[0].toInt()
-        val endMin = endTimeArray[1].toInt()
-        if (startHr == endHr) {
-            if (startMin == 0) timeSlot += "$startHr:00"
-            if (startMin == 30) timeSlot += "$startHr:30"
-        } else {
-            //TODO: write Test
-            for (i in startHr..endHr) {
-                if (i == startHr) {
-                    if (startMin == 0) timeSlot += "$i:00"
-                    timeSlot += "$i:30"
-                } else if (i != endHr) {
-                    timeSlot += "$i:00"
-                    timeSlot += "$i:30"
-                } else {
-                    timeSlot += "$i:00"
-                    if (endMin == 30) timeSlot += "$i:30"
-                }
-            }
-        }
-        return timeSlot
     }
     //endregion
 
