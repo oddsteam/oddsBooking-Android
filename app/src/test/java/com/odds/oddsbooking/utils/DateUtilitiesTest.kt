@@ -1,9 +1,11 @@
 package com.odds.oddsbooking.utils
 
+import com.odds.oddsbooking.utils.DateUtilities.dateTimeGeneralFormat
 import com.odds.oddsbooking.utils.DateUtilities.getTimeSlot
 import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
+import org.mockito.kotlin.verify
 
 class DateUtilitiesTest{
     @Test
@@ -43,5 +45,16 @@ class DateUtilitiesTest{
         val newTimeSlot = getTimeSlot(startTime, endTime)
         //Then
         assertArrayEquals(timeSlot, newTimeSlot)
+    }
+
+    @Test
+    fun`when input dateTime should call fun dateTimeGeneralFormat & return newdateFormat`(){
+        //Given
+        val dateTime = "2022/07/23"
+        val dateSplit = "2022-07-23"
+        //When
+        val newDateSplit = dateTimeGeneralFormat(dateTime)
+        //Then
+        assertEquals(dateSplit,newDateSplit)
     }
 }
