@@ -12,8 +12,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    tools:context=".presentations.splash_screen.SplashActivity"
-    android:background="@color/white_color" >
+    tools:context=".presentations.splash_screen.SplashActivity">
 
     <ImageView
         android:layout_width="wrap_content"

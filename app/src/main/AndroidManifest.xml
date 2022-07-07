@@ -20,6 +20,7 @@
             android:exported="false" />
         <activity
             android:name="com.odds.oddsbooking.presentations.splash_screen.SplashActivity"
+            android:theme="@style/SplashScreenTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
