@@ -1,14 +1,22 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
+import android.util.Log
+import com.odds.oddsbooking.data.repository.BookingRepository
+import com.odds.oddsbooking.di.DataModule
 import com.odds.oddsbooking.models.BookingRequest
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.services.booking.BookingAPI
 import com.odds.oddsbooking.utils.DateUtilities.dateTimeGeneralFormat
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 
 class BookingPreviewPresenter constructor(
     private val dispatcher: CoroutineDispatcher,
-    private val api: BookingAPI
+    private val api: BookingAPI,
+    private val bookingRepository: BookingRepository = DataModule.createBookingRepository(api)
 ) {
     private val scope = CoroutineScope(Job() + dispatcher)
     private lateinit var view: BookingPreviewView
@@ -21,16 +29,33 @@ class BookingPreviewPresenter constructor(
     }
 
     fun createBooking() {
-        view.showProgressBar()
         scope.launch {
-            try {
-                val response = api.createBooking(bookingInfo)
-                if (response.isSuccessful) {
+            bookingRepository.createBooking(bookingInfo)
+
+                .onStart {
+//                    Log.d("createBooking", "bookingRepository onStart")
+
+                    view.showProgressBar()
+                }
+                .onCompletion {
+//                    Log.d("createBooking", "bookingRepository onCompletion")
+                }
+                .catch {
+//                    Log.d("createBooking", "bookingRepository catch ${it}")
+                    view.showToastMessage("${it.message}")
+                }
+                .collect {
+//                    Log.d("createBooking", "bookingRepository collect ${it}")
                     view.goToSuccessPage(bookingData)
-                } else view.showToastMessage("${response.errorBody()?.string()}")
-            } catch (e: Exception) {
-                view.showToastMessage("error : /$e")
-            }
+                }
+//            try {
+//                val response = api.createBooking(bookingInfo)
+//                if (response.isSuccessful) {
+//                    view.goToSuccessPage(bookingData)
+//                } else view.showToastMessage("${response.errorBody()?.string()}")
+//            } catch (e: Exception) {
+//                view.showToastMessage("error : /$e")
+//            }
         }
     }
 

@@ -1,9 +1,12 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
+import com.odds.oddsbooking.data.repository.BookingRepository
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.services.booking.BookingAPI
 import com.odds.oddsbooking.services.booking.BookingDetailResponse
 import com.odds.oddsbooking.services.booking.BookingResponse
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
@@ -12,6 +15,7 @@ import org.mockito.kotlin.*
 import retrofit2.Response
 
 class BookingPreviewPresenterTest {
+    private val bookingRepository : BookingRepository = mock()
     private val api: BookingAPI = mock()
     private val view: BookingPreviewView = mock()
     private lateinit var presenter: BookingPreviewPresenter
@@ -20,7 +24,8 @@ class BookingPreviewPresenterTest {
     fun setUp() {
         presenter = BookingPreviewPresenter(
             kotlinx.coroutines.Dispatchers.Unconfined,
-            api
+            api,
+            bookingRepository
         )
         presenter.attachView(view)
     }
@@ -93,8 +98,7 @@ class BookingPreviewPresenterTest {
         )
         presenter.getBookingInfo(bookingData)
 
-        val response = Response.success(200, bookingRes)
-        whenever(api.createBooking(any())).doReturn(response)
+        whenever(bookingRepository.createBooking(any())).doReturn(flowOf(bookingRes))
 
         //When
         presenter.createBooking()
@@ -106,28 +110,26 @@ class BookingPreviewPresenterTest {
     @Test
     fun `when call createBooking and response error , api should response`() = runTest {
         //Given
-        val responseBody =  "error body".toResponseBody()
-        val response = Response.error<BookingResponse>(401, responseBody)
-        whenever(api.createBooking(any())).doReturn(response)
+        whenever(bookingRepository.createBooking(any())).doReturn(flow { throw Exception("response not success") })
 
         //When
         presenter.createBooking()
 
         //Then
-        verify(view).showToastMessage("error body")
+        verify(view).showToastMessage("response not success")
     }
 
-    @Test
-    fun `when call createBooking and handshake not passed , api should response`() = runTest {
-        //Given
-        whenever(api.createBooking(any())).then{
-            //refine words
-            throw Exception("error")
-        }
-        //When
-        presenter.createBooking()
-
-        //Then
-        verify(view).showToastMessage("error : /java.lang.Exception: error")
-    }
+//    @Test
+//    fun `when call createBooking and handshake not passed , api should response`() = runTest {
+//        //Given
+//        whenever(api.createBooking(any())).then{
+//            //refine words
+//            throw Exception("error")
+//        }
+//        //When
+//        presenter.createBooking()
+//
+//        //Then
+//        verify(view).showToastMessage("error : /java.lang.Exception: error")
+//    }
 }
