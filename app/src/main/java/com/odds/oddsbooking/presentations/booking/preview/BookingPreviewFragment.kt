@@ -20,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 class BookingPreviewFragment : Fragment(), BookingPreviewView {
 
     private val binding by lazy { FragmentBookingPreviewBinding.inflate(layoutInflater) }
+
     private val presenter by lazy {
         BookingPreviewPresenter(
             Dispatchers.Main,

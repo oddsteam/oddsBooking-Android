@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class SplashPresenterTest {
     @Mock
-    lateinit var view: SplashPresenter.SplashView
+    lateinit var view: SplashView
     private var presenter: SplashPresenter = SplashPresenter(
         Dispatchers.Unconfined, 0
     )

@@ -1,6 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
-import com.odds.oddsbooking.models.Booking
+import com.odds.oddsbooking.models.BookingRequest
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.services.booking.BookingAPI
 import com.odds.oddsbooking.utils.DateUtilities.dateTimeGeneralFormat
@@ -14,7 +14,7 @@ class BookingPreviewPresenter constructor(
     private lateinit var view: BookingPreviewView
     private var bookingData: BookingData = BookingData()
 
-    private var bookingInfo: Booking = Booking()
+    private var bookingInfo: BookingRequest = BookingRequest()
 
     fun attachView(view: BookingPreviewView) {
         this.view = view
@@ -41,14 +41,14 @@ class BookingPreviewPresenter constructor(
     fun getBookingInfo(bookingInfo: BookingData?) {
         if(bookingInfo != null){
             bookingData = bookingInfo
-            this.bookingInfo = Booking(
+            this.bookingInfo = BookingRequest(
                 bookingData.fullName,
                 bookingData.email,
                 bookingData.phoneNumber,
                 bookingData.room,
                 bookingData.reason,
-                "${dateTimeGeneralFormat(bookingData.fromDate)}T${bookingData.fromTime}",
-                "${dateTimeGeneralFormat(bookingData.toDate)}T${bookingData.toTime}",
+                "${dateTimeGeneralFormat(bookingData.fromDate, bookingData.fromTime)}",
+                "${dateTimeGeneralFormat(bookingData.toDate, bookingData.toTime)}",
                 false
             )
 

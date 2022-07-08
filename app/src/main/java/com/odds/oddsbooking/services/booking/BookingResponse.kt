@@ -4,28 +4,28 @@ import com.google.gson.annotations.SerializedName
 
 data class BookingDetailResponse(
     @SerializedName("id")
-    val id: String,
+    val id: String?,
     @SerializedName("fullName")
-    val fullName: String,
+    val fullName: String?,
     @SerializedName("email")
-    val email: String,
+    val email: String?,
     @SerializedName("phoneNumber")
-    val phoneNumber: String,
+    val phoneNumber: String?,
     @SerializedName("room")
-    val room: String,
+    val room: String?,
     @SerializedName("reason")
-    val reason: String,
+    val reason: String?,
     @SerializedName("startDate")
-    val startDate: String,
+    val startDate: String?,
     @SerializedName("endDate")
-    val endDate: String,
+    val endDate: String?,
     @SerializedName("status")
-    val status: Boolean,
+    val status: Boolean?,
 )
 
 data class BookingResponse(
     @SerializedName("status")
-    val status: Number,
+    val status: Number?,
     @SerializedName("data")
-    val data : BookingDetailResponse,
+    val data : BookingDetailResponse?,
 )

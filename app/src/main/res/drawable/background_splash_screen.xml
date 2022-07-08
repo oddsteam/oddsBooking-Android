@@ -8,7 +8,4 @@
         android:drawable="@drawable/ic_odds_logo_color_small"
         android:gravity="center"
         />
-
-
-
 </layer-list>

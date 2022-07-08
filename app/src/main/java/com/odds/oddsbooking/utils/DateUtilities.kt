@@ -34,9 +34,9 @@ object DateUtilities {
         return String.format("%d/%02d/%02d", year, month + 1, day)
     }
 
-    fun dateTimeGeneralFormat(dateTime: String): String {
+    fun dateTimeGeneralFormat(dateTime: String, time: String): String {
         val (year, month, day) = dateTime.split("/").toTypedArray()
-        return "${year}-${month}-${day}"
+        return "${year}-${month}-${day}T${time}"
     }
 
     fun getTimeSlot(startTime: String, endTime: String): Array<String> {
@@ -51,7 +51,6 @@ object DateUtilities {
             if (startMin == 0) timeSlot += "$startHr:00"
             if (startMin == 30) timeSlot += "$startHr:30"
         } else {
-            //TODO: write Test
             for (i in startHr..endHr) {
                 if (i == startHr) {
                     if (startMin == 0) timeSlot += "$i:00"

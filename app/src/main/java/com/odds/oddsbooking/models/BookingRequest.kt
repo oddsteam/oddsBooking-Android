@@ -1,6 +1,6 @@
 package com.odds.oddsbooking.models
 
-data class Booking(
+data class BookingRequest(
     //TODO: add default value
     val fullName: String = "",
     val email: String = "",

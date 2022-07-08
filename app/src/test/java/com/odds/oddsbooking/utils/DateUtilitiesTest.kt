@@ -2,14 +2,12 @@ package com.odds.oddsbooking.utils
 
 import com.odds.oddsbooking.utils.DateUtilities.dateTimeGeneralFormat
 import com.odds.oddsbooking.utils.DateUtilities.getTimeSlot
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
-import org.mockito.kotlin.verify
 
 class DateUtilitiesTest{
     @Test
-    fun`when click dialog should call getTimeSlot & return timeSlot`(){
+    fun`when call getTimeSlot startHr = 9 and endHr = 21 & return timeSlot 9 - 21`(){
         //Given
         val startHr = "09:00"
         val endHr = "21:00"
@@ -48,12 +46,15 @@ class DateUtilitiesTest{
     }
 
     @Test
-    fun`when input dateTime should call fun dateTimeGeneralFormat & return newdateFormat`(){
+    fun`when input dateTime should call fun dateTimeGeneralFormat & return newDateFormat`(){
         //Given
         val dateTime = "2022/07/23"
-        val dateSplit = "2022-07-23"
+        val time = "18:00"
+        val dateSplit = "2022-07-23T18:00"
+
         //When
-        val newDateSplit = dateTimeGeneralFormat(dateTime)
+        val newDateSplit = dateTimeGeneralFormat(dateTime, time)
+
         //Then
         assertEquals(dateSplit,newDateSplit)
     }
