@@ -16,12 +16,16 @@ class SplashPresenter constructor(
 
     interface SplashView{
         fun goToBookingForm()
+        fun showAnimation()
     }
 
     fun splashing(){
+        view.showAnimation()
         scope.launch {
             delay(duration)
             view.goToBookingForm()
         }
     }
+
+
 }

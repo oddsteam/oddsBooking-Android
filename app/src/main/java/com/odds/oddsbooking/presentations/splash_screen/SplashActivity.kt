@@ -21,21 +21,24 @@ class SplashActivity : AppCompatActivity(), SplashPresenter.SplashView {
 
         presenter.attachView(this)
 
-        val nameNTextAnimation = AnimationUtils.loadAnimation(this, R.anim.name_version_fade)
-
-        binding.appName.startAnimation(nameNTextAnimation)
-        binding.appVersion.startAnimation(nameNTextAnimation)
-
         //TODO: remove delay but still delay
         presenter.splashing()
     }
 
     override fun goToBookingForm() {
+
         Intent(this, BookingFormActivity::class.java).apply {
             val flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             addFlags(flags)
             startActivity(this)
         }
+    }
+
+    override fun showAnimation() {
+        val nameNTextAnimation = AnimationUtils.loadAnimation(this, R.anim.name_version_fade)
+
+        binding.appName.startAnimation(nameNTextAnimation)
+        binding.appVersion.startAnimation(nameNTextAnimation)
     }
 }
