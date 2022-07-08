@@ -852,7 +852,7 @@ class BookingFormPresenterTest {
        val date = formatter.parse(fromDate)
 
         val minTime: Long = date.time
-        val maxTime: Long = date.time
+        val maxTime: Long = date.time + BookingFormPresenter.ONE_DAY
 
         print("minDateT : " + minTime + "\n")
         print("maxDateT : " + maxTime + "\n")
@@ -864,7 +864,6 @@ class BookingFormPresenterTest {
                 maxTime,
                 toDate
             )
-
 
         //When
         presenter.onToDateClick(toDate, fromDate)
@@ -923,10 +922,5 @@ class BookingFormPresenterTest {
 
         //Then
         verify(view).onDatePickerDialogToDate(dateInTimePickerDialog)
-    }
-
-    @Test
-    fun `when something test haha`() {
-
     }
 }
