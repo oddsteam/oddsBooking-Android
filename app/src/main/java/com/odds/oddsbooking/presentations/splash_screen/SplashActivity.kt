@@ -20,7 +20,6 @@ class SplashActivity : AppCompatActivity(), SplashView {
 
         presenter.attachView(this)
 
-        //TODO: remove delay but still delay
         presenter.splashing()
     }
 

@@ -139,7 +139,6 @@ class BookingFormPresenter {
                 fromDateErrorFlag = true
             }
             else -> {
-                //TODO: refactor code more readable
                 if (isWeekend(fromDate)) {
                     setFromTimeTimeSlot(startTime =  "09:00", endTime =  "20:00")
                 }
@@ -291,7 +290,6 @@ class BookingFormPresenter {
     }
 
     fun onToDateClick(toDate: String, fromDate: String) {
-        //TODO: handle invalid format
         val date = formatter.parse(fromDate)
 
         val minDate: Long = date.time

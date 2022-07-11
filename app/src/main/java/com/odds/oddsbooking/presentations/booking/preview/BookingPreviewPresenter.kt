@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 
+//mvvc
 class BookingPreviewPresenter constructor(
     private val dispatcher: CoroutineDispatcher,
     private val api: BookingAPI,
@@ -33,19 +34,14 @@ class BookingPreviewPresenter constructor(
             bookingRepository.createBooking(bookingInfo)
 
                 .onStart {
-//                    Log.d("createBooking", "bookingRepository onStart")
-
                     view.showProgressBar()
                 }
                 .onCompletion {
-//                    Log.d("createBooking", "bookingRepository onCompletion")
                 }
                 .catch {
-//                    Log.d("createBooking", "bookingRepository catch ${it}")
                     view.showToastMessage("${it.message}")
                 }
                 .collect {
-//                    Log.d("createBooking", "bookingRepository collect ${it}")
                     view.goToSuccessPage(bookingData)
                 }
 //            try {
