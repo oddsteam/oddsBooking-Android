@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.odds.oddsbooking.databinding.ActivitySplashBinding
@@ -13,14 +14,30 @@ class SplashActivity : AppCompatActivity(), SplashView {
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }
     private val presenter by lazy { SplashPresenter(Dispatchers.Main,1200) }
 
+    private val viewModel : SplashScreenViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
 
-        presenter.attachView(this)
+        observe()
 
-        presenter.splashing()
+        viewModel.splashing()
+
+//        presenter.attachView(this)
+//
+//        presenter.splashing()
+    }
+
+    private fun observe() {
+        viewModel.showAnimation.observe(this) {
+            showAnimation()
+        }
+
+        viewModel.navigateToBookingForm.observe(this) {
+            goToBookingForm()
+        }
     }
 
     override fun goToBookingForm() {

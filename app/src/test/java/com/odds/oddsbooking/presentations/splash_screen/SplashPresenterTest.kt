@@ -8,6 +8,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
+//TODO: write new test
 @RunWith(MockitoJUnitRunner::class)
 class SplashPresenterTest {
     @Mock
@@ -16,9 +17,11 @@ class SplashPresenterTest {
         Dispatchers.Unconfined, 0
     )
 
+
+
     @Before
     fun setup() {
-        presenter.attachView(view)
+//        presenter.attachView(view)
     }
 
     @Test
