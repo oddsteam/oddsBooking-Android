@@ -7,28 +7,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingSuccessBinding
 
-//TODO : convert BookingSuccess
 class BookingSuccessFragment : Fragment() {
 
     private val binding by lazy { FragmentBookingSuccessBinding.inflate(layoutInflater) }
 
+    private val viewModel: BookingSuccessViewModel by viewModels()
     private var bookingData: BookingData? = BookingData()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observe()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         addCallbackOnBackPressedDispatcher{
-            onReturnToForm()
+            viewModel.onReturnToForm()
         }
         bookingData = arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING)
 
         binding.bookingAgainButton.setOnClickListener {
-            onReturnToForm()
+            viewModel.onReturnToForm()
         }
         return binding.root
     }
@@ -48,5 +54,9 @@ class BookingSuccessFragment : Fragment() {
         Intent(requireContext(), BookingFormActivity::class.java).apply {
             startActivity(this)
         }
+    }
+
+    private fun observe() {
+        viewModel.onReturnToForm.observe(this) { onReturnToForm() }
     }
 }
