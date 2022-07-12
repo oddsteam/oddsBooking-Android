@@ -23,10 +23,6 @@ class SplashActivity : AppCompatActivity() {
         observe()
 
         viewModel.splashing()
-
-//        presenter.attachView(this)
-//
-//        presenter.splashing()
     }
 
     private fun observe() {
