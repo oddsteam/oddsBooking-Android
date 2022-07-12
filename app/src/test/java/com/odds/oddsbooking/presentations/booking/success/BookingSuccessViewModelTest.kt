@@ -3,7 +3,6 @@ package com.odds.oddsbooking.presentations.booking.success
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.odds.oddsbooking.presentations.MainCoroutineScopeRule
-import com.odds.oddsbooking.presentations.splash_screen.SplashScreenViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
