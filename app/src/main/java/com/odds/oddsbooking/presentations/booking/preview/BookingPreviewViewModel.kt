@@ -69,7 +69,6 @@ class BookingPreviewViewModel constructor(
     fun createBooking(){
         viewModelScope.launch {
             bookingRepository.createBooking(bookingInfo)
-
                 .onStart {
                     _showProgressBar.value = Unit
                 }
@@ -79,7 +78,6 @@ class BookingPreviewViewModel constructor(
 //                .onEach {
 //                    //ของมาทีละชิ้น เราจะทำอะไร *ต้อง collect ก่อน
 //                }
-
                 .collect {
                     _goToSuccessPage.value = bookingData
                 }
