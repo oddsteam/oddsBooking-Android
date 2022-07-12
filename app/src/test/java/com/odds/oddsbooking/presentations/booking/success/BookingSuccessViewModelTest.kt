@@ -19,7 +19,7 @@ class BookingSuccessViewModelTest {
     @get:Rule
     val coroutineScope = MainCoroutineScopeRule()
 
-    private val onReturnToForm : Observer<Unit> = mock()
+    private val onReturnToForm: Observer<Unit> = mock()
 
     private lateinit var viewModel: BookingSuccessViewModel
 
@@ -35,7 +35,7 @@ class BookingSuccessViewModelTest {
         viewModel.onReturnToForm()
         //When
         coroutineScope.testScheduler.apply {
-            advanceTimeBy(1200) ; runCurrent()
+            advanceTimeBy(1200); runCurrent()
         }
         //Then
         Mockito.verify(onReturnToForm).onChanged(Unit)
