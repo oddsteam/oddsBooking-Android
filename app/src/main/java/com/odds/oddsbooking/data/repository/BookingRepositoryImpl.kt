@@ -15,7 +15,6 @@ class BookingRepositoryImpl(private val api: BookingAPI) : BookingRepository{
                 response.body()?.let {
                     emit(it)
                 }
-//                    view.goToSuccessPage(bookingData)
             } else {
                 throw Exception("response not success")
             }

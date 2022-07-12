@@ -10,9 +10,8 @@ import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.odds.oddsbooking.databinding.ActivitySplashBinding
 import kotlinx.coroutines.Dispatchers
 
-class SplashActivity : AppCompatActivity(), SplashView {
+class SplashActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }
-    private val presenter by lazy { SplashPresenter(Dispatchers.Main,1200) }
 
     private val viewModel : SplashScreenViewModel by viewModels()
 
@@ -40,7 +39,7 @@ class SplashActivity : AppCompatActivity(), SplashView {
         }
     }
 
-    override fun goToBookingForm() {
+    private fun goToBookingForm() {
         Intent(this, BookingFormActivity::class.java).apply {
             val flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -49,7 +48,7 @@ class SplashActivity : AppCompatActivity(), SplashView {
         }
     }
 
-    override fun showAnimation() {
+    private fun showAnimation() {
         val nameNTextAnimation = AnimationUtils.loadAnimation(this, R.anim.name_version_fade)
 
         binding.appName.startAnimation(nameNTextAnimation)

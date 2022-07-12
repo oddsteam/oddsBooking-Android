@@ -17,12 +17,10 @@ class SplashScreenViewModel : ViewModel() {
     private val duration : Long = 1200
 
     fun splashing(){
-//        view.showAnimation()
         _showAnimation.value = Unit
 
         viewModelScope.launch {
             delay(duration)
-//            view.goToBookingForm()
             _navigateToBookingForm.value = Unit
         }
     }
