@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
@@ -17,13 +18,21 @@ import com.odds.oddsbooking.databinding.FragmentBookingPreviewBinding
 import com.odds.oddsbooking.services.booking.BookingAPIFactory
 import kotlinx.coroutines.Dispatchers
 
-class BookingPreviewFragment : Fragment(), BookingPreviewView {
+class BookingPreviewFragment : Fragment() {
 
     private val binding by lazy { FragmentBookingPreviewBinding.inflate(layoutInflater) }
 
-    private val presenter by lazy {
-        BookingPreviewPresenter(
-            Dispatchers.Main,
+//    private val presenter by lazy {
+//        BookingPreviewPresenter(
+//            Dispatchers.Main,
+//            BookingAPIFactory.createBookingAPI(
+//                requireContext()
+//            )
+//        )
+//    }
+
+    private val viewModel: BookingPreviewViewModel by viewModels {
+        BookingPreviewViewModelFactory(
             BookingAPIFactory.createBookingAPI(
                 requireContext()
             )
@@ -32,7 +41,7 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.attachView(this)
+        observe()
     }
 
     override fun onCreateView(
@@ -44,16 +53,35 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getBookingInfo(arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING))
+        viewModel.getBookingInfo(arguments?.getParcelable(BookingFormActivity.EXTRA_BOOKING))
         binding.confirmButton.setOnClickListener {
-            presenter.createBooking()
+            viewModel.createBooking()
         }
         binding.backToBookingFormButton.setOnClickListener {
-            presenter.backToBookingFormPage()
+            viewModel.backToBookingFormPage()
         }
     }
 
-    override fun setAllEditTextFromBookingData(bookingData: BookingData) {
+    private fun observe() {
+        viewModel.backToBookingFormPage.observe(this) {
+            backToBookingFormPage()
+        }
+        viewModel.setAllEditTextFromBookingData.observe(this) {
+            setAllEditTextFromBookingData(it)
+        }
+        viewModel.showProgressBar.observe(this) {
+            showProgressBar()
+        }
+        viewModel.goToSuccessPage.observe(this) {
+            goToSuccessPage(it)
+        }
+        viewModel.showToastMessage.observe(this) {
+            showToastMessage(it)
+        }
+
+    }
+
+    private fun setAllEditTextFromBookingData(bookingData: BookingData) {
         val fromDate = "${bookingData.fromDate} ${bookingData.fromTime}"
         val toDate = "${bookingData.toDate} ${bookingData.toTime}"
         with(binding) {
@@ -67,13 +95,13 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
         }
     }
 
-    override fun showProgressBar() {
+    private fun showProgressBar() {
         binding.layoutProgressBar.isVisible = true
         binding.confirmButton.isEnabled = false
         binding.backToBookingFormButton.isEnabled = false
     }
 
-    override fun goToSuccessPage(bookingData: BookingData) {
+    private fun goToSuccessPage(bookingData: BookingData) {
         binding.layoutProgressBar.isGone = true
         findNavController().apply {
             navigate(
@@ -85,11 +113,11 @@ class BookingPreviewFragment : Fragment(), BookingPreviewView {
         }
     }
 
-    override fun backToBookingFormPage() {
+    private fun backToBookingFormPage() {
         findNavController().popBackStack()
     }
 
-    override fun showToastMessage(errorMessage: String) {
+    private fun showToastMessage(errorMessage: String) {
         Toast.makeText(
             requireContext(),
             errorMessage,
