@@ -18,6 +18,7 @@ class SplashScreenViewModel : ViewModel() {
 
     fun splashing(){
         _showAnimation.value = Unit
+        //set value   เพื่อให้  LiveData มีการเปลี่ยน //สะกิด _showAnimation ให้ทำงาน
 
         viewModelScope.launch {
             delay(duration)

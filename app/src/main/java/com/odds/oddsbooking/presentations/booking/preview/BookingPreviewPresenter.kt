@@ -8,15 +8,13 @@ import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.services.booking.BookingAPI
 import com.odds.oddsbooking.utils.DateUtilities.dateTimeGeneralFormat
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 
 //mvvc
 class BookingPreviewPresenter constructor(
     private val dispatcher: CoroutineDispatcher,
     private val api: BookingAPI,
+    //TODO: create api build fun
     private val bookingRepository: BookingRepository = DataModule.createBookingRepository(api)
 ) {
     private val scope = CoroutineScope(Job() + dispatcher)
@@ -36,11 +34,16 @@ class BookingPreviewPresenter constructor(
                 .onStart {
                     view.showProgressBar()
                 }
-                .onCompletion {
-                }
                 .catch {
                     view.showToastMessage("${it.message}")
                 }
+//                .onEach {
+//                    //ของมาทีละชิ้น เราจะทำอะไร *ต้อง collect ก่อน
+//                }
+                .map {
+
+                }
+
                 .collect {
                     view.goToSuccessPage(bookingData)
                 }

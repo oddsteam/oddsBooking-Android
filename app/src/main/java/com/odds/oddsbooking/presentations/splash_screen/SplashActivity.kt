@@ -27,6 +27,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun observe() {
         viewModel.showAnimation.observe(this) {
+            //implement interface Observer.onChange แต่มันมีแค่ fun เดียว เขียนแบบนี้ได้
             showAnimation()
         }
 

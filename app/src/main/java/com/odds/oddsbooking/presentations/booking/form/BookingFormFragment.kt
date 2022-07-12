@@ -456,6 +456,13 @@ class BookingFormFragment : Fragment(), BookingFormView {
                 binding.toDateFormEditText.text.toString(),
                 binding.fromDateFormEditText.text.toString())
         }
+//        binding.toDateFormEditText.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(p0: View?) {
+//                presenter.onToDateClick(
+//                binding.toDateFormEditText.text.toString(),
+//                binding.fromDateFormEditText.text.toString())
+//            }
+//        } )
     }
 
     private fun setEditTextIsFocus(editText: TextInputEditText, isFocus: Boolean) {

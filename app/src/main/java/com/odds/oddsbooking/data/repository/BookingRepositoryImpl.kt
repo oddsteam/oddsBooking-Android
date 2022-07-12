@@ -14,6 +14,7 @@ class BookingRepositoryImpl(private val api: BookingAPI) : BookingRepository{
             if (response.isSuccessful) {
                 response.body()?.let {
                     emit(it)
+                    //emit -> return ของออกไป แต่ส่งไปตาม Flow ซึ่งสามารถส่งไปได้เรื่อยๆ เหมือนโยนของเข้าท่อทีละชิ้น
                 }
             } else {
                 throw Exception("response not success")
