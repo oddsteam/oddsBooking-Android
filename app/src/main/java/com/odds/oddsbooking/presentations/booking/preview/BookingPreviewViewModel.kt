@@ -1,5 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.odds.oddsbooking.di.DataModule
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.BookingRequest
 import com.odds.oddsbooking.services.booking.BookingAPI
+import com.odds.oddsbooking.services.booking.BookingAPIFactory
 import com.odds.oddsbooking.utils.DateUtilities
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -17,8 +19,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class BookingPreviewViewModel constructor(
-    private val api: BookingAPI,
-    private val bookingRepository: BookingRepository = DataModule.createBookingRepository(api)
+    private val context: Context,
+    private val bookingRepository: BookingRepository = DataModule.createBookingRepository(
+        BookingAPIFactory.createBookingAPI(
+            context
+        ))
 ) : ViewModel() {
     private val _setAllEditTextFromBookingData by lazy { MutableLiveData<BookingData>() }
     val setAllEditTextFromBookingData : LiveData<BookingData> get() = _setAllEditTextFromBookingData

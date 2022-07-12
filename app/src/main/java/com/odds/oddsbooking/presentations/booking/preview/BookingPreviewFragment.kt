@@ -22,20 +22,9 @@ class BookingPreviewFragment : Fragment() {
 
     private val binding by lazy { FragmentBookingPreviewBinding.inflate(layoutInflater) }
 
-//    private val presenter by lazy {
-//        BookingPreviewPresenter(
-//            Dispatchers.Main,
-//            BookingAPIFactory.createBookingAPI(
-//                requireContext()
-//            )
-//        )
-//    }
-
     private val viewModel: BookingPreviewViewModel by viewModels {
         BookingPreviewViewModelFactory(
-            BookingAPIFactory.createBookingAPI(
-                requireContext()
-            )
+            requireContext()
         )
     }
 
