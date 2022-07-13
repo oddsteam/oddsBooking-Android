@@ -56,6 +56,24 @@ class BookingFormFragment : Fragment(), BookingFormView {
         viewModel.disablePreviewButton.observe(this){
             disablePreviewButton()
         }
+
+        viewModel.onValidateNameSuccess.observe(this){
+            onValidateEmailSuccess()
+        }
+        viewModel.onValidateNameError.observe(this){
+            onValidateNameError(it)
+        }
+        viewModel.onNameAutoFormat.observe(this){
+            onNameAutoFormat(it)
+        }
+
+        viewModel.onValidateEmailSuccess.observe(this){
+            onValidateEmailSuccess()
+        }
+        viewModel.onValidateEmailError.observe(this){
+            onValidateEmailError(it)
+        }
+
     }
 
     override fun onCreateView(
@@ -133,12 +151,12 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private fun formValidate() {
         with(binding) {
             nameFormEditText.doAfterTextChanged { text ->
-                presenter.validateFullName(text.toString())
-                nameFormEditText.setOnFocusChangeListener { _, _ -> presenter.autoFormatName(text.toString()) }
+                viewModel.validateFullName(text.toString())
+                nameFormEditText.setOnFocusChangeListener { _, _ -> viewModel.autoFormatName(text.toString()) }
             }
 
             emailFormEditText.doAfterTextChanged { text ->
-                presenter.validateEmail(text.toString())
+                viewModel.validateEmail(text.toString())
             }
 
             phoneFormEditText.doAfterTextChanged { text ->

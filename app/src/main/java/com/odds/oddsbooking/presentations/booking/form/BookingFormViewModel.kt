@@ -1,6 +1,7 @@
 package com.odds.oddsbooking.presentations.booking.form
 
 import android.content.Context
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.odds.oddsbooking.data.repository.BookingRepository
 import com.odds.oddsbooking.di.DataModule
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.services.booking.BookingAPIFactory
+import com.odds.oddsbooking.utils.NameUtilities.getNameFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,14 +21,27 @@ class BookingFormViewModel : ViewModel() {
     private val _setToTimesDropDown by lazy { MutableLiveData<Array<String>>() }
     val setToTimesDropDown: LiveData<Array<String>> get() = _setToTimesDropDown
 
-    private val _validateFullName by lazy {MutableLiveData<String>()}
-    val validateFullName: LiveData<String> get() = _validateFullName
+    //region onValidatesError/Success
 
-    private val _onValidateNameError by lazy { MutableLiveData<String>() }
-    val onValidateNameError: LiveData<String> get() = _onValidateNameError
+    //region onValidateNameError/Success
+    private val _onValidateNameError by lazy { MutableLiveData<Int>() }
+    val onValidateNameError: LiveData<Int> get() = _onValidateNameError
 
     private val _onValidateNameSuccess by lazy {MutableLiveData<Unit>()}
     val onValidateNameSuccess: LiveData<Unit> get() = _onValidateNameSuccess
+
+    private val _onNameAutoFormat by lazy { MutableLiveData<String>() }
+    val onNameAutoFormat: LiveData<String> get() = _onNameAutoFormat
+    //endregion
+
+    //region onValidateEmailError/Success
+    private val _onValidateEmailError by lazy { MutableLiveData<Int>() }
+    val onValidateEmailError : LiveData<Int> get() = _onValidateEmailError
+
+    private val _onValidateEmailSuccess by lazy { MutableLiveData<Unit>() }
+    val onValidateEmailSuccess: LiveData<Unit> get() = _onValidateEmailSuccess
+
+    //endregion
 
     private val _enablePreviewButton by lazy {MutableLiveData<Unit>()}
     val enablePreviewButton: LiveData<Unit> get() = _enablePreviewButton
@@ -62,7 +77,7 @@ class BookingFormViewModel : ViewModel() {
     fun validateFullName(fullName: String) {
         fullNameErrorFlag = when {
             fullName.isEmpty() -> {
-                _onValidateNameError.value = (R.string.full_name_empty_err.toString())
+                _onValidateNameError.value = R.string.full_name_empty_err
                 true
             }
             else -> {
@@ -73,6 +88,26 @@ class BookingFormViewModel : ViewModel() {
         }
         validateForm()
     }
+
+    fun validateEmail(email: String) {
+        emailErrorFlag = when {
+            email.isEmpty() -> {
+                _onValidateEmailError.value = R.string.email_empty_err
+                true
+            }
+            !PatternsCompat.EMAIL_ADDRESS.matcher(email).matches() -> {
+                _onValidateEmailError.value = R.string.email_format_err
+                true
+            }
+            else -> {
+                _onValidateEmailSuccess.value = Unit
+                bookingData.email = email
+                false
+            }
+        }
+        validateForm()
+    }
+
     private fun validateForm() {
         when {
             !fullNameErrorFlag
@@ -90,6 +125,10 @@ class BookingFormViewModel : ViewModel() {
                 _disablePreviewButton.value = Unit
             }
         }
+    }
+
+    fun autoFormatName(name: String) {
+        _onNameAutoFormat.value = getNameFormatter(name)
     }
 }
 
