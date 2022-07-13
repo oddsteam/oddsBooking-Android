@@ -1,5 +1,6 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.odds.oddsbooking.presentations.MainCoroutineScopeRule
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 @RunWith(JUnit4::class)
 class BookingPreviewViewModelTest {
@@ -20,24 +22,23 @@ class BookingPreviewViewModelTest {
     val coroutineScope = MainCoroutineScopeRule()
 
     private val backToBookingFormPage: Observer<Unit> = mock()
+    private val context: Context = mock()
 
     private lateinit var viewModel: BookingPreviewViewModel
 
     @Before
     fun setUp() {
-        //viewModel = BookingPreviewViewModel()
+        viewModel = BookingPreviewViewModel(context)
         viewModel.backToBookingFormPage.observeForever(backToBookingFormPage)
     }
 
     @Test
-    fun `preview`() {
+    fun `when preview back to BookingFormPage`() {
         //Given
-        viewModel.backToBookingFormPage
+
         //When
-        coroutineScope.testScheduler.apply {
-            advanceTimeBy(1200); runCurrent()
-        }
+        viewModel.backToBookingFormPage()
         //Then
-        Mockito.verify(backToBookingFormPage).onChanged(Unit)
+        verify(backToBookingFormPage).onChanged(Unit)
     }
 }

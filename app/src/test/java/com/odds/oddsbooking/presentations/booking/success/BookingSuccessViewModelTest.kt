@@ -10,6 +10,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 @RunWith(JUnit4::class)
 class BookingSuccessViewModelTest {
@@ -32,12 +33,10 @@ class BookingSuccessViewModelTest {
     @Test
     fun `when input data success should call onReturnToForm`() {
         //Given
-        viewModel.onReturnToForm()
+
         //When
-        coroutineScope.testScheduler.apply {
-            advanceTimeBy(1200); runCurrent()
-        }
+        viewModel.onReturnToForm()
         //Then
-        Mockito.verify(onReturnToForm).onChanged(Unit)
+        verify(onReturnToForm).onChanged(Unit)
     }
 }

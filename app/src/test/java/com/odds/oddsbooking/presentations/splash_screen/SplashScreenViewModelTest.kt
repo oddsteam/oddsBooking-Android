@@ -11,6 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class SplashScreenViewModelTest {
     @get:Rule
@@ -44,6 +45,6 @@ class SplashScreenViewModelTest {
         }
 
         //Then
-        Mockito.verify(showAnimationObserver).onChanged(Unit)
+        verify(showAnimationObserver).onChanged(Unit)
     }
 }
