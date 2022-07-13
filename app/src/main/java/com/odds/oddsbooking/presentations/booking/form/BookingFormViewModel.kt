@@ -27,7 +27,7 @@ class BookingFormViewModel : ViewModel() {
     private val _onValidateNameError by lazy { MutableLiveData<Int>() }
     val onValidateNameError: LiveData<Int> get() = _onValidateNameError
 
-    private val _onValidateNameSuccess by lazy {MutableLiveData<Unit>()}
+    private val _onValidateNameSuccess by lazy { MutableLiveData<Unit>() }
     val onValidateNameSuccess: LiveData<Unit> get() = _onValidateNameSuccess
 
     private val _onNameAutoFormat by lazy { MutableLiveData<String>() }
@@ -36,24 +36,36 @@ class BookingFormViewModel : ViewModel() {
 
     //region onValidateEmailError/Success
     private val _onValidateEmailError by lazy { MutableLiveData<Int>() }
-    val onValidateEmailError : LiveData<Int> get() = _onValidateEmailError
+    val onValidateEmailError: LiveData<Int> get() = _onValidateEmailError
 
     private val _onValidateEmailSuccess by lazy { MutableLiveData<Unit>() }
     val onValidateEmailSuccess: LiveData<Unit> get() = _onValidateEmailSuccess
 
-    private val _onValidatePhoneNumberError by lazy {MutableLiveData<Int>()}
-    val onValidatePhoneNumberError : LiveData<Int> get() = _onValidatePhoneNumberError
+    private val _onValidatePhoneNumberError by lazy { MutableLiveData<Int>() }
+    val onValidatePhoneNumberError: LiveData<Int> get() = _onValidatePhoneNumberError
 
-    private val _onValidatePhoneNumberSuccess by lazy {MutableLiveData<Unit>()}
-    val onValidatePhoneNumberSuccess : LiveData<Unit> get() = _onValidatePhoneNumberSuccess
+    private val _onValidatePhoneNumberSuccess by lazy { MutableLiveData<Unit>() }
+    val onValidatePhoneNumberSuccess: LiveData<Unit> get() = _onValidatePhoneNumberSuccess
+
+    private val _onValidateRoomError by lazy { MutableLiveData<Int>() }
+    val onValidateRoomError: LiveData<Int> get() = _onValidateRoomError
+
+    private val _onValidateRoomSuccess by lazy { MutableLiveData<Unit>()}
+    val onValidateRoomSuccess: LiveData<Unit> get() = _onValidateRoomSuccess
+
+    private val _onValidateReasonError by lazy { MutableLiveData<Int>() }
+    val onValidateReasonError: LiveData<Int> get() = _onValidateReasonError
+
+    private val _onValidateReasonSuccess by lazy { MutableLiveData<Unit>()}
+    val onValidateReasonSuccess: LiveData<Unit> get() = _onValidateReasonSuccess
 
     //endregion
 
-    private val _enablePreviewButton by lazy {MutableLiveData<Unit>()}
+    private val _enablePreviewButton by lazy { MutableLiveData<Unit>() }
     val enablePreviewButton: LiveData<Unit> get() = _enablePreviewButton
 
-    private val _disablePreviewButton by lazy {MutableLiveData<Unit>()}
-    val disablePreviewButton:LiveData<Unit> get() = _disablePreviewButton
+    private val _disablePreviewButton by lazy { MutableLiveData<Unit>() }
+    val disablePreviewButton: LiveData<Unit> get() = _disablePreviewButton
 
     private var fromTimeTimeSlot: Array<String> = arrayOf()
     private var toTimeTimeSlot: Array<String> = arrayOf()
@@ -76,7 +88,7 @@ class BookingFormViewModel : ViewModel() {
         _setFromTimesDropDown.value = fromTimeTimeSlot
     }
 
-    fun setToTimesDropDown(){
+    fun setToTimesDropDown() {
         _setToTimesDropDown.value = toTimeTimeSlot
     }
 
@@ -150,6 +162,36 @@ class BookingFormViewModel : ViewModel() {
             else -> {
                 _onValidatePhoneNumberSuccess.value = Unit
                 bookingData.phoneNumber = phoneNumber
+                false
+            }
+        }
+        validateForm()
+    }
+
+    fun validateRoom(room: String) {
+        roomErrorFlag = when {
+            room.isEmpty() -> {
+                _onValidateRoomError.value = (R.string.room_empty_err)
+                true
+            }
+            else -> {
+                _onValidateRoomSuccess.value = Unit
+                bookingData.room = room
+                false
+            }
+        }
+        validateForm()
+    }
+
+    fun validateReason(reason: String) {
+        reasonErrorFlag = when {
+            reason.isEmpty() -> {
+                _onValidateReasonError.value = (R.string.reason_empty_err)
+                true
+            }
+            else -> {
+                _onValidateReasonSuccess.value = Unit
+                bookingData.reason = reason
                 false
             }
         }

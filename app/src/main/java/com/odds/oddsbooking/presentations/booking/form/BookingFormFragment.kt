@@ -79,6 +79,18 @@ class BookingFormFragment : Fragment(), BookingFormView {
         viewModel.onValidatePhoneNumberError.observe(this){
             onValidatePhoneNumberError(it)
         }
+        viewModel.onValidateRoomError.observe(this){
+            onValidateRoomError(it)
+        }
+        viewModel.onValidateRoomSuccess.observe(this){
+            onValidateRoomSuccess()
+        }
+        viewModel.onValidateReasonError.observe(this){
+            onValidateReasonError(it)
+        }
+        viewModel.onValidateReasonSuccess.observe(this){
+            onValidateReasonSuccess()
+        }
 
     }
 
@@ -170,11 +182,11 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             roomFormDropdown.doAfterTextChanged { text ->
-                presenter.validateRoom(text.toString())
+                viewModel.validateRoom(text.toString())
             }
 
             reasonFormEditText.doAfterTextChanged { text ->
-                presenter.validateReason(text.toString())
+                viewModel.validateReason(text.toString())
             }
 
             fromDateFormEditText.doAfterTextChanged { text ->
