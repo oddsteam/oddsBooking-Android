@@ -3,6 +3,7 @@ package com.odds.oddsbooking.presentations.booking.preview
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.presentations.MainCoroutineScopeRule
 import org.junit.Before
 import org.junit.Rule
@@ -23,6 +24,7 @@ class BookingPreviewViewModelTest {
 
     private val backToBookingFormPage: Observer<Unit> = mock()
     private val context: Context = mock()
+    private val setAllEditTextFromBookingData: Observer<Unit> = mock()
 
     private lateinit var viewModel: BookingPreviewViewModel
 
@@ -40,5 +42,25 @@ class BookingPreviewViewModelTest {
         viewModel.backToBookingFormPage()
         //Then
         verify(backToBookingFormPage).onChanged(Unit)
+    }
+
+    @Test
+    fun `when getBookingInfo should call setAllEditTextFromBookingData`() {
+        //Given
+        val bookingData = BookingData(
+            "Mola Mola",
+            "Mola@odds.team",
+            "0889537322",
+            "Neon",
+            "Test Preview",
+            "2022/07/05",
+            "18:00",
+            "2022/07/05",
+            "20:00"
+        )
+        //When
+        viewModel.getBookingInfo(bookingData)
+        //Then
+        verify(setAllEditTextFromBookingData)
     }
 }
