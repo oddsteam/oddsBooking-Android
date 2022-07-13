@@ -92,6 +92,64 @@ class BookingFormFragment : Fragment(), BookingFormView {
             onValidateReasonSuccess()
         }
 
+        viewModel.onValidateFromDateSuccess.observe(this){
+            onValidateFromDateSuccess(it)
+        }
+        viewModel.onValidateFromDateError.observe(this){
+            onValidateFromDateError(it)
+        }
+
+        viewModel.onValidateToDateSuccess.observe(this){
+            onValidateToDateSuccess(it)
+        }
+        viewModel.onValidateToDateError.observe(this){
+            onValidateToDateError(it)
+        }
+
+        viewModel.setFromTimeDropdown.observe(this){
+            setFromTimeDropdown(it)
+        }
+        viewModel.setToTimeDropDown.observe(this){
+            setToTimeDropDown(it)
+        }
+        viewModel.clearValueFromTimeDropdown.observe(this){
+            clearValueFromTimeDropdown()
+        }
+        viewModel.clearValueToTimeDropdown.observe(this){
+            clearValueToTimeDropdown()
+        }
+        viewModel.setEnableFromTime.observe(this){
+            setEnableFromTime()
+        }
+        viewModel.setEnableToTime.observe(this){
+            setEnableToTime()
+        }
+        viewModel.setDisableToDate.observe(this){
+            setDisableToDate()
+        }
+        viewModel.setDisableToTime.observe(this){
+            setDisableToTime()
+        }
+
+        viewModel.onDatePickerDialogFormDate.observe(this){
+            onDatePickerDialogFormDate(it)
+        }
+        viewModel.onDatePickerDialogToDate.observe(this){
+            onDatePickerDialogToDate(it)
+        }
+
+        viewModel.setDisableFromDateEditText.observe(this){
+            setDisableFromDateEditText()
+        }
+        viewModel.setDisableToDateEditText.observe(this){
+            setDisableToDateEditText()
+        }
+        viewModel.setTextFromDate.observe(this){
+            setTextFromDate(it)
+        }
+        viewModel.setTextToDate.observe(this){
+            setTextToDate(it)
+        }
     }
 
     override fun onCreateView(
@@ -150,17 +208,17 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //region on...Listener
     private fun onCancelListener() =
         DialogInterface.OnCancelListener {
-            presenter.onDatePickerCancel()
+            viewModel.onDatePickerCancel()
         }
 
     private fun onDismissListener() =
         DialogInterface.OnDismissListener {
-            presenter.onDatePickerDismiss()
+            viewModel.onDatePickerDismiss()
         }
 
     private fun onDateSetListener() = //confirm
         DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            presenter.onDatePickerConfirm(year, month, day)
+            viewModel.onDatePickerConfirm(year, month, day)
         }
     //endregion
 
@@ -190,7 +248,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             fromDateFormEditText.doAfterTextChanged { text ->
-                presenter.validateFromDate(text.toString())
+                viewModel.validateFromDate(text.toString())
             }
 
             fromTimeFormDropdown.doAfterTextChanged { text ->
@@ -202,7 +260,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             toDateFormEditText.doAfterTextChanged { text ->
-                presenter.validateToDate(
+                viewModel.validateToDate(
                     text.toString(),
                     fromDateFormEditText.text.toString(),
                     fromTimeFormDropdown.text.toString()
@@ -498,13 +556,13 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onFromDateClicked() {
         binding.fromDateFormEditText.setOnClickListener {
-            presenter.onFromDateClick(binding.fromDateFormEditText.text.toString())
+            viewModel.onFromDateClick(binding.fromDateFormEditText.text.toString())
         }
     }
 
     private fun onToDateClicked() {
         binding.toDateFormEditText.setOnClickListener {
-            presenter.onToDateClick(
+            viewModel.onToDateClick(
                 binding.toDateFormEditText.text.toString(),
                 binding.fromDateFormEditText.text.toString())
         }
