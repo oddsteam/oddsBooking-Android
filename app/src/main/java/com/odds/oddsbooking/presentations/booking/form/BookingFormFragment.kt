@@ -73,6 +73,12 @@ class BookingFormFragment : Fragment(), BookingFormView {
         viewModel.onValidateEmailError.observe(this){
             onValidateEmailError(it)
         }
+        viewModel.onValidatePhoneNumberSuccess.observe(this){
+            onValidatePhoneNumberSuccess()
+        }
+        viewModel.onValidatePhoneNumberError.observe(this){
+            onValidatePhoneNumberError(it)
+        }
 
     }
 
@@ -160,7 +166,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             phoneFormEditText.doAfterTextChanged { text ->
-                presenter.validatePhoneNumber(text.toString())
+                viewModel.validatePhoneNumber(text.toString())
             }
 
             roomFormDropdown.doAfterTextChanged { text ->

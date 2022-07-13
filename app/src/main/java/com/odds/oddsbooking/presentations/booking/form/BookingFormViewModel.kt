@@ -41,6 +41,12 @@ class BookingFormViewModel : ViewModel() {
     private val _onValidateEmailSuccess by lazy { MutableLiveData<Unit>() }
     val onValidateEmailSuccess: LiveData<Unit> get() = _onValidateEmailSuccess
 
+    private val _onValidatePhoneNumberError by lazy {MutableLiveData<Int>()}
+    val onValidatePhoneNumberError : LiveData<Int> get() = _onValidatePhoneNumberError
+
+    private val _onValidatePhoneNumberSuccess by lazy {MutableLiveData<Unit>()}
+    val onValidatePhoneNumberSuccess : LiveData<Unit> get() = _onValidatePhoneNumberSuccess
+
     //endregion
 
     private val _enablePreviewButton by lazy {MutableLiveData<Unit>()}
@@ -129,6 +135,25 @@ class BookingFormViewModel : ViewModel() {
 
     fun autoFormatName(name: String) {
         _onNameAutoFormat.value = getNameFormatter(name)
+    }
+
+    fun validatePhoneNumber(phoneNumber: String) {
+        phoneNumberErrorFlag = when {
+            phoneNumber.isEmpty() -> {
+                _onValidatePhoneNumberError.value = (R.string.phone_number_empty_err)
+                true
+            }
+            !Regex("^0[9862][0-9]{8}\$").matches(phoneNumber) -> {
+                _onValidatePhoneNumberError.value = (R.string.phone_number_format_err)
+                true
+            }
+            else -> {
+                _onValidatePhoneNumberSuccess.value = Unit
+                bookingData.phoneNumber = phoneNumber
+                false
+            }
+        }
+        validateForm()
     }
 }
 
