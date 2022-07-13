@@ -24,7 +24,7 @@ class BookingPreviewViewModelTest {
 
     private val backToBookingFormPage: Observer<Unit> = mock()
     private val context: Context = mock()
-    private val setAllEditTextFromBookingData: Observer<Unit> = mock()
+    private val setAllEditTextFromBookingData: Observer<BookingData> = mock()
 
     private lateinit var viewModel: BookingPreviewViewModel
 
@@ -32,6 +32,7 @@ class BookingPreviewViewModelTest {
     fun setUp() {
         viewModel = BookingPreviewViewModel(context)
         viewModel.backToBookingFormPage.observeForever(backToBookingFormPage)
+        viewModel.setAllEditTextFromBookingData.observeForever(setAllEditTextFromBookingData)
     }
 
     @Test
@@ -61,6 +62,6 @@ class BookingPreviewViewModelTest {
         //When
         viewModel.getBookingInfo(bookingData)
         //Then
-        verify(setAllEditTextFromBookingData)
+        verify(setAllEditTextFromBookingData).onChanged(bookingData)
     }
 }
