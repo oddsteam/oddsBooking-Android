@@ -10,7 +10,7 @@ import com.odds.oddsbooking.utils.DateUtilities.dateTimeGeneralFormat
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-//mvvc
+//mvvm
 class BookingPreviewPresenter constructor(
     private val dispatcher: CoroutineDispatcher,
     private val api: BookingAPI,

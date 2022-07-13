@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -27,20 +28,34 @@ class BookingFormFragment : Fragment(), BookingFormView {
     private val binding by lazy { FragmentBookingFormBinding.inflate(layoutInflater) }
 
     private val presenter by lazy { BookingFormPresenter() }
-
+    private val viewModel : BookingFormViewModel by viewModels()
     private val disable = R.color.disable_color
     private val enable = android.R.color.transparent
 
     //region Fragment Life Cycle
     override fun onResume() {
         super.onResume()
-        presenter.setFromTimesDropDown()
-        presenter.setToTimesDropDown()
+        viewModel.setFromTimesDropDown()
+        viewModel.setToTimesDropDown()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.attachView(this)
+        observe()
+    }
+    private fun observe(){
+        viewModel.setFromTimesDropDown.observe(this){
+            setFromTimeDropdown(it)
+        }
+        viewModel.setToTimesDropDown.observe(this){
+            setToTimeDropDown(it)
+        }
+        viewModel.enablePreviewButton.observe(this){
+            enablePreviewButton()
+        }
+        viewModel.disablePreviewButton.observe(this){
+            disablePreviewButton()
+        }
     }
 
     override fun onCreateView(
@@ -113,6 +128,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
     //endregion
 
+    //TODO change presenter >> viewModel
     //region formValidates
     private fun formValidate() {
         with(binding) {
