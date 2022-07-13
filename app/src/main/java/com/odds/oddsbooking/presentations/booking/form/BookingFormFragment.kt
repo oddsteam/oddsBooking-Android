@@ -2,6 +2,8 @@ package com.odds.oddsbooking.presentations.booking.form
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Debug
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -98,6 +100,12 @@ class BookingFormFragment : Fragment(), BookingFormView {
         viewModel.onValidateFromDateError.observe(this){
             onValidateFromDateError(it)
         }
+        viewModel.onValidateFromTimeSuccess.observe(this){
+            onValidateFromTimeSuccess(it)
+        }
+        viewModel.onValidateFromTimeError.observe(this){
+            onValidateFromTimeError(it)
+        }
 
         viewModel.onValidateToDateSuccess.observe(this){
             onValidateToDateSuccess(it)
@@ -120,6 +128,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
         viewModel.setEnableFromTime.observe(this){
             setEnableFromTime()
+        }
+        viewModel.setEnableToDate.observe(this){
+            setEnableToDate()
         }
         viewModel.setEnableToTime.observe(this){
             setEnableToTime()
@@ -252,7 +263,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             fromTimeFormDropdown.doAfterTextChanged { text ->
-                presenter.validateFromTime(
+                viewModel.validateFromTime(
                     text.toString(),
                     fromDateFormEditText.text.toString(),
                     toDateFormEditText.text.toString(),
@@ -462,7 +473,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     override fun clearValueFromTimeDropdown() {
         setDropDownWithValueToEmpty(binding.fromTimeFormDropdown)
-
     }
 
     override fun clearValueToTimeDropdown() {
@@ -493,6 +503,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
 
     override fun setFromTimeDropdown(timeSlot: Array<String>) {
+        if(timeSlot.isNotEmpty()){
+            Log.d("formTimeTimeSlotD", "${timeSlot.size}")
+        }
         setTimeDropdown(timeSlot, binding.fromTimeFormDropdown)
     }
 
@@ -524,6 +537,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun setTimeDropdown(timeSlot: Array<String>, view: View) {
         val toTime: Array<String> = timeSlot
+
         val arrayAdapterToTime = ArrayAdapter(view.context, R.layout.dropdown_item, toTime)
         val dropdown = binding.root.findViewById<AutoCompleteTextView>(view.id)
         dropdown.setAdapter(arrayAdapterToTime)

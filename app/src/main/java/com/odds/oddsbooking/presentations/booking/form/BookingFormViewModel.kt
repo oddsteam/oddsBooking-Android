@@ -1,6 +1,7 @@
 package com.odds.oddsbooking.presentations.booking.form
 
 import android.content.Context
+import android.util.Log
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,21 +51,25 @@ class BookingFormViewModel : ViewModel() {
     private val _onValidatePhoneNumberError by lazy { MutableLiveData<Int>() }
     val onValidatePhoneNumberError: LiveData<Int> get() = _onValidatePhoneNumberError
 
-
     private val _onValidatePhoneNumberSuccess by lazy { MutableLiveData<Unit>() }
     val onValidatePhoneNumberSuccess: LiveData<Unit> get() = _onValidatePhoneNumberSuccess
+    //endregion
 
+    //region onValidateRoomError/Success
     private val _onValidateRoomError by lazy { MutableLiveData<Int>() }
     val onValidateRoomError: LiveData<Int> get() = _onValidateRoomError
 
     private val _onValidateRoomSuccess by lazy { MutableLiveData<Unit>() }
     val onValidateRoomSuccess: LiveData<Unit> get() = _onValidateRoomSuccess
+    //endregion
 
+    //region onValidateReasonError/Success
     private val _onValidateReasonError by lazy { MutableLiveData<Int>() }
     val onValidateReasonError: LiveData<Int> get() = _onValidateReasonError
 
     private val _onValidateReasonSuccess by lazy { MutableLiveData<Unit>() }
     val onValidateReasonSuccess: LiveData<Unit> get() = _onValidateReasonSuccess
+    //endregion
 
     //region onValidateFromDateError/Success
     private val _onValidateFromDateError by lazy { MutableLiveData<Int>() }
@@ -74,15 +79,26 @@ class BookingFormViewModel : ViewModel() {
     val onValidateFromDateSuccess: LiveData<Array<String>> get() = _onValidateFromDateSuccess
     //endregion
 
+    //region onValidateFromTimeError/Success
+    private val _onValidateFromTimeError by lazy { MutableLiveData<Int>() }
+    val onValidateFromTimeError: LiveData<Int> get() = _onValidateFromTimeError
+
+    private val _onValidateFromTimeSuccess by lazy { MutableLiveData<Array<String>>() }
+    val onValidateFromTimeSuccess: LiveData<Array<String>> get() = _onValidateFromTimeSuccess
+    //endregion
+
+    //region onValidateToDateError/Success
     private val _onValidateToDateError by lazy { MutableLiveData<Int>() }
     val onValidateToDateError: LiveData<Int> get() = _onValidateToDateError
 
     private val _onValidateToDateSuccess by lazy { MutableLiveData<Array<String>>() }
     val onValidateToDateSuccess: LiveData<Array<String>> get() = _onValidateToDateSuccess
+    //endregion
 
+    //endregion
 
     private val _setFromTimeDropdown by lazy { MutableLiveData<Array<String>>() }
-    val setFromTimeDropdown: LiveData<Array<String>> get() = _setFromTimesDropDown
+    val setFromTimeDropdown: LiveData<Array<String>> get() = _setFromTimeDropdown
 
     private val _setToTimeDropDown by lazy { MutableLiveData<Array<String>>() }
     val setToTimeDropDown: LiveData<Array<String>> get() = _setToTimeDropDown
@@ -95,6 +111,9 @@ class BookingFormViewModel : ViewModel() {
 
     private val _setEnableFromTime by lazy { MutableLiveData<Unit>() }
     val setEnableFromTime: LiveData<Unit> get() = _setEnableFromTime
+
+    private val _setEnableToDate by lazy { MutableLiveData<Unit>() }
+    val setEnableToDate: LiveData<Unit> get() = _setEnableToDate
 
     private val _setEnableToTime by lazy { MutableLiveData<Unit>() }
     val setEnableToTime: LiveData<Unit> get() = _setEnableToTime
@@ -200,7 +219,7 @@ class BookingFormViewModel : ViewModel() {
         this.fromDate = fromDate
         when {
             fromDate.isEmpty() -> {
-                _onValidateFromDateError.value = (R.string.from_date_empty_err)
+                _onValidateFromDateError.value = R.string.from_date_empty_err
                 fromDateErrorFlag = true
             }
             else -> {
@@ -210,8 +229,11 @@ class BookingFormViewModel : ViewModel() {
                     setFromTimeTimeSlot(startTime = "18:00", endTime = "22:00")
                 }
 
-                _onValidateFromDateSuccess.value = fromTimeTimeSlot
+                if(fromTimeTimeSlot.isNotEmpty()){
+                    Log.d("formTimeTimeSlot", "${fromTimeTimeSlot.size}")
+                }
 
+                _onValidateFromDateSuccess.value = fromTimeTimeSlot
                 _setFromTimeDropdown.value = fromTimeTimeSlot
                 _clearValueFromTimeDropdown.value = Unit
                 _clearValueToTimeDropdown.value = Unit
@@ -330,6 +352,42 @@ class BookingFormViewModel : ViewModel() {
                 _onValidateReasonSuccess.value = Unit
                 bookingData.reason = reason
                 false
+            }
+        }
+        validateForm()
+    }
+
+    fun validateFromTime(fromTime: String, fromDate: String, toDate: String) {
+        when {
+            fromTime.isEmpty() -> {
+                _onValidateFromTimeError.value = R.string.time_empty_err
+                fromDateErrorFlag = true
+            }
+            else -> {
+                if (DateUtilities.isSameDate(fromDate, toDate)) {
+                    val fromTimeArray = fromTime.split(":")
+                    val startToTime = "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
+
+                    if (DateUtilities.isWeekend(fromDate)) {
+                        setToTimeTimeSlot(startTime = startToTime, endTime =  "21:00")
+                    }
+                    else {
+                        setToTimeTimeSlot(startTime = startToTime, endTime =  "23:00")
+                    }
+                } else {
+                    if (DateUtilities.isWeekend(fromDate)) {
+                        setToTimeTimeSlot(startTime = "09:00", endTime =  "21:00")
+                    }
+                }
+
+                _onValidateFromTimeSuccess.value = toTimeTimeSlot
+
+                _setToTimeDropDown.value = toTimeTimeSlot
+                _clearValueToTimeDropdown.value = Unit
+                _setEnableToDate.value = Unit
+                _setEnableToTime.value = Unit
+                fromTimeErrorFlag = false
+                bookingData.fromTime = fromTime
             }
         }
         validateForm()
