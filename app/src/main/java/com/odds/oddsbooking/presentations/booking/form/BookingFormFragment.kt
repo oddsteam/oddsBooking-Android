@@ -37,6 +37,8 @@ class BookingFormFragment : Fragment(), BookingFormView {
     //region Fragment Life Cycle
     override fun onResume() {
         super.onResume()
+
+        loadRoomDropdown()
         viewModel.setFromTimesDropDown()
         viewModel.setToTimesDropDown()
     }
@@ -52,6 +54,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         viewModel.setToTimesDropDown.observe(this){
             setToTimeDropDown(it)
         }
+
         viewModel.enablePreviewButton.observe(this){
             enablePreviewButton()
         }
@@ -60,7 +63,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
 
         viewModel.onValidateNameSuccess.observe(this){
-            onValidateEmailSuccess()
+            onValidateNameSuccess()
         }
         viewModel.onValidateNameError.observe(this){
             onValidateNameError(it)
@@ -114,6 +117,13 @@ class BookingFormFragment : Fragment(), BookingFormView {
             onValidateToDateError(it)
         }
 
+        viewModel.onValidateToTimeSuccess.observe(this){
+            onValidateToTimeSuccess()
+        }
+        viewModel.onValidateToTimeError.observe(this){
+            onValidateToTimeError(it)
+        }
+
         viewModel.setFromTimeDropdown.observe(this){
             setFromTimeDropdown(it)
         }
@@ -160,6 +170,10 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
         viewModel.setTextToDate.observe(this){
             setTextToDate(it)
+        }
+
+        viewModel.onNavigateToPreview.observe(this){
+            onNavigateToPreview(it)
         }
     }
 
@@ -279,7 +293,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
             }
 
             toTimeFormDropDown.doAfterTextChanged { text ->
-                presenter.validateToTime(text.toString())
+                viewModel.validateToTime(text.toString())
             }
         }
     }
@@ -553,7 +567,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun onPreviewButtonClick() {
         binding.previewButton.setOnClickListener {
-            presenter.onPreviewButtonClicked()
+            viewModel.onPreviewButtonClicked()
         }
     }
 

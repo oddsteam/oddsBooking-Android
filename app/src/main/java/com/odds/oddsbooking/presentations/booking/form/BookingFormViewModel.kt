@@ -26,8 +26,6 @@ class BookingFormViewModel : ViewModel() {
     private val _setToTimesDropDown by lazy { MutableLiveData<Array<String>>() }
     val setToTimesDropDown: LiveData<Array<String>> get() = _setToTimesDropDown
 
-    //region onValidatesError/Success
-
     //region onValidateNameError/Success
     private val _onValidateNameError by lazy { MutableLiveData<Int>() }
     val onValidateNameError: LiveData<Int> get() = _onValidateNameError
@@ -95,6 +93,12 @@ class BookingFormViewModel : ViewModel() {
     val onValidateToDateSuccess: LiveData<Array<String>> get() = _onValidateToDateSuccess
     //endregion
 
+    //region onValidateToTimeError/Success
+    private val _onValidateToTimeError by lazy { MutableLiveData<Int>() }
+    val onValidateToTimeError: LiveData<Int> get() = _onValidateToTimeError
+
+    private val _onValidateToTimeSuccess by lazy { MutableLiveData<Unit>() }
+    val onValidateToTimeSuccess: LiveData<Unit> get() = _onValidateToTimeSuccess
     //endregion
 
     private val _setFromTimeDropdown by lazy { MutableLiveData<Array<String>>() }
@@ -148,6 +152,9 @@ class BookingFormViewModel : ViewModel() {
     private val _setTextToDate by lazy { MutableLiveData<String>() }
     val setTextToDate: LiveData<String> get() = _setTextToDate
 
+    private val _onNavigateToPreview by lazy { MutableLiveData<BookingData>() }
+    val onNavigateToPreview: LiveData<BookingData> get() = _onNavigateToPreview
+
     private var fromTimeTimeSlot: Array<String> = arrayOf()
     private var toTimeTimeSlot: Array<String> = arrayOf()
     private var formatter = SimpleDateFormat("yyyy/MM/dd", Locale.US)
@@ -155,7 +162,7 @@ class BookingFormViewModel : ViewModel() {
     private var fromDate = ""
     private var dateInTimePickerDialog = DateInTimePicker(
         datePickerType = DateInTimePickerType.FROM_DATE,
-        System.currentTimeMillis() + BookingFormPresenter.TWO_WEEKS,
+        System.currentTimeMillis() + TWO_WEEKS,
         null,
         ""
     )
@@ -295,11 +302,11 @@ class BookingFormViewModel : ViewModel() {
     }
 
     //region set/get TimeSlots
-    fun setFromTimeTimeSlot(startTime: String, endTime: String) {
+    private fun setFromTimeTimeSlot(startTime: String, endTime: String) {
         fromTimeTimeSlot = DateUtilities.getTimeSlot(startTime, endTime)
     }
 
-    fun setToTimeTimeSlot(startTime: String, endTime: String) {
+    private fun setToTimeTimeSlot(startTime: String, endTime: String) {
         toTimeTimeSlot = DateUtilities.getTimeSlot(startTime, endTime)
     }
     //endregion
@@ -393,11 +400,26 @@ class BookingFormViewModel : ViewModel() {
         validateForm()
     }
 
+    fun validateToTime(toTime: String) {
+        toTimeErrorFlag = when {
+            toTime.isEmpty() -> {
+                _onValidateToTimeError.value = (R.string.time_empty_err)
+                true
+            }
+            else -> {
+                _onValidateToTimeSuccess.value = Unit
+                bookingData.toTime = toTime
+                false
+            }
+        }
+        validateForm()
+    }
+
     //region onDatePickersClick
     fun onFromDateClick(fromDate: String) {
         dateInTimePickerDialog = DateInTimePicker(
             DateInTimePickerType.FROM_DATE,
-            System.currentTimeMillis() + BookingFormPresenter.TWO_WEEKS,
+            System.currentTimeMillis() + TWO_WEEKS,
             null,
             fromDate
         )
@@ -411,7 +433,7 @@ class BookingFormViewModel : ViewModel() {
         var maxDate: Long = date.time
 
         if (DateUtilities.isSaturday(fromDate)) {
-            maxDate = date.time + BookingFormPresenter.ONE_DAY
+            maxDate = date.time + ONE_DAY
         }
 
         dateInTimePickerDialog =
@@ -424,6 +446,7 @@ class BookingFormViewModel : ViewModel() {
         //reset when click in toDate datePicker
         _onDatePickerDialogToDate.value = dateInTimePickerDialog
     }
+    //endregion
 
     fun onDatePickerCancel() {
         if (dateInTimePickerDialog.datePickerType == DateInTimePickerType.FROM_DATE) {
@@ -472,6 +495,15 @@ class BookingFormViewModel : ViewModel() {
                 setToTimeTimeSlot("09:00", "21:00")
             }
         }
+    }
+
+    fun onPreviewButtonClicked() {
+        _onNavigateToPreview.value = bookingData
+    }
+
+    companion object {
+        const val ONE_DAY = 24 * 60 * 60 * 1000
+        const val TWO_WEEKS = 14 * ONE_DAY
     }
 
 }
