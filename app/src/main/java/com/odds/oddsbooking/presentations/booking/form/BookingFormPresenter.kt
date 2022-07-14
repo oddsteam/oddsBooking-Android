@@ -148,7 +148,7 @@ class BookingFormPresenter {
 
                 view.onValidateFromDateSuccess(fromTimeTimeSlot)
 
-                view.setFromTimeDropdown(fromTimeTimeSlot)
+                view.setFromTimeDropDown(fromTimeTimeSlot)
                 view.clearValueFromTimeDropdown()
                 view.clearValueToTimeDropdown()
                 view.setEnableFromTime()
@@ -330,7 +330,7 @@ class BookingFormPresenter {
 
     //region setTimesDropDown
     fun setFromTimesDropDown() {
-        view.setFromTimeDropdown(fromTimeTimeSlot)
+        view.setFromTimeDropDown(fromTimeTimeSlot)
     }
 
     fun setToTimesDropDown() {

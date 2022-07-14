@@ -39,8 +39,9 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
         loadRoomDropdown()
 
-        viewModel.setFromTimesDropDown()
-        viewModel.setToTimesDropDown()
+
+        viewModel.setFromTimeText()
+        viewModel.setToTimeText()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +50,11 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
     private fun observe(){
-        viewModel.setFromTimesDropDown.observe(this){
-            setFromTimeDropdown(it)
+        viewModel.setFromTimeText.observe(this){
+            setFromTimeText(it)
         }
-        viewModel.setToTimesDropDown.observe(this){
-            setToTimeDropDown(it)
+        viewModel.setToTimeText.observe(this){
+            setToTimeText(it)
         }
 
         viewModel.enablePreviewButton.observe(this){
@@ -126,7 +127,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
 
         viewModel.setFromTimeDropdown.observe(this){
-            setFromTimeDropdown(it)
+            setFromTimeDropDown(it)
         }
         viewModel.setToTimeDropDown.observe(this){
             setToTimeDropDown(it)
@@ -516,8 +517,21 @@ class BookingFormFragment : Fragment(), BookingFormView {
     }
 
 
-    override fun setFromTimeDropdown(timeSlot: Array<String>) {
+    override fun setFromTimeDropDown(timeSlot: Array<String>) {
+        if(timeSlot.isNotEmpty()){
+            Log.d("fromTimeTimeSlot", "${timeSlot[0]}")
+        }else{
+            Log.d("fromTimeTimeSlot", "empty")
+        }
         setTimeDropdown(timeSlot, binding.fromTimeFormDropdown)
+    }
+
+    private fun setFromTimeText(fromTime: String) {
+        binding.fromTimeFormDropdown.setText(fromTime)
+    }
+
+    private fun setToTimeText(toTime: String) {
+        binding.toTimeFormDropDown.setText(toTime)
     }
 
     override fun setToTimeDropDown(timeSlot: Array<String>) {
@@ -548,7 +562,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private fun setTimeDropdown(timeSlot: Array<String>, view: View) {
         val toTime: Array<String> = timeSlot
-
         val arrayAdapterToTime = ArrayAdapter(view.context, R.layout.dropdown_item, toTime)
         val dropdown = binding.root.findViewById<AutoCompleteTextView>(view.id)
         dropdown.setAdapter(arrayAdapterToTime)

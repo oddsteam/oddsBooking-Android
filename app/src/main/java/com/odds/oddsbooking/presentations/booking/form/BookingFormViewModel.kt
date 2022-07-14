@@ -1,30 +1,25 @@
 package com.odds.oddsbooking.presentations.booking.form
 
-import android.content.Context
 import android.util.Log
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.odds.oddsbooking.R
-import com.odds.oddsbooking.data.repository.BookingRepository
-import com.odds.oddsbooking.di.DataModule
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.DateInTimePicker
 import com.odds.oddsbooking.models.DateInTimePickerType
-import com.odds.oddsbooking.services.booking.BookingAPIFactory
 import com.odds.oddsbooking.utils.DateUtilities
 import com.odds.oddsbooking.utils.NameUtilities.getNameFormatter
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.sql.StatementEvent
 
 class BookingFormViewModel : ViewModel() {
-    private val _setFromTimesDropDown by lazy { MutableLiveData<Array<String>>() }
-    val setFromTimesDropDown: LiveData<Array<String>> get() = _setFromTimesDropDown
+    private val _setFromTimeText by lazy { MutableLiveData<String>() }
+    val setFromTimeText: LiveData<String> get() = _setFromTimeText
 
-    private val _setToTimesDropDown by lazy { MutableLiveData<Array<String>>() }
-    val setToTimesDropDown: LiveData<Array<String>> get() = _setToTimesDropDown
+    private val _setToTimeText by lazy { MutableLiveData<String>() }
+    val setToTimeText: LiveData<String> get() = _setToTimeText
 
     //region onValidateNameError/Success
     private val _onValidateNameError by lazy { MutableLiveData<Int>() }
@@ -179,13 +174,18 @@ class BookingFormViewModel : ViewModel() {
     private var toTimeErrorFlag = true
     //endregion
 
-    fun setFromTimesDropDown() {
-        _setFromTimesDropDown.value = fromTimeTimeSlot
-
+    fun setFromTimeText() {
+        if(bookingData.fromTime.isNotEmpty()){
+            _setFromTimeText.value = bookingData.fromTime
+            _setFromTimeDropdown.value = fromTimeTimeSlot
+        }
     }
 
-    fun setToTimesDropDown() {
-        _setToTimesDropDown.value = toTimeTimeSlot
+    fun setToTimeText() {
+        if(bookingData.toTime.isNotEmpty()){
+            _setToTimeText.value = bookingData.toTime
+            _setToTimeDropDown.value = toTimeTimeSlot
+        }
     }
 
     fun validateFullName(fullName: String) {

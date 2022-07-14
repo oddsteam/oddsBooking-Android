@@ -32,7 +32,7 @@ interface BookingFormView : IDatePicker {
     fun onDatePickerDialogFormDate(fromDate: DateInTimePicker)
     fun onDatePickerDialogToDate(toDate: DateInTimePicker)
 
-    fun setFromTimeDropdown(timeSlot: Array<String>)
+    fun setFromTimeDropDown(timeSlot: Array<String>)
     fun setToTimeDropDown(timeSlot: Array<String>)
     fun clearValueFromTimeDropdown()
     fun clearValueToTimeDropdown()

@@ -185,7 +185,7 @@ class BookingFormPresenterTest {
         verify(view, never()).onValidateFromDateError(R.string.from_date_empty_err)
         verify(view).disablePreviewButton()
         verify(view).setEnableFromTime()
-        verify(view).setFromTimeDropdown(timeSlot)
+        verify(view).setFromTimeDropDown(timeSlot)
         verify(view).clearValueFromTimeDropdown()
         verify(view).clearValueToTimeDropdown()
         verify(view).setDisableToDate()
@@ -204,7 +204,7 @@ class BookingFormPresenterTest {
         verify(view).onValidateFromDateError(R.string.from_date_empty_err)
         verify(view).disablePreviewButton()
         verify(view, never()).setEnableFromTime()
-        verify(view, never()).setFromTimeDropdown(timeSlot)
+        verify(view, never()).setFromTimeDropDown(timeSlot)
         verify(view, never()).clearValueFromTimeDropdown()
         verify(view, never()).clearValueToTimeDropdown()
         verify(view, never()).setDisableToDate()
@@ -802,7 +802,7 @@ class BookingFormPresenterTest {
         presenter.setFromTimesDropDown()
 
         //Then
-        verify(view).setFromTimeDropdown(timeSlot)
+        verify(view).setFromTimeDropDown(timeSlot)
     }
 
     @Test
