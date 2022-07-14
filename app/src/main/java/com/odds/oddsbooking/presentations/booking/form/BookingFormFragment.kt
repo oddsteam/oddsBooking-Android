@@ -2,7 +2,6 @@ package com.odds.oddsbooking.presentations.booking.form
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Debug
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +38,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         super.onResume()
 
         loadRoomDropdown()
+
         viewModel.setFromTimesDropDown()
         viewModel.setToTimesDropDown()
     }
@@ -47,6 +47,7 @@ class BookingFormFragment : Fragment(), BookingFormView {
         super.onCreate(savedInstanceState)
         observe()
     }
+
     private fun observe(){
         viewModel.setFromTimesDropDown.observe(this){
             setFromTimeDropdown(it)
@@ -181,7 +182,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         return binding.root
     }
 
@@ -517,9 +517,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
 
     override fun setFromTimeDropdown(timeSlot: Array<String>) {
-        if(timeSlot.isNotEmpty()){
-            Log.d("formTimeTimeSlotD", "${timeSlot.size}")
-        }
         setTimeDropdown(timeSlot, binding.fromTimeFormDropdown)
     }
 

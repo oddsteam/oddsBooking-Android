@@ -181,6 +181,7 @@ class BookingFormViewModel : ViewModel() {
 
     fun setFromTimesDropDown() {
         _setFromTimesDropDown.value = fromTimeTimeSlot
+
     }
 
     fun setToTimesDropDown() {
@@ -223,6 +224,7 @@ class BookingFormViewModel : ViewModel() {
 
 
     fun validateFromDate(fromDate: String) {
+
         this.fromDate = fromDate
         when {
             fromDate.isEmpty() -> {
@@ -234,10 +236,6 @@ class BookingFormViewModel : ViewModel() {
                     setFromTimeTimeSlot(startTime = "09:00", endTime = "20:00")
                 } else {
                     setFromTimeTimeSlot(startTime = "18:00", endTime = "22:00")
-                }
-
-                if(fromTimeTimeSlot.isNotEmpty()){
-                    Log.d("formTimeTimeSlot", "${fromTimeTimeSlot.size}")
                 }
 
                 _onValidateFromDateSuccess.value = fromTimeTimeSlot
@@ -283,6 +281,8 @@ class BookingFormViewModel : ViewModel() {
 
 
     private fun validateForm() {
+        logBookingData()
+        logErrorFlags()
         when {
             !fullNameErrorFlag
                     && !emailErrorFlag
@@ -368,7 +368,7 @@ class BookingFormViewModel : ViewModel() {
         when {
             fromTime.isEmpty() -> {
                 _onValidateFromTimeError.value = R.string.time_empty_err
-                fromDateErrorFlag = true
+                fromTimeErrorFlag = true
             }
             else -> {
                 if (DateUtilities.isSameDate(fromDate, toDate)) {
@@ -376,14 +376,13 @@ class BookingFormViewModel : ViewModel() {
                     val startToTime = "${fromTimeArray[0].toInt() + 1}:${fromTimeArray[1].toInt()}"
 
                     if (DateUtilities.isWeekend(fromDate)) {
-                        setToTimeTimeSlot(startTime = startToTime, endTime =  "21:00")
-                    }
-                    else {
-                        setToTimeTimeSlot(startTime = startToTime, endTime =  "23:00")
+                        setToTimeTimeSlot(startTime = startToTime, endTime = "21:00")
+                    } else {
+                        setToTimeTimeSlot(startTime = startToTime, endTime = "23:00")
                     }
                 } else {
                     if (DateUtilities.isWeekend(fromDate)) {
-                        setToTimeTimeSlot(startTime = "09:00", endTime =  "21:00")
+                        setToTimeTimeSlot(startTime = "09:00", endTime = "21:00")
                     }
                 }
 
@@ -499,6 +498,34 @@ class BookingFormViewModel : ViewModel() {
 
     fun onPreviewButtonClicked() {
         _onNavigateToPreview.value = bookingData
+    }
+
+    private fun logBookingData() {
+        Log.d(
+            "logBookingData", "fullName : " + bookingData.fullName + "\n" +
+                    "email : " + bookingData.email + "\n" +
+                    "phoneNumber : " + bookingData.phoneNumber + "\n" +
+                    "room : " + bookingData.room + "\n" +
+                    "reason : " + bookingData.reason + "\n" +
+                    "fromDate : " + bookingData.fromDate + "\n" +
+                    "fromTime : " + bookingData.fromTime + "\n" +
+                    "toDate : " + bookingData.toDate + "\n" +
+                    "toTime : " + bookingData.toTime
+        )
+    }
+
+    private fun logErrorFlags() {
+        Log.d(
+            "logErrorFlags", "fullName : " + fullNameErrorFlag + "\n" +
+                    "email : " + emailErrorFlag + "\n" +
+                    "phoneNumber : " + phoneNumberErrorFlag + "\n" +
+                    "room : " + roomErrorFlag + "\n" +
+                    "reason : " + reasonErrorFlag + "\n" +
+                    "fromDate : " + fromDateErrorFlag + "\n" +
+                    "fromTime : " + fromTimeErrorFlag + "\n" +
+                    "toDate : " + toDateErrorFlag + "\n" +
+                    "toTime : " + toTimeErrorFlag
+        )
     }
 
     companion object {
