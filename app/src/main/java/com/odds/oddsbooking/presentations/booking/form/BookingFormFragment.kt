@@ -28,7 +28,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
 
     private val binding by lazy { FragmentBookingFormBinding.inflate(layoutInflater) }
 
-    private val presenter by lazy { BookingFormPresenter() }
     private val viewModel : BookingFormViewModel by viewModels()
     private val disable = R.color.disable_color
     private val enable = android.R.color.transparent

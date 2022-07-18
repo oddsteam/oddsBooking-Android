@@ -7,6 +7,8 @@
         <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.1305" />
         <entry key="app/src/main/res/drawable/ic_email.xml" value="0.1305" />
         <entry key="app/src/main/res/drawable/ic_face.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.139" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.139" />
         <entry key="app/src/main/res/drawable/ic_o_odds_logo.xml" value="0.149" />
         <entry key="app/src/main/res/drawable/ic_odds_logo_color.xml" value="0.1185" />
         <entry key="app/src/main/res/drawable/ic_odds_logo_color_small.xml" value="0.1" />

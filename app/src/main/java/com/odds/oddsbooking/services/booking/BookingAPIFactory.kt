@@ -2,7 +2,10 @@ package com.odds.oddsbooking.services.booking
 
 import android.content.Context
 import com.odds.oddsbooking.R
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,8 +17,11 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
+@Module
+@InstallIn(ActivityComponent::class)
 object BookingAPIFactory {
-    private fun createOkHttpClient(context: Context): OkHttpClient {
+    @Provides
+    fun createOkHttpClient(context: Context): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient
@@ -25,7 +31,8 @@ object BookingAPIFactory {
             .build()
     }
 
-    private fun createRetrofit(context: Context): Retrofit {
+    @Provides
+    fun createRetrofit(context: Context): Retrofit {
         val apiUrl = "https://api-odds-booking.odds.team"
         return Retrofit.Builder()
             .baseUrl(apiUrl)

@@ -7,7 +7,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.odds.oddsbooking.R
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.databinding.ActivityBookingFormBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BookingFormActivity : AppCompatActivity() {
     private val binding by lazy { ActivityBookingFormBinding.inflate(layoutInflater) }
 

@@ -1,24 +1,19 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.odds.oddsbooking.data.repository.BookingRepository
-import com.odds.oddsbooking.di.DataModule
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.BookingRequest
-import com.odds.oddsbooking.services.booking.BookingAPI
-import com.odds.oddsbooking.services.booking.BookingAPIFactory
 import com.odds.oddsbooking.utils.DateUtilities
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BookingPreviewViewModel constructor(
+class BookingPreviewViewModel @Inject constructor(
     private val bookingRepository: BookingRepository
 ) : ViewModel() {
     private val _setAllEditTextFromBookingData by lazy { MutableLiveData<BookingData>() }

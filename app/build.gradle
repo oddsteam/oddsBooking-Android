@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'com.google.firebase.appdistribution'
+
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -101,6 +104,9 @@ dependencies {
     // Firebase
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
 
     //mockito
     testImplementation "org.mockito:mockito-core:4.0.0"

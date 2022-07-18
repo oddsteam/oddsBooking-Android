@@ -31,6 +31,7 @@ class BookingPreviewViewModelTest {
     private val showProcessBarObserver: Observer<Unit> = mock()
     private val showToastMassageObserver: Observer<String> = mock()
     private val goToSuccessPageObserver: Observer<BookingData> = mock()
+
     private val bookingRepository : BookingRepository = mock()
 
     private lateinit var viewModel: BookingPreviewViewModel
