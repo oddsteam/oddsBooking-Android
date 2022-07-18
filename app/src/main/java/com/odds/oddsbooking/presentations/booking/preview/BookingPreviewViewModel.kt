@@ -19,11 +19,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class BookingPreviewViewModel constructor(
-    private val context: Context,
-    private val bookingRepository: BookingRepository = DataModule.createBookingRepository(
-        BookingAPIFactory.createBookingAPI(
-            context
-        ))
+    private val bookingRepository: BookingRepository
 ) : ViewModel() {
     private val _setAllEditTextFromBookingData by lazy { MutableLiveData<BookingData>() }
     val setAllEditTextFromBookingData : LiveData<BookingData> get() = _setAllEditTextFromBookingData

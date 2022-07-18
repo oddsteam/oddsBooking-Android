@@ -5,7 +5,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.odds.oddsbooking.data.repository.BookingRepository
 import com.odds.oddsbooking.models.BookingData
-import com.odds.oddsbooking.models.BookingRequest
 import com.odds.oddsbooking.presentations.MainCoroutineScopeRule
 import com.odds.oddsbooking.services.booking.BookingDetailResponse
 import com.odds.oddsbooking.services.booking.BookingResponse
@@ -17,7 +16,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.Mockito
 import org.mockito.kotlin.*
 
 @RunWith(JUnit4::class)
@@ -29,23 +27,22 @@ class BookingPreviewViewModelTest {
     val coroutineScope = MainCoroutineScopeRule()
 
     private val backToBookingFormPage: Observer<Unit> = mock()
-    private val context: Context = mock()
-    private val setAllEditTextFromBookingData: Observer<BookingData> = mock()
-    private val showProcessBar: Observer<Unit> = mock()
-    private val showToastMassage: Observer<String> = mock()
-    private val goToSuccessPage: Observer<BookingData> = mock()
+    private val setAllEditTextFromBookingDataObserver: Observer<BookingData> = mock()
+    private val showProcessBarObserver: Observer<Unit> = mock()
+    private val showToastMassageObserver: Observer<String> = mock()
+    private val goToSuccessPageObserver: Observer<BookingData> = mock()
     private val bookingRepository : BookingRepository = mock()
 
     private lateinit var viewModel: BookingPreviewViewModel
 
     @Before
     fun setUp() {
-        viewModel = BookingPreviewViewModel(context)
+        viewModel = BookingPreviewViewModel(bookingRepository)
         viewModel.backToBookingFormPage.observeForever(backToBookingFormPage)
-        viewModel.setAllEditTextFromBookingData.observeForever(setAllEditTextFromBookingData)
-        viewModel.showProgressBar.observeForever(showProcessBar)
-        viewModel.showToastMessage.observeForever(showToastMassage)
-        viewModel.goToSuccessPage.observeForever(goToSuccessPage)
+        viewModel.setAllEditTextFromBookingData.observeForever(setAllEditTextFromBookingDataObserver)
+        viewModel.showProgressBar.observeForever(showProcessBarObserver)
+        viewModel.showToastMessage.observeForever(showToastMassageObserver)
+        viewModel.goToSuccessPage.observeForever(goToSuccessPageObserver)
 
     }
 
@@ -76,7 +73,7 @@ class BookingPreviewViewModelTest {
         //When
         viewModel.getBookingInfo(bookingData)
         //Then
-        verify(setAllEditTextFromBookingData).onChanged(bookingData)
+        verify(setAllEditTextFromBookingDataObserver).onChanged(bookingData)
     }
 
     @Test
@@ -85,26 +82,57 @@ class BookingPreviewViewModelTest {
         //When
         viewModel.createBooking()
         //Then
-        verify(showProcessBar).onChanged(Unit)
+        verify(showProcessBarObserver).onChanged(Unit)
     }
 
     @Test
     fun `when call createBooking and response error , api should response`() = runTest {
         //Given
+        whenever(bookingRepository.createBooking(any())).doReturn(flow { throw Exception("response not success") })
 
         //When
         viewModel.createBooking()
+
         //Then
-        verify(showToastMassage).onChanged("response not success")
+        verify(showToastMassageObserver).onChanged("response not success")
     }
 
-//    @Test
-//    fun `when call createBooking and response success, api should response`() = runTest {
-//        //Given
-//
-//        //When
-//
-//        //Then
-//
-//    }
+    @Test
+    fun `when call createBooking and response success, api should response`() = runTest {
+        //Given
+        val bookingData = BookingData(
+            "Sittidet Pawutinan",
+            "sittidet@odds.team",
+            "0889537322",
+            "Neon",
+            "Test Preview",
+            "2022/07/05",
+            "18:00",
+            "2022/07/05",
+            "20:00"
+        )
+        val bookingRes = BookingResponse(
+            status = 200,
+            data = BookingDetailResponse(
+                "1",
+                "Sittidet Pawutinan",
+                "sittidet@odds.team",
+                "0889537322",
+                "Neon",
+                "Test Preview",
+                "2022-07-05T18:00",
+                "2022-07-05T20:00",
+                status = false
+            )
+        )
+        viewModel.getBookingInfo(bookingData)
+
+        whenever(bookingRepository.createBooking(any())).doReturn(flowOf(bookingRes))
+
+        //When
+        viewModel.createBooking()
+
+        //Then
+        verify(goToSuccessPageObserver).onChanged(bookingData)
+    }
 }
