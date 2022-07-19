@@ -2,6 +2,7 @@ package com.odds.oddsbooking.di
 
 import android.content.Context
 import com.odds.oddsbooking.R
+import com.odds.oddsbooking.utils.NetworkUtilities.addSslSocketFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,41 +32,6 @@ object NetworkModule {
             .addInterceptor(logging)
             .addSslSocketFactory(context)
             .build()
-    }
-
-    //TODO: move another file
-    private fun OkHttpClient.Builder.addSslSocketFactory(context: Context) = apply {
-        val trustManagers = createTrustManagers(context)
-        trustManagers?.let {
-            val sslContext = SSLContext.getInstance("TLS")
-            sslContext.init(null, trustManagers, null)
-            this.sslSocketFactory(
-                sslContext.socketFactory,
-                trustManagers[0] as X509TrustManager,
-            )
-        }
-    }
-
-    //TODO: move to another file
-    private fun createTrustManagers(context: Context): Array<TrustManager>? {
-        return try {
-            val factory = CertificateFactory.getInstance("X.509")
-            val inputStream = context.resources.openRawResource(R.raw.odds_team)
-            val certificate = factory.generateCertificate(inputStream)
-            inputStream.close()
-
-            val keyStoreType: String = KeyStore.getDefaultType()
-            val keyStore: KeyStore = KeyStore.getInstance(keyStoreType)
-            keyStore.load(null, null)
-            keyStore.setCertificateEntry("ca", certificate)
-
-            val algorithm = TrustManagerFactory.getDefaultAlgorithm()
-            val trustManagerFactory = TrustManagerFactory.getInstance(algorithm)
-            trustManagerFactory.init(keyStore)
-            trustManagerFactory.trustManagers
-        } catch (e: Exception) {
-            null
-        }
     }
 
     @Provides

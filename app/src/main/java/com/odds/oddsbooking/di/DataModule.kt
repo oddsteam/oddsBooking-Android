@@ -13,8 +13,3 @@ abstract class DataModule {
     @Binds
     abstract fun bindBookingRepository(bookingRepositoryImpl: BookingRepositoryImpl): BookingRepository
 }
-
-//@Binds
-//  abstract fun bindAnalyticsService(
-//    analyticsServiceImpl: AnalyticsServiceImpl
-//  ): AnalyticsService
