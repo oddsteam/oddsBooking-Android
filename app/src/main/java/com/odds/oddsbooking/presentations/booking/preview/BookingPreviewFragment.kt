@@ -15,18 +15,14 @@ import com.odds.oddsbooking.R
 import com.odds.oddsbooking.presentations.booking.BookingFormActivity
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.databinding.FragmentBookingPreviewBinding
-import com.odds.oddsbooking.services.booking.BookingAPIFactory
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BookingPreviewFragment : Fragment() {
 
     private val binding by lazy { FragmentBookingPreviewBinding.inflate(layoutInflater) }
 
-    private val viewModel: BookingPreviewViewModel by viewModels {
-        BookingPreviewViewModelFactory(
-            requireContext()
-        )
-    }
+    private val viewModel: BookingPreviewViewModel by viewModels ()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -8,11 +8,13 @@ import com.odds.oddsbooking.data.repository.BookingRepository
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.models.BookingRequest
 import com.odds.oddsbooking.utils.DateUtilities
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class BookingPreviewViewModel @Inject constructor(
     private val bookingRepository: BookingRepository
 ) : ViewModel() {

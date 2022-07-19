@@ -1,13 +1,12 @@
 package com.odds.oddsbooking.presentations.booking.preview
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.odds.oddsbooking.data.repository.BookingRepository
 import com.odds.oddsbooking.models.BookingData
 import com.odds.oddsbooking.presentations.MainCoroutineScopeRule
-import com.odds.oddsbooking.services.booking.BookingDetailResponse
-import com.odds.oddsbooking.services.booking.BookingResponse
+import com.odds.oddsbooking.models.BookingDetailResponse
+import com.odds.oddsbooking.models.BookingResponse
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest

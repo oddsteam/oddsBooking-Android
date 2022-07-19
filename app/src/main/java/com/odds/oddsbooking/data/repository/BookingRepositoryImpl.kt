@@ -1,14 +1,14 @@
 package com.odds.oddsbooking.data.repository
 
 import com.odds.oddsbooking.models.BookingRequest
-import com.odds.oddsbooking.services.booking.BookingAPI
-import com.odds.oddsbooking.services.booking.BookingResponse
+import com.odds.oddsbooking.data.api.BookingApi
+import com.odds.oddsbooking.models.BookingResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 //TODO: write test
-class BookingRepositoryImpl @Inject constructor(private val api: BookingAPI) : BookingRepository{
+class BookingRepositoryImpl @Inject constructor(private val api: BookingApi) : BookingRepository{
 
     override fun createBooking(request: BookingRequest): Flow<BookingResponse> {
         return  flow{

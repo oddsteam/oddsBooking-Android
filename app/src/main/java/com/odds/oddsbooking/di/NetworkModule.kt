@@ -1,11 +1,12 @@
-package com.odds.oddsbooking.services.booking
+package com.odds.oddsbooking.di
 
 import android.content.Context
 import com.odds.oddsbooking.R
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,10 +19,11 @@ import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
 @Module
-@InstallIn(ActivityComponent::class)
-object BookingAPIFactory {
+@InstallIn(SingletonComponent::class)
+//เอาไปใช้ที่อื่นได้
+object NetworkModule {
     @Provides
-    fun createOkHttpClient(context: Context): OkHttpClient {
+    fun provideOkHttpClient (@ApplicationContext context: Context): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient
@@ -31,20 +33,7 @@ object BookingAPIFactory {
             .build()
     }
 
-    @Provides
-    fun createRetrofit(context: Context): Retrofit {
-        val apiUrl = "https://api-odds-booking.odds.team"
-        return Retrofit.Builder()
-            .baseUrl(apiUrl)
-            .client(createOkHttpClient(context))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    fun createBookingAPI(context: Context): BookingAPI {
-        return createRetrofit(context).create(BookingAPI::class.java)
-    }
-
+    //TODO: move another file
     private fun OkHttpClient.Builder.addSslSocketFactory(context: Context) = apply {
         val trustManagers = createTrustManagers(context)
         trustManagers?.let {
@@ -57,6 +46,7 @@ object BookingAPIFactory {
         }
     }
 
+    //TODO: move to another file
     private fun createTrustManagers(context: Context): Array<TrustManager>? {
         return try {
             val factory = CertificateFactory.getInstance("X.509")
@@ -76,5 +66,15 @@ object BookingAPIFactory {
         } catch (e: Exception) {
             null
         }
+    }
+
+    @Provides
+    fun provideRetrofit(client: OkHttpClient): Retrofit {
+        val apiUrl = "https://api-odds-booking.odds.team"
+        return Retrofit.Builder()
+            .baseUrl(apiUrl)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 }

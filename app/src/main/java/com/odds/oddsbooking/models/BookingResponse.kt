@@ -1,4 +1,4 @@
-package com.odds.oddsbooking.services.booking
+package com.odds.oddsbooking.models
 
 import com.google.gson.annotations.SerializedName
 
