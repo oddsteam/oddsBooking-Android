@@ -38,23 +38,6 @@ data class DateInTimePicker(
             return calendar
         }
 
-
-    fun getCurrentCalendar(timePicked: String): CalendarDate {
-        var calendarDate = if (timePicked.isNotEmpty()) {
-            val dates = timePicked.split("/")
-            val years = dates[0].toInt()
-            val months = dates[1].toInt() - 1
-            val days = dates[2].toInt()
-            CalendarDate(Calendar.getInstance(), years, months, days)
-        } else {
-            val years = Calendar.getInstance().get(Calendar.YEAR)
-            val months = Calendar.getInstance().get(Calendar.MONTH)
-            val days = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-            CalendarDate(Calendar.getInstance(), years, months, days)
-        }
-
-        return calendarDate
-    }
 }
 
 enum class DateInTimePickerType {

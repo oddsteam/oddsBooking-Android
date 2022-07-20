@@ -366,7 +366,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
         }
     }
 
-
     override fun onDatePickerDialogFormDate(fromDate: DateInTimePicker) {
         setEditTextIsFocus(binding.fromDateFormEditText, true)
         showDatePickerDialog(
@@ -380,7 +379,6 @@ class BookingFormFragment : Fragment(), BookingFormView {
             toDate
         )
     }
-
 
     override fun setFromTimeDropdown(timeSlot: Array<String>) {
         setTimeDropdown(timeSlot, binding.fromTimeFormDropdown)

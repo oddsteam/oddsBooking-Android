@@ -326,10 +326,6 @@ class BookingFormPresenter {
         return nameFormatter.joinToString(" ")
     }
 
-//    private fun getDateFormatter(year: Int, month: Int, day: Int): String {
-//        return String.format("%d/%02d/%02d", year, month + 1, day)
-//    }
-
     //region setTimesDropDown
     fun setFromTimesDropDown() {
         view.setFromTimeDropdown(fromTimeTimeSlot)
