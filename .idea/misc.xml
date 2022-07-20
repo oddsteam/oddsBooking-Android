@@ -7,22 +7,24 @@
         <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.1305" />
         <entry key="app/src/main/res/drawable/ic_email.xml" value="0.1305" />
         <entry key="app/src/main/res/drawable/ic_face.xml" value="0.1305" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.139" />
-        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.139" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1065" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1065" />
         <entry key="app/src/main/res/drawable/ic_o_odds_logo.xml" value="0.149" />
         <entry key="app/src/main/res/drawable/ic_odds_logo_color.xml" value="0.1185" />
         <entry key="app/src/main/res/drawable/ic_odds_logo_color_small.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_outline_local_offer_24.xml" value="0.1065" />
         <entry key="app/src/main/res/drawable/ic_phone.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/ic_reason.xml" value="0.1065" />
         <entry key="app/src/main/res/drawable/ic_room.xml" value="0.1305" />
         <entry key="app/src/main/res/drawable/ic_success.xml" value="0.1945" />
         <entry key="app/src/main/res/drawable/ic_time.xml" value="0.1305" />
-        <entry key="app/src/main/res/layout/activity_booking_form.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_booking_form.xml" value="0.21499176025390623" />
         <entry key="app/src/main/res/layout/activity_booking_success.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11550151975683891" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25483856201171873" />
         <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.30978260869565216" />
-        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.2823674740998641" />
-        <entry key="app/src/main/res/layout/fragment_booking_preview.xml" value="0.30978260869565216" />
+        <entry key="app/src/main/res/layout/fragment_booking_form.xml" value="0.1980224609375" />
+        <entry key="app/src/main/res/layout/fragment_booking_preview.xml" value="0.20436706542968752" />
         <entry key="app/src/main/res/layout/fragment_booking_success.xml" value="0.1421875" />
       </map>
     </option>
